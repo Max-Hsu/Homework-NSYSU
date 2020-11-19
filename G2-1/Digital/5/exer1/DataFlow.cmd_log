@@ -1,0 +1,2 @@
+xst -intstyle ise -ifn "C:/Users/Max-Hsu/Desktop/homework/G2-1/Digital/5/exer1/DataFlow.xst" -ofn "C:/Users/Max-Hsu/Desktop/homework/G2-1/Digital/5/exer1/DataFlow.syr" 
+xst -intstyle ise -ifn "C:/Users/Max-Hsu/Desktop/homework/G2-1/Digital/5/exer1/DataFlow.xst" -ofn "C:/Users/Max-Hsu/Desktop/homework/G2-1/Digital/5/exer1/DataFlow.syr" 

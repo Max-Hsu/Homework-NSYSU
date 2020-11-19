@@ -1,0 +1,67 @@
+////////////////////////////////////////////////////////////////////////////////
+// Copyright (c) 1995-2013 Xilinx, Inc.  All rights reserved.
+////////////////////////////////////////////////////////////////////////////////
+//   ____  ____ 
+//  /   /\/   / 
+// /___/  \  /    Vendor: Xilinx 
+// \   \   \/     Version : 14.7
+//  \   \         Application : sch2hdl
+//  /   /         Filename : scha.vf
+// /___/   /\     Timestamp : 09/30/2019 09:54:59
+// \   \  /  \ 
+//  \___\/\___\ 
+//
+//Command: sch2hdl -intstyle ise -family artix7 -verilog C:/Users/Max-Hsu/Desktop/homework/G2-1/Digital/4/exer3/scha.vf -w C:/Users/Max-Hsu/Desktop/homework/G2-1/Digital/4/exer3/scha.sch
+//Design Name: scha
+//Device: artix7
+//Purpose:
+//    This verilog netlist is translated from an ECS schematic.It can be 
+//    synthesized and simulated, but it should not be modified. 
+//
+`timescale 1ns / 1ps
+
+module scha(w, 
+            x, 
+            y, 
+            z, 
+            F1, 
+            F2, 
+            F3);
+
+    input w;
+    input x;
+    input y;
+    input z;
+   output F1;
+   output F2;
+   output F3;
+   
+   wire XLXN_5;
+   wire XLXN_6;
+   wire XLXN_15;
+   wire XLXN_16;
+   
+   XOR2  XLXI_1 (.I0(x), 
+                .I1(w), 
+                .O(XLXN_5));
+   XOR2  XLXI_2 (.I0(z), 
+                .I1(y), 
+                .O(XLXN_6));
+   XOR2  XLXI_3 (.I0(XLXN_6), 
+                .I1(XLXN_5), 
+                .O(F1));
+   XOR2  XLXI_4 (.I0(z), 
+                .I1(y), 
+                .O(XLXN_15));
+   XOR2  XLXI_5 (.I0(XLXN_15), 
+                .I1(x), 
+                .O(XLXN_16));
+   XOR2  XLXI_6 (.I0(XLXN_16), 
+                .I1(w), 
+                .O(F2));
+   XOR4  XLXI_7 (.I0(z), 
+                .I1(y), 
+                .I2(x), 
+                .I3(w), 
+                .O(F3));
+endmodule

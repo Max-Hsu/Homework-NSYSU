@@ -1,0 +1,9 @@
+Dependencies for Project 'Blinky', Target 'LPC2100': (DO NOT MODIFY !)
+F (.\Startup.s)(0x4A0284D4)(--cpu ARM7TDMI -g --pd "__MICROLIB SETA 1"-IC:\Keil_v5\ARM\RV31\INC-IC:\Keil_v5\ARM\CMSIS\Include-IC:\Keil_v5\ARM\INC\Philips--pd "__UVISION_VERSION SETA 528"-o .\obj\startup.o --depend .\obj\startup.d)
+F (.\Retarget.c)(0x4A0284D4)(-c --cpu ARM7TDMI -D__MICROLIB -g -O0-IC:\Keil_v5\ARM\RV31\INC-IC:\Keil_v5\ARM\CMSIS\Include-IC:\Keil_v5\ARM\INC\Philips-D__UVISION_VERSION="528"-o .\obj\retarget.o --omf_browse .\obj\retarget.crf --depend .\obj\retarget.d)
+I (C:\Keil_v5\ARM\ARMCC\include\rt_misc.h)(0x5CEB79D6)
+I (C:\Keil_v5\ARM\ARMCC\include\stddef.h)(0x5CEB79E2)
+I (C:\Keil_v5\ARM\ARMCC\include\stdint.h)(0x5CEB79E2)
+F (.\Blinky.c)(0x5DA055C6)(-c --cpu ARM7TDMI -D__MICROLIB -g -O0-IC:\Keil_v5\ARM\RV31\INC-IC:\Keil_v5\ARM\CMSIS\Include-IC:\Keil_v5\ARM\INC\Philips-D__UVISION_VERSION="528"-o .\obj\blinky.o --omf_browse .\obj\blinky.crf --depend .\obj\blinky.d)
+I (C:\Keil_v5\ARM\INC\Philips\LPC21xx.H)(0x559CDB08)
+F (.\Abstract.txt)(0x4A0284D4)()

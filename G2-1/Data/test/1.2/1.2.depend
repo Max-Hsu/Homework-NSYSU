@@ -1,0 +1,7 @@
+# depslib dependency file v1.0
+1568186700 source:c:\users\max-hsu\desktop\homework\g2-1\data\test\1.2\hw1.2-b073040049.cpp
+	<iostream>
+	<vector>
+	<cmath>
+	<string>
+

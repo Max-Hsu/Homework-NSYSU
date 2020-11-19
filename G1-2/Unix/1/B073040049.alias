@@ -1,0 +1,25 @@
+alias x='cat'
+alias l='cat .*[0-9A-Z]'
+alias see='pwd -P > ~/newfile;diff ~/oldfile ~/newfile &>/dev/null && echo you cannot go that way || cat .de*[0-9] 2> /dev/null ; cat .lights 2> /dev/null ; cat .object 2> /dev/null ; mv .done*[^P-R][0-5] .dez5 2> /dev/null ; mv .des*[^A]2 .descriptionK 2> /dev/null'
+alias board='pwd -P > ~/oldfile ; cd ../museum ; see ;rm -f .descriptionA0'
+alias se='pwd -P > ~/oldfile ; cd se ; see'
+alias ne='pwd -P > ~/oldfile ; cd ne ; see'
+alias nw='./nw 2> /dev/null && echo The gate will not open. || echo You cannot go that way.'
+alias GoBack='basename `pwd -P`>~/nowaddress&&diff ~/oppsiteposition ~/nowaddress > /dev/null &&cd `pwd -P`/..'
+alias sw='pwd -P > ~/oldfile ;echo ne>~/oppsiteposition && GoBack && see'
+alias u='pwd -P > ~/oldfile ;echo d > ~/oppsiteposition && GoBack ||cd u 2>/dev/null; see'
+alias d='pwd -P > ~/oldfile ;echo u > ~/oppsiteposition && GoBack ||cd d 2>/dev/null; see'
+alias w='pwd -P > ~/oldfile ;echo e > ~/oppsiteposition && GoBack ||cd w 2>/dev/null; see'
+alias s='pwd -P > ~/oldfile ;echo n > ~/oppsiteposition && GoBack ||cd s 2>/dev/null; see'
+alias e='(./e 2> /dev/null && echo "The door is locked" && pwd -P > ~/decide )||(pwd -P > ~/oldfile ;echo w > ~/oppsiteposition && GoBack ||cd e 2>/dev/null ; pwd -P > ~/decide; see) ; cd `cat ~/decide`'
+alias n='(./n 2> /dev/null && echo "You do not have a key that can open this door." && pwd -P > ~/decide )||(pwd -P > ~/oldfile ;echo s > ~/oppsiteposition && GoBack ||cd n 2>/dev/null ; pwd -P > ~/decide ; see) ; cd `cat ~/decide`'
+alias quit='rm -f ~/newfile ~/oldfile ~/nowaddress ~/oppsiteposition ~/decide ;echo -e "\n\nYou have scored 60 out of a possible 90 points."; exit '
+
+PS1=">"
+rm -rf B073040049
+clear
+tar -xvf B073040049.tar &> /dev/null
+cd B073040049/HW1/vermont
+touch ~/newfile ~/oldfile ~/nowaddress ~/oppsiteposition ~/decide
+chmod 777 ~/newfile ~/oldfile ~/nowaddress ~/oppsiteposition
+see

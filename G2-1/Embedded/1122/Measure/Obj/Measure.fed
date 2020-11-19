@@ -1,0 +1,11 @@
+;#<FEEDBACK># ARM Linker, 5060750: Last Updated: Mon Nov 18 23:19:52 2019
+;VERSION 0.2
+;FILE getline.o
+getline <= USED 0
+;FILE measure.o
+;FILE retarget.o
+_sys_exit <= USED 0
+_ttywrch <= USED 0
+ferror <= USED 0
+;FILE serial.o
+getkey <= USED 0

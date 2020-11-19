@@ -1,0 +1,2 @@
+This is a simple Blinky project for the Philips LPC2100 series.
+It constantly changes the status on port GPIO P1.16..23.

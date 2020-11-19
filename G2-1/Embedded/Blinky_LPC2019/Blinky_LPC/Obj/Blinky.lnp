@@ -1,0 +1,8 @@
+--cpu ARM7TDMI
+".\obj\startup.o"
+".\obj\retarget.o"
+".\obj\blinky.o"
+--library_type=microlib --strict --scatter ".\Obj\Blinky.sct"
+--summary_stderr --info summarysizes --map --load_addr_map_info --xref --callgraph --symbols
+--info sizes --info totals --info unused --info veneers
+--list ".\Lst\Blinky.map" -o .\Obj\Blinky.axf

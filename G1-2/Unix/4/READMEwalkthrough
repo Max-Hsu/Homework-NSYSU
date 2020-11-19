@@ -1,0 +1,629 @@
+******************
+* Provided files *
+******************
+You are reading this file, so you have untarred the new homework. Let's look at
+what is in the directory with this file:
+
+% ls ~/HW4
+exam     invNames      jarImpact  pa3into4  README        scoremsg
+hw4game  itemDisplays  obj        pokey     READMEprimer
+inv      jarHole       obs        pwd       rooms
+%
+
+The above has many of the same files and directories as the previous homework:
+ - exam: the directory of files for display messages when examining objects.
+ - jarhole: A text file with the message about the hole in the street.
+ - jarImpact: A text file with the message about the exploding jar. 
+ - inv: the directory of files for objects in your inventory.
+ - invNames: the directory of files for object display names in your inventory.
+ - itemDisplays: the directory of files for object display names in the room.
+ - obj: the directory for the name of any object provided on the command line.
+
+There also a few new files:
+ - hw4game: The emacs -batch -l dunnet restore file to get to the right part
+            of the actual game. (Of course the corresponding file for the last
+	    homework is gone now.)
+ - pa3into4:The answer to the previous homework, modified slightly to work with
+            this homework's directories.
+ - README: The file you are reading now.
+ - READMEprimer:The file I posted, explaining how the simulated computer works.
+ - scoremsg:A text file that contains: "out of a possible 90 points."  You may
+            recognize this as the end portion of the message you get when you
+            type the "score" command. (The reason for putting this in a file is
+	    so that we can change it, once we're in the endgame treasure room.)
+ - pwd:A text file containing: "~/G/pokey/root/usr/toukmond". You may recognize
+            this as the directory that you start in when you log onto pokey.
+	    (The reason for putting this in a file is so that we can change it,
+	    when we type cd -- and so that that change will be remembered if we
+	    type "exit", then come back to the computer later.)
+
+There also a few directory changes:
+ - rooms: This is where the rooms are now. Notice that the old directories for
+          rooms ("museum", "street", and "vermont") are no longer in the HW4 
+          directory. They have been moved to "rooms", as we can see here:
+	    % ls ~/HW4/rooms
+	    endgame  museum  street  vermont
+	    %
+          There is a new directory here as well. This is for the treasure room:
+	    % ls ~/HW4/rooms/endgame
+             bracelet
+             diamond
+             gold
+             key
+             n
+             paper
+             platinum
+             preserver
+             shovel
+            'There is a beach towel on the ground here.'
+            'There is a gold bar here.'
+            'There is a life preserver here.'
+            'There is a platinum bar here.'
+            'There is a shimmering diamond here.'
+            'There is a shiny brass key here.'
+            'There is a shovel here.'
+            'There is a slip of paper here.'
+            'There is an emerald bracelet here.'
+             towel
+	    %
+	  Here we see that there are some objects in the treasure room already
+	  (because I put them there earlier in the game). Four of these objects
+	  are treasures. We also see above that there is a subdirectory "n".
+	  This is because there are several rooms in the endgame.
+ - pokey: This is the directory for the computer that is inside the game (whose
+          name, we are told by the computer-room message, is "pokey").
+
+Let's look at this pokey directory more:
+% ls ~/HW4/pokey/
+root
+% ls ~/HW4/pokey/root/
+rooms  usr
+%
+
+In the above, we see that "~/HW4/pokey/root/" represents pokey's root directory
+(because, as we'll recall from the READMEprimer file, pokey has two directories
+under the root directory: "/rooms" and "/usr").
+
+% cd ~/HW4/pokey/root/
+% ls
+rooms  usr
+% pwd
+/home/Me/HW4/pokey/root/
+% cd usr/toukmond
+% pwd
+/home/Me/HW4/pokey/root/usr/toukmond
+%
+
+In the above, we see that the correspondence of ~/HW4/pokey/root/ to pokey's /
+is not perfect. Using pwd gives us the full path, whereas we only want the end
+part that comes after "root".
+
+
+Let's look at the contents of the toukmond directory:
+% ls -la ~/HW4/pokey/root/usr/toukmond/
+total 112
+drwxr-xr-x+ 1 Me None     0 Jan  1  1970 .
+drwxr-xr-x+ 1 Me None     0 Jan  1  1970 ..
+-rwxr-xr-x  1 Me None 10423 Jan  1  1970 cat
+-rwxr-xr-x  1 Me None 10423 Jan  1  1970 cd
+-rwxr-xr-x  1 Me None 10423 Jan  1  1970 echo
+-rwxr-xr-x  1 Me None 10423 Jan  1  1970 exit
+-rwxr-xr-x  1 Me None 10423 Jan  1  1970 ftp
+-rwxr-xr-x  1 Me None 10423 Jan  1  1970 ls
+-rwxr-xr-x  1 Me None 10423 Jan  1  1970 pwd
+-rwxr-xr-x  1 Me None 10423 Jan  1  1970 rlogin
+-rwxr-xr-x  1 Me None 10423 Jan  1  1970 uncompress
+%
+
+In the above, we see that the commands are already in this directory, with the
+right dates. (We also notice that there is no "ssh" file, but this file is gone
+in the real game, too (as discussed in the READMEprimer file).)
+
+We notice that there are also differences to the game's real output. First the
+object in the inventory aren't displayed. This is because you have to add them,
+since they can change as you drop and pick up items. Second, the owner and the
+group are wrong. Your owner will be your account name, not "Me", but your group
+will be "None" like it shows above (let me know if yours says something else).
+
+
+Let's look around some more:
+% ls ~/HW4/pokey/root/
+rooms  usr
+% cd  ~/HW4/pokey/root/rooms
+% ls
+%
+
+In the above, we see that there are no subdirectories in the rooms directory.
+This is because you have to add them. The reason you have to do this is because
+they can change: rooms don't appear in this directory until they have been
+visited. As this part of the game starts, we haven't visited some possible
+rooms: street/s, street/e, street/e/s, the things in the subway, and the
+mailroom. (Yes, the READMEprimer file showed us going into the mailroom. But,
+if you restore the hw4game file in actual dunnet, you will see that I actually
+didn't go into that room to get to this point in the game, because I knew from
+earlier runs that toukmond was the username.) The way that we can know that we
+haven't visited a room is that the .description?2 still exists.
+
+
+********************
+* Game walkthrough *
+********************
+% source ./pa4
+Fourth-Vermont intersection
+You are at the intersection of Fourth Street and Vermont Ave.
+>
+
+
+So far, it starts out just like the last homework. But let's try a new command:
+
+>score
+You have scored 40 out of a possible 90 points.
+>
+
+
+Why have we scored 40 points? It is because we are implementing the end portion
+of the game. Four treasures will have been put in the treasure room before we
+reach this point in the game (the gold bar, the diamond, the platinum bar, and
+the bracelet.) We can see them if we type:
+
+> ls ../endgame/*\ *
+../endgame/There is a beach towel on the ground here.
+../endgame/There is a gold bar here.
+../endgame/There is a life preserver here.
+../endgame/There is a platinum bar here.
+../endgame/There is a shimmering diamond here.
+../endgame/There is a shiny brass key here.
+../endgame/There is a shovel here.
+../endgame/There is a slip of paper here.
+../endgame/There is an emerald bracelet here.
+>
+
+
+If we were to run emacs -batch -l dunnet and then restore ~/HW4/hw4game, we
+would have exactly these same items in the treasure room, and we would find
+that we do, indeed, have a score of 40 at the start.
+
+
+Moving on, let's see what items I have:
+
+>i
+You currently have:
+A bone
+A lamp
+A license
+A ruby
+A silver bar
+A valuable egg
+Some glycerine
+Some nitric acid
+A glass jar
+>
+
+
+OK, so I have the jar and acid and glycerine from last time. I also have some
+treasures (the ruby, the silver bar, and the egg). These treasures don't give
+me points yet, because they are in my inventory instead of the treasure room.
+To get them into the treasure room, we need to put them in the garbage bin
+(which is found in museum/n/n). In this current homework, however, we'll be
+using a different method to sed them, as we'll see later...
+
+
+Moving on, let's try another new command:
+>type
+$
+
+
+What we are seeing here is confusing at first. If you typed this in the real
+game, you would see: "There is nothing here on which you could type." This is
+because you need to go to the computer room in the house if you want to type
+on the keyboard. In our current game, however, we won't implement this check
+to see if we are in the computer room. This is a good feature of our game,
+because I don't feel like walking back to the computer room just to test the
+type command.
+
+Another confusing aspect of the type command is that it only changed the prompt
+symbol to "$". (In actual fact, some words do display, earlier in the game,
+when we first log in to the computer. But, by this point, we're already logged
+in to the computer. So the only display is "$".)
+
+
+Well, now that we're logged in, let's see how it works:
+
+$ pwd
+/usr/toukmond
+$ ls
+total 122
+drwxr-xr-x  3 toukmond restricted    512 Jan  1  1970 .
+drwxr-xr-x  3 toukmond restricted   2048 Jan  1  1970 ..
+-rwxr-xr-x  1 toukmond restricted      0 Jan  1  1970 acid.o
+-rwxr-xr-x  1 toukmond restricted      0 Jan  1  1970 bone.o
+-rwxr-xr-x  1 toukmond restricted      0 Jan  1  1970 egg.o
+-rwxr-xr-x  1 toukmond restricted      0 Jan  1  1970 glycerine.o
+-rwxr-xr-x  1 toukmond restricted      0 Jan  1  1970 inv.o
+-rwxr-xr-x  1 toukmond restricted      0 Jan  1  1970 jar.o
+-rwxr-xr-x  1 toukmond restricted      0 Jan  1  1970 lamp.o
+-rwxr-xr-x  1 toukmond restricted      0 Jan  1  1970 license.o
+-rwxr-xr-x  1 toukmond restricted      0 Jan  1  1970 ruby.o
+-rwxr-xr-x  1 toukmond restricted      0 Jan  1  1970 silver.o
+-rwxr-xr-x  1 toukmond restricted  10423 Jan  1  1970 cat
+-rwxr-xr-x  1 toukmond restricted  10423 Jan  1  1970 cd
+-rwxr-xr-x  1 toukmond restricted  10423 Jan  1  1970 echo
+-rwxr-xr-x  1 toukmond restricted  10423 Jan  1  1970 exit
+-rwxr-xr-x  1 toukmond restricted  10423 Jan  1  1970 ftp
+-rwxr-xr-x  1 toukmond restricted  10423 Jan  1  1970 ls
+-rwxr-xr-x  1 toukmond restricted  10423 Jan  1  1970 pwd
+-rwxr-xr-x  1 toukmond restricted  10423 Jan  1  1970 rlogin
+-rwxr-xr-x  1 toukmond restricted  10423 Jan  1  1970 uncompress
+$
+
+
+From the above we see a few slight differences with the original game:
+- There are slight spacing differences between the columns, compared to the
+  original games' output.
+- In the real game, the ".o" files would be at the bottom, not the command
+  files. (The reason for this is that I couldn't find a different way to get
+  all of the .o files grouped together, rather than while keeping "." and ".."
+  at the top.)
+- The ordering within groups is not the same. For example, the command files
+  above are in alphabetical order, but they are not in that order in the game.
+  This is not an important difference, so we will ignore it: as long as "." and
+  ".." are at the top, the ".o" files are next, and the command files are at
+  the bottom, then the orders within the three groups don't matter.
+
+
+The following tests show that our implementation works just like the original
+game in these cases:
+$ ls *.o
+No such directory.
+$ cat cat
+Ascii files only.
+$ cat lamp.o
+Ascii files only.
+$ cat hgfds
+File not found.
+$ cat ./hgfds
+cat: only files in current directory allowed.
+$ cat ./cat
+cat: only files in current directory allowed.
+$ ftp
+ftp: hostname required on command line.
+$ ftp xxyzz
+ftp: Unknown host.
+$ ftp endgame
+ftp: Unknown host.
+$ ftp gamma
+ftp: host not responding.
+$ cd
+Usage: cd <path>
+$ echo
+echo
+$ echo hello hello
+hello hello
+$ echo "How are you"
+"How are you"
+$ rlogin
+Usage: rlogin <hostname>
+$ rlogin xxyzz
+rlogin: Unknown host.
+$ rlogin gamma
+Host not responding.
+$ rlogin endgame
+You have scored 40 out of a possible 90 points.
+You have not achieved enough points to connect to endgame.
+$
+$ ls ..
+total 4
+drwxr-xr-x  3 root     staff     512 Jan  1  1970 .
+drwxr-xr-x  3 root     staff    2048 Jan  1  1970 ..
+drwxr-xr-x  1 toukmond restricted  0 Jan  1  1970 toukmond
+$ ls ../..
+total 4
+drwxr-xr-x  3 root     staff     512 Jan  1  1970 .
+drwxr-xr-x  3 root     staff    2048 Jan  1  1970 ..
+drwxr-xr-x  1 root     staff       0 Jan  1  1970 rooms
+drwxr-xr-x  1 root     staff       0 Jan  1  1970 usr
+ls /../../.././././//.//../../usr
+total 4
+drwxr-xr-x  3 root     staff     512 Jan  1  1970 .
+drwxr-xr-x  3 root     staff    2048 Jan  1  1970 ..
+drwxr-xr-x  1 toukmond restricted  0 Jan  1  1970 toukmond
+$
+
+The last one above shows something that the READMEprimer had discussed: we have
+chosen to obtain the right behavior from "ls /../../.././././//.//../../usr",
+rather than the wrong behavior of the original game. (Actually, this time I
+tried this one and it worked on my real game too! But I know that I've seen
+them sometimes not work.)
+
+
+Moving on:
+$ ls /rooms
+total 4
+drwxr-xr-x  3 root     staff     512 Jan  1  1970 .
+drwxr-xr-x  3 root     staff    2048 Jan  1  1970 ..
+drwxr-xr-x  1 root     staff       0 Jan  1  1970 classroom
+drwxr-xr-x  1 root     staff       0 Jan  1  1970 computer-room
+drwxr-xr-x  1 root     staff       0 Jan  1  1970 fourth-vermont-intersection
+drwxr-xr-x  1 root     staff       0 Jan  1  1970 geological-display
+drwxr-xr-x  1 root     staff       0 Jan  1  1970 main-maple-intersection
+drwxr-xr-x  1 root     staff       0 Jan  1  1970 maintenance-room
+drwxr-xr-x  1 root     staff       0 Jan  1  1970 marine-life-area
+drwxr-xr-x  1 root     staff       0 Jan  1  1970 meadow
+drwxr-xr-x  1 root     staff       0 Jan  1  1970 museum-entrance
+drwxr-xr-x  1 root     staff       0 Jan  1  1970 museum-lobby
+drwxr-xr-x  1 root     staff       0 Jan  1  1970 old-building-hallway
+drwxr-xr-x  1 root     staff       0 Jan  1  1970 post-office
+$
+
+From the above, we see that the visited rooms are the only rooms which we see.
+This is the same as the game. But I've made a change. Rooms that are not in
+this part of the game are not included.
+
+ls /rooms/post-office
+total 5
+drwxr-xr-x  3 root     staff       512 Jan  1  1970 .
+drwxr-xr-x  3 root     staff      2048 Jan  1  1970 ..
+-rwxr-xr-x  1 root     staff       192 Jan  1  1970 description
+$ cat /rooms/post-office/description
+cat: only files in current directory allowed.
+$ cd /rooms/post-office
+$ cat description
+You are near the remains of a post office.  There is a mail drop on the
+face of the building, but you cannot see where it leads.  A path leads
+back to the east, and a road leads to the north.
+$ exit
+
+You step back from the console.
+
+>l
+Fourth-Vermont intersection
+You are at the intersection of Fourth Street and Vermont Ave.
+>
+
+
+Remember, we never went to the computer room. That is why we are still in the
+place we were in when we typed "type". Let's do some stuff:
+
+>e
+Fifth-Vermont intersection
+You are at the intersection of Fifth Street and the east end of Vermont Ave.
+>drop lamp
+Dropped.
+>type
+$ cd /rooms
+$ ls
+total 11
+drwxr-xr-x  3 root     staff        512 Jan  1  1970 .
+drwxr-xr-x  3 root     staff       2048 Jan  1  1970 ..
+drwxr-xr-x  1 root     staff          0 Jan  1  1970 classroom
+drwxr-xr-x  1 root     staff          0 Jan  1  1970 computer-room
+drwxr-xr-x  1 root     staff          0 Jan  1  1970 fifth-vermont-intersection
+drwxr-xr-x  1 root     staff          0 Jan  1  1970 fourth-vermont-intersection
+drwxr-xr-x  1 root     staff          0 Jan  1  1970 geological-display
+drwxr-xr-x  1 root     staff          0 Jan  1  1970 main-maple-intersection
+drwxr-xr-x  1 root     staff          0 Jan  1  1970 maintenance-room
+drwxr-xr-x  1 root     staff          0 Jan  1  1970 marine-life-area
+drwxr-xr-x  1 root     staff          0 Jan  1  1970 meadow
+drwxr-xr-x  1 root     staff          0 Jan  1  1970 museum-entrance
+drwxr-xr-x  1 root     staff          0 Jan  1  1970 museum-lobby
+drwxr-xr-x  1 root     staff          0 Jan  1  1970 old-building-hallway
+drwxr-xr-x  1 root     staff          0 Jan  1  1970 post-office
+$
+
+
+In the above, we see that the fifth-vermont-intersection directory now exists.
+Let's go there:
+
+$ cd fifth-vermont-intersection
+$ ls
+total 6
+drwxr-xr-x  3 root     staff      512 Jan  1  1970 .
+drwxr-xr-x  3 root     staff     2048 Jan  1  1970 ..
+-rwxr-xr-x  1 toukmond restricted   0 Jan  1  1970 lamp.o
+-rwxr-xr-x  1 root     staff       77 Jan  1  1970 description
+$ cat description
+You are at the intersection of Fifth Street and the east end of Vermont Ave.
+$ cat lamp.o
+Ascii files only.
+$ exit
+
+You step back from the console.
+
+> cat ~/G/rooms/street/e/.done2
+You are at the intersection of Fifth Street and the east end of Vermont Ave.
+> 
+
+
+From the above we see that lamp we've just dropped is here (and, of course, it
+is no longer in /usr/toukmond). We also see that the description file is the
+same as what is in our .done2 file.
+
+
+Let's now see how we log on to the endgame. First of all, we know that we are
+not ready to do so:
+
+> type
+$ rlogin endgame
+You have scored 40 out of a possible 90 points.
+You have not achieved enough points to connect to endgame.
+$ exit
+
+You step back from the console.
+
+>
+
+
+OK. Now the right way to get to 90 points is to 1: get the coins, 2: get the
+amethyst, 3: go to the garbage can at ~/G/rooms/museum/n/n, and 4: type "put 
+coins in garbage", "put amethyst in garbage", "put egg in garbage", "put silver
+in garbage", and "put ruby in garbage". Well that's a lot of work. Let's just
+cheat instead:
+
+>score
+You have scored 40 out of a possible 90 points.
+>cheat
+>l
+Fifth-Oaktree intersection
+You are at the intersection of Fifth Street and the east end of Oaktree Ave.
+There is a cliff off to the east.
+>score
+You have scored 90 out of a possible 90 points.
+>
+
+Don't cheat. The penalties for cheating are high in this course (and we usually
+catch students each year.)
+
+But do type "cheat". What does this command do? It moves the egg, silver, and
+ruby files from ~/G/inv into the ~/G/rooms/endgame treasure room. It also moves
+the amethyst and coins from their current places into the treasure room. The
+score command therefore see all 9 treasures in that room. Note: you must not
+move any of these files yourself before typing cheat.
+
+
+See that the treasures are gone from my inventory:
+>i
+You currently have:
+A bone
+A license
+Some glycerine
+Some nitric acid
+A glass jar
+>
+
+OK. So the purpose of the cheat was to simplify or testing of the endgame:
+
+>type
+$ rlogin endgame
+You have scored 90 out of a possible 90 points.
+
+Welcome to the endgame.  You are a truly noble adventurer.
+
+You step back from the console.
+
+Treasure room
+You are in the treasure room. A door leads out to the north.
+There are some valuable coins here.
+There is a beach towel on the ground here.
+There is a gold bar here.
+There is a jewel-encrusted egg here.
+There is a life preserver here.
+There is a platinum bar here.
+There is a shimmering diamond here.
+There is a shiny brass key here.
+There is a shovel here.
+There is a silver bar here.
+There is a slip of paper here.
+There is a valuable amethyst here.
+There is a valuable ruby here.
+There is an emerald bracelet here.
+>
+
+
+From the above, we see that logging in to endgame has transported me there.
+All of my treasures and other items are here. There is also a door to the
+north. Let's move on:
+
+> score
+You have scored 90 endgame points out of a possible 110.
+>
+
+From the above, we see that there are 2 new treasures. Let's go find them:
+
+>n
+Endgame N/S hallway
+You are in a north/south hallway.
+>n
+Question room 1
+You are in a north/south hallway.
+You have reached a question room.  You must answer a question correctly in
+order to get by.  Use the ‘answer’ command to answer the question.
+>n
+Question room 2
+You are in a north/south hallway.
+>
+
+
+From the above, we see that I haven't actually implemented the riddles.
+Moving on:
+
+>n
+Question room 3
+You are in a north/south hallway.
+>n
+Treasure room
+You are in the endgame treasure room. A door leads out to the north, and
+a hallway leads to the south.
+There is a 100 dollar bill here.
+>get bill
+Taken.
+>n
+Winner's room
+You are in the winner's room.  A door leads back to the south.
+The Mona Lisa is here.
+>get mona
+Taken.
+>s
+Treasure room
+>s
+Question room 3
+>s
+Question room 2
+>s
+Question room 1
+>s
+Endgame N/S hallway
+>s
+Treasure room
+There are some valuable coins here.
+There is a beach towel on the ground here.
+There is a gold bar here.
+There is a jewel-encrusted egg here.
+There is a life preserver here.
+There is a platinum bar here.
+There is a shimmering diamond here.
+There is a shiny brass key here.
+There is a shovel here.
+There is a silver bar here.
+There is a slip of paper here.
+There is a valuable amethyst here.
+There is a valuable ruby here.
+There is an emerald bracelet here.
+>score
+You have scored 90 endgame points out of a possible 110.
+>
+
+
+So now we are back in the original treasure room, but with two new treasures.
+(You may have noticed that there was another treasure room, but we're not
+implementing that part of the game. In fact, when the line above says that we
+have 90 out 110 points, that is not the message of the original game -- we'd
+have to move the treasures to the endgame treasure room to count the points.)
+
+Moving on:
+>score
+You have scored 90 endgame points out of a possible 110.
+>drop bill
+Dropped.
+>score
+You have scored 100 endgame points out of a possible 110.
+>x mona
+I see nothing special about that.
+>score
+You have scored 110 endgame points out of a possible 110.
+>
+
+Poor Mona Lisa. Not special and only worth as much as a hundred dollar bill.
+I suspect a forgery.
+
+
+Well, that is the walkthrough of the game. Now, how to implement it?
+
+
+******************
+* Implementation *
+******************
+
+You will create new aliases for "type", "cheat", and "score". You will also
+create a csh script called "type". But the details of these will be provided
+in a later homework posting...
+

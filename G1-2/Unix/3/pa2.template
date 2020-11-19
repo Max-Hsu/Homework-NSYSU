@@ -1,0 +1,302 @@
+cd
+ln -s /dev/null X &> /dev/null
+rm -r HW2 &>~/X
+tar -xvf HW2.tar >~/X
+ln -s HW2 G &>~/X
+ln -s G/obj O &>~/X
+ln -s G/inv I &>~/X
+cd HW2/street
+PS1=">"
+
+# As you can see in the above, I've created four links in your home directory.
+# These will make accessing the corresponding four directories easier. For
+# example, the third line above sends its output to '~/X", but that just means
+# it throws away the output. There are many places, in the aliases below, where
+# you will similarly want to throw away the output, and having a 1-letter file
+# in your home directory allows you to use the fewest keystrokes. 
+# In lines 5-7, we make three more aliases "~/G", "~/O", and "~/I". These are
+# used less, but they do simplify some of the aliases below.
+# (You may notice that we are currently in the home directory anyway, because 
+# of line 1. So we really only need to say "&>X". But I used "&>~/X" instead, 
+# because I wanted to show you how it is that you will do it -- in the aliases
+# below, you won't be in the home directory, so you will need to include the 
+# "~/" before the "X".)
+
+
+alias l='cd - >~/X;cat .*;ls *" "* 2> ~/X | fgrep " ";cd - > ~/X '
+
+# As you can see above, the "l" command has three blanks for you to fill in:
+#  __1__: This is a wildcard pattern that matches to all the description files.
+#         (I.e.: .description*1,.done*2,.lights (".object" no longer exists).)
+#  __2__: This is a wildcard pattern that matches to all files that contain a
+#         space character. Note: You should not create files that have spaces
+#         in their names, because it gets confusing. I have, however, created
+#         exactly such file names, because the display messages for the objects
+#         in the game have spaces in them. (And that is why the "ls __2__"
+#         command will display those messages.)
+#  __3__: This is a UNIX command that we learned in lecture 2, which we can use
+#         (if provided with the proper argument) to only display lines which
+#         have at least one space in them. The point of this is to remove empty
+#         lines, because every non-empty line has a space. (Empty lines only 
+#         happens when a non-empty jar is on the ground -- see the README file
+#         for a discussion of this.)
+
+
+alias see='(mv ~/G/tmpD ~/G/tmpC>~/X;pwd>~/G/tmpD;\
+           diff -q ~/G/tmp[CD]>~/X&&echo You cannot go that way.||\
+	   (cat .descr*[0-9] &&mv .descr*2 .done2;ls ls *" "*|fgrep " "))2>~/X;cd ~/G/obs'
+
+# Next, as you can see above, my "see" command accesses the "G" directory link
+# that we made. Also note that the command ends by changing the directory to
+# "~/G/obs". This directory contains the names of all of the objects in the 
+# game. We have to end in this directory so that later aliases that use objects
+# will work correctly (see the README file for details about this).
+#
+# Note that there are three blanks for you to fill in:
+#  __1__: This is a wildcard pattern that matches to all the description files
+#         except for .done*
+#  __2__: Identical to the __2__ from "l"
+#  __3__: Identical to the __3__ from "l"
+
+
+alias GB='basename `pwd -P`>~/G/tmpB&&diff -q ~/G/tmp[AB]&>~/X&&cd `pwd -P`/..'
+alias board='cd ->~/X;ls train&>~/X&&cd ~/G/museum;see;(cd -;rm .desc*A0)&>~/X'
+alias ne='cd - >~/X;cd ne 2> ~/X; see'
+alias se='cd - >~/X;cd se 2> ~/X; see'
+alias nw='cd - >~/X;./nw 2> ~/X|| see'
+alias sw='cd - >~/X;echo ne>~/G/tmpA &&GB && see'
+alias u=' cd - >~/X;echo d >~/G/tmpA &&GB ||cd u 2> ~/X; see'
+alias d=' cd - >~/X;echo u >~/G/tmpA &&GB ||cd d 2> ~/X; see'
+alias w=' cd - >~/X;echo e >~/G/tmpA &&GB ||cd w 2> ~/X; see'
+alias s=' cd - >~/X;echo n >~/G/tmpA &&GB ||cd s 2> ~/X; see'
+alias e=' cd - >~/X;echo w >~/G/tmpA &&GB ||cd e 2> ~/X; w/e 2>~/X&&cd w||see'
+alias n=' cd - >~/X;echo s >~/G/tmpA &&GB ||cd n 2> ~/X; s/n 2>~/X&&cd s||see'
+
+# The preceding 12 aliases are mostly the same as for the previous programming
+# assignment. That assignment was given after only 2 lectures. Now that we've
+# learned more about UNIX, we could shrink some of them. In particular, we
+# could avoid some of the temp files by using pipes (|). But the aliases from
+# the past homework work already, so I decided not to change them.
+# (Actually, I did change them slightly from the old homework. The change is
+# the "cd -" at the beginning of each alias. These cd's are needed because the
+# "see" command has moved us to the ~/G/obs directory. (See the above paragraph
+# for a discussion of the fact that "see" does change this directory. See also
+# the README file for an explanation of why it had to do so.)
+# Note that the above "cd -" commands work because the previous directory that
+# we were in before changing to "~/G/obs" was the directory for the current 
+# room.
+
+
+alias i='(echo "You currently have: " ; cd ~/I &> ~/X ;ls [^Tj]* | cat -n |\
+		tr "\n\t0-9" "** " > ~/G/I ; cd ~/G/invNames ; ls `cat ~/G/I` ;\
+		cat ~/I/jar &> ~/X && ls *jar* | cat | fgrep " ")'
+
+# This alias first prints "You currently have:". It then also lists everything
+# in your inventory. Note that your inventory is located at "~/I". When you
+# start the game, your inventory contains only a lamp, but you can pick up
+# other objects. Note also that the real game does print "You currently have",
+# even if your inventory is empty. So we do the same in our version.)
+#
+# There is a complication however. If you look in "~/I", you will see a file
+# named "lamp", but if you play the game and type "i" you will see it listed
+# as "A lamp". So how can we get this change, using only what we learned about
+# UNIX in the first three weeks? Well, the answer is a little tricky:
+#  Step 1. Use "(" to create a subshell. The reason for this is that we will be
+#          changing the directory inside of the "i" alias, but we don't want to
+#          forget where our current directory is. By using "(", our changes of
+#          directory will be undone once this "i" command finishes.
+#  Step 2. Print "You currently have:"
+#  Step 3. Change directory to "~/I". (Obviously, this sets us up for looking
+#          at the inventory.)
+#  Step 4. List all files that do not begin with a "T" or a "j". (The only file
+#          that begins with "j" is "jar" and the only file beginning with "T"
+#          is a directory that only gets made when putting things in the jar,
+#          as discussed below for the "TryToPutInJar" alias.)
+#  Step 5. This receives its input piped in from step 4. It then uses a "cat"
+#          command with a flag to include line numbers. (We don't actually want
+#          to use these line numbers. What we actually want is to put something
+#          in the front of each file name from step 4, and these numbers serve
+#          our purpose because they are placed in the front of each line.
+#  Step 6. This receives its input piped in from step 5. It then uses a command
+#          from lecture 3 to replace (another word for replace is "tr"anslate)
+#          tab and newline characters with "*" and to replace numeric digits
+#          with " ".
+#  Step 7. This redirects the output from step 6 into a file named "~/G/I".
+#          What is the effect of steps 4-7? Well, suppose you had the following
+#          objects in your inventory:
+#            % ls ~/I
+#            acid  glycerine  jar  lamp
+#          After running steps 4-7, you'll have made the following ~/G/I file:
+#            % cat ~/I
+#                  *acid*      *glycerine*      *lamp*
+#          Notice that the "~/G/I" file doesn't contain "*jar*" because it was
+#          excluded on step 4. Notice also that the other three files now have
+#          a "*" before and after their names. (One of these "*" came from the
+#          tab that step 5 had inserted, and the other "*" came from the new-
+#          lines that had come after each entry.
+#          Considering the contents of the "~/G/I" file, you might get a clue
+#          of how we are going to use it in steps 8-9...
+#  Step 8. This changes the directory to ~/G/invNames. If you look in this
+#          directory, which I have provided to you, the file names are the
+#          descriptions for the objects as the game would display them when
+#          seen in your inventory. Thus the file for the lamp is named 'A lamp'
+#          with the space being part of the name. Thus also objects that cannot
+#          be picked up, for example the gate or the garbage, don't have any
+#          files in this ~/G/invNames directory.
+#  Step 9. This lists all of the files within the current directory (ie,
+#          ~/G/invNames) which match to the wildcard patterns found in "~/G/I".
+#          To get this to work, you will need to use the `` operator.
+#  Step 10.Now that ordinary objects have been displayed, it is time to deal
+#          with the jar. This step 10 tests to see if the jar is in the "~/I"
+#          directory (but it doesn't change the directory and it doesn't create
+#          any visible output).
+#  Step 11.If step 10 successfully located the jar, then this step 11 will
+#          display all files containing the word "jar" within the current
+#          directory (ie, within ~/G/invNames). There will always be one match
+#          ('A glass jar'). Sometimes there will be a 2nd match: a subdirectory
+#          named 'The jar contains'. This subdirectory is not present in the
+#          original ~/G/invNames directory that you create when you untar the
+#          provided HW2.tar file; it is only be present if the "TryToPutInJar"
+#          alias creates it. If created, it will contain files for the objects
+#          that have been put in the jar. See the provided README file for a
+#          discussion of the rationale for this subdirectory.
+#  Step 12.Step 11's output needs to be piped into "cat", in order to make the
+#          entries within the 'The jar contains' subdirectory (if present) to
+#          display on separate lines (which is how it works in the game).
+#  Step 13.Step 12's output needs to be piped into a command to remove blank
+#          lines. This is because "ls" puts a blank line before listing the
+#          subdirectory, but the game doesn't have such a blank line.
+#          This step 13 is not new; it is actually the same as __3__ from the
+#          implementation of "l", above.
+#          The astute reader may wonder: "if step 13 was needed for "l", then
+#          why wasn't step 12 also needed for "l"? The answer is that step 12
+#          handles multiple jar contents, and that just can't happen for "l".
+#          (Why not? because I only let you put things in the jar when you are
+#          holding it (see the README file discussion on game limitations), and
+#          so a non-empty jar can only lay on the ground if you drop it after
+#          putting something into it. But the only things you can put into it
+#          are the two ingredients you use to make nitroglycerine. If you drop
+#          it with both of these ingredients, it will explode. Therefore the
+#          jar will never be on the ground with two elements, but it can be in
+#          your inventory with both. So step 12 is needed for "i" but not for
+#          "l".)
+
+
+
+alias Arg2File='cat > ../T && cd - >~/X ; rm -f ~/O/* &> ~/X'
+
+# The above alias is simple to write, but it is hard to understand its purpose.
+# As described in the README file, I used a trick to allow an alias to capture
+# a command line argument. It is a good opportunity to get experience on how
+# to understand UNIX's method of expanding arguments and redirecting inputs.
+# Arg2File's purpose is to put the argument into a file, named "T" in the "G"
+# directory. Notice that it also changes the directory -- but only after UNIX
+# has expanded the argument (for which we needed to be in "~/G/obs").
+#
+# But consider: what are the contents of "T".  Well, let's see:
+#   % source ./pa2
+#   Fourth-Vermont intersection
+#   There is a glass jar here.
+#   There is a packet of glycerine here.
+#   There is a packet of nitric acid here.
+#   >(Arg2File) < jar
+#   >cat ~/G/T
+#   jar
+#   >(Arg2File) < acid
+#   >cat ~/G/T
+#   acid
+#   >(Arg2File) < nitric
+#   >cat ~/G/T
+#   acid
+#   >
+# See? The file contains the name of the object. But passing "nitric" created
+# acid. Why is that? Let's see:
+#   >pwd
+#   /home/Me/G/obs
+#   >ls
+#   acid        bracelet  disposal  glycerine  mail       shovel    train
+#   amethyst    cabinet   drop      gold       Mona       silver    vax
+#   bill        cliff     egg       jar        nitric     skeleton
+#   bin         coins     emerald   key        paper      switch
+#   bins        computer  fish      lamp       platinum   tank
+#   blackboard  diamond   garbage   license    preserver  tanks
+#   bone        dinosaur  gate      life       ruby       towel
+#   >cat nitric
+#   acid
+#   >cat acid
+#   acid
+#   >
+# See? We are in the "obs" directory, which is why the argument could be passed
+# in without producing an error about not being found. But "T" does not contain
+# the argument you typed; it contains the contents of the file with that name.
+# And this mechanism was used to let "nitric" be a synonym for "acid". (There
+# other synonyms, and their corresponding files have been similarly handled.)
+
+
+alias InRoom='Arg2File; cp `cat ~/G/T` ~/O &> ~/X'
+
+# You have to fill in the blank, __1__, which is an argument to cp.
+# The purpose of this alias is to copy the specified object from the room into
+# a file named "~/O". But what does that mean? Well, notice that:
+#  1. The "Arg2File" alias is executed by the "InRoom" alias, and that Arg2File
+#     alias changes the directory to the room. So we are "in the room" when the
+#     "cp" executes.
+#  2. The ~/G/T file contains the name of the object.
+#  3. The objects in a room have corresponding files in its directory. For ex:
+#       % ls ~/G/street/e/s
+#       cliff   coins  'There are some valuable coins here.'   w
+#       % ~/G/street/e/s/coins
+#       They are old coins from the 19th century.
+#       % ~/G/street/e/s/cliff
+#       It is a HIGH cliff.
+#       %
+#     See? The "cliff" and "coins" files are in the directory. (There is also
+#     another file about the coins: 'There are some valuable coins here.', but
+#     that file has no relevance to the "InRoom" alias.)
+#  4. If you copy the file from the room into the "~/O" directory, then you
+#     will know the object's name and its description. 
+#  5. If you tried to copy an object that's not in the room, then it won't copy
+#     and the ~/O directory will be empty.
+#  6. The exit status of InRoom will be success if the object actual is in the
+#     room (hence the name for the alias).
+#
+# So that's what the "InRoom" alias does. Your job is to fill in __1__ with
+# the name of the file to copy. That name is indicated by the contents of
+# the "~/T" file.
+
+
+
+alias FromInv='Arg2File;mv ~/I/`cat ~/G/T` ~/O &>~/X'
+
+# Fill in __1__ with the same answer you used for __1__ in "InRoom". In
+# function, there are two differences between these aliases:
+#   1. "FromInv" looks in the inventory, not the current directory.
+#   2. "FromInv" uses "mv" not "cp", so the object removes from the inventory.
+
+
+
+alias InArea='Arg2File; cp `cat ~/G/T` ~/I/`cat ~/G/T` ~/O &>~/X'
+
+# Fill in the same __1__ here as you did for InRoom and FromInv. This one has
+# the difference that it copies from either location.
+
+
+
+alias x='(InArea && cat ~/O || echo "I do not see that here. ") < '
+###############################################################################################################
+# Step 1: Use (...). This allows the directory to be changed without losing the
+#         current location. And it allows the redirecting of the command line
+#         argument to work.
+# Step 2: Use InArea.
+# Step 3: Display the contents of "~/O".
+# Step 4: If there are no contents, then display "I do not see that here."
+# Step 5: Use "<" to send in the command line argument.
+
+
+#Final line:
+see
+# The above command is not an alias. It just begins the game display.
+
+# In a later posting, I will give some guidance for the remaining aliases,
+# which are for homework 3.
+

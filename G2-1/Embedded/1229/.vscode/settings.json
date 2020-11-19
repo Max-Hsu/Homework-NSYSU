@@ -1,0 +1,6 @@
+{
+    "files.associations": {
+        "lpc21xx.h": "c",
+        "*.ini": "cpp"
+    }
+}

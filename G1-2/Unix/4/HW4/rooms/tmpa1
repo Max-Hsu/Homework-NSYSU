@@ -1,0 +1,43 @@
+cat ./endgame/.descriptionZ1|tr A-Z/  a-z-
+echo diamond.o
+echo gold.o
+echo key.o
+echo paper.o
+echo platinum.o
+echo preserver.o
+echo scoremsg.o
+echo shovel.o
+echo towel.o
+cat ./endgame/n/.descriptionZ1|tr A-Z/  a-z-
+cat ./endgame/n/n/.descriptionZ1|tr A-Z/  a-z-
+cat ./endgame/n/n/n/.descriptionZ1|tr A-Z/  a-z-
+cat ./endgame/n/n/n/n/.descriptionZ1|tr A-Z/  a-z-
+cat ./endgame/n/n/n/n/n/.descriptionZ1|tr A-Z/  a-z-
+echo bill.o
+cat ./endgame/n/n/n/n/n/n/.descriptionZ1|tr A-Z/  a-z-
+echo Mona.o
+cat ./museum/.descriptionA1|tr A-Z/  a-z-
+cat ./museum/n/.descriptionB1|tr A-Z/  a-z-
+cat ./museum/n/n/.descriptionC1|tr A-Z/  a-z-
+cat ./museum/n/n/d/.descriptionD1|tr A-Z/  a-z-
+echo amethyst.o
+cat ./museum/n/n/d/ne/.descriptionE1|tr A-Z/  a-z-
+cat ./museum/n/n/u/.descriptionF1|tr A-Z/  a-z-
+cat ./museum/n/n/u/w/.descriptionG1|tr A-Z/  a-z-
+cat ./museum/n/n/u/w/s/.descriptionH1|tr A-Z/  a-z-
+cat ./museum/n/n/u/w/w/.descriptionI1|tr A-Z/  a-z-
+cat ./museum/n/n/u/w/w/s/.descriptionJ1|tr A-Z/  a-z-
+cat ./museum/n/n/u/w/w/s/w/.descriptionK1|tr A-Z/  a-z-
+cat ./museum/n/n/u/w/w/s/w/s/.descriptionL1|tr A-Z/  a-z-
+cat ./museum/n/n/u/w/w/s/w/s/se/.descriptionM1|tr A-Z/  a-z-
+cat ./museum/n/n/u/w/w/s/w/s/se/s/.descriptionN1|tr A-Z/  a-z-
+cat ./museum/n/n/u/w/w/s/w/s/se/s/e/.descriptionO1|tr A-Z/  a-z-
+cat ./museum/n/n/u/w/w/s/w/s/se/s/e/s/.descriptionP1|tr A-Z/  a-z-
+cat ./museum/n/n/u/w/w/s/w/s/se/s/e/s/e/.descriptionR1|tr A-Z/  a-z-
+cat ./museum/n/n/u/w/w/s/w/s/se/s/e/s/w/.descriptionQ1|tr A-Z/  a-z-
+cat ./street/.descriptionS1|tr A-Z/  a-z-
+cat ./street/e/.descriptionU1|tr A-Z/  a-z-
+cat ./street/e/s/.descriptionV1|tr A-Z/  a-z-
+echo coins.o
+cat ./street/s/.descriptionT1|tr A-Z/  a-z-
+cat ./vermont/.descriptionX1|tr A-Z/  a-z-

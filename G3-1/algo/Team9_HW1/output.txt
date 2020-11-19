@@ -1,0 +1,2 @@
+points_traveled:	2 3 1 8 7 6 4 5 10 9 11 2 
+travel_distances:	167.80695975880064

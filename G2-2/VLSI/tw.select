@@ -1,0 +1,21 @@
+Team2
+Member 1 許家愷 B073040049
+Member 2 陳柏軒 B053090015
+Member 3 李啟源 B053090019
+
+Design topics :
+
+8-bit unsigned Brent-Kung Adder
+8-bit unsigned Carry Saved Adder
+8-bit unsigned Carry Lookahead Adder
+8-bit SIPO/PISO register
+8-bit universal Shift Register
+8-bit Baugh-Wooley Multiplier
+8-bit Array Multiplier
+8-bit unsigned Carry Select Adder
+8-bit Booth Multiplier
+8-bit unsigned Adder using dynamic logic
+8-bit unsigned Manchester Adder
+8-bit/4-bit unsigned Integer Divider
+1-Kb SRAM
+1-Kb DRAM

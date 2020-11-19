@@ -1,0 +1,690 @@
+                           UNIX System Programing
+                        Programing Assignments #2&3
+
+Due: Monday, April 1  at  11:59 pm.
+     The aliases up to and including "alias x='...'"
+Due: Monday, April 15  at  11:59 pm.
+     The remaining aliases.
+     
+Submission method: You will post to the course website. The TA will post 
+                   instructions on how to do this.
+
+Submission rules: I REQUIRE you to FOLLOW THESE RULES:
+
+                  1. Submit one text file for each of the two assignments.
+
+                  2. The names of these will be "<your student ID>_N.alias"
+                     You will replace "N" with either 2 or 3, depending on the
+		     assignment number. You will replace "<your student ID>"
+                     with your unique ID number (B9.... or M9.... etc.)
+
+                  3. Submissions made after the deadline will be ignored.
+                     (That means, no late submissions on this assignment.)
+                     (By the way, if you don't turn in your assignments, you
+                      will probably Fail The Class. That's a Fact. So start
+                      early and ask questions.)
+                  
+                  This is a large class. Unless each of you follows the above
+                  rules, the TAs' work becomes so hard. So I INSIST that you 
+                  FOLLOW the above rules. If you don't, we won't accept your 
+                  homework.
+
+
+Getting help:   - The Professor has office hours on Monday from 12:30-2:30, 
+                  and on Friday from 10:00-12:00, in room 9037.  He can also 
+                  be reached by email.
+                - The TAs are also available to answer your questions.
+                - Questions about the assignment can be posted to the 
+                  Discussion Forum.
+                - You may also discuss the ideas of the assignment with your
+                  classmates. Such discussion can be quite helpful to your 
+                  learning -- IF you ONLY talk about the general concepts of 
+                  the assignment.
+                  If, however, you discuss specific implementation details
+                  then you are not helping each other to learn; you are just 
+                  doing the work for them.
+                  Therefore beware: you may not share code. You CANNOT show 
+                  another student ANY part of the answer to the assignment.
+
+Cheating policy:  If students are found to be sharing work, they will receive 
+                  a 0 for this course, or worse.
+                  It is cheating to let other students see your work, or EVEN 
+                  to let them look over your shoulder when your code is on the
+                  screen.
+                  We always look for evidence of cheating, so don't do it.
+                  Almost every year we catch students cheating and the
+                  penalties are severe.
+                  (In any event, even if you do not get caught, a student who 
+                  copies the homework will not learn the material, so they 
+                  will fail the exam.)
+
+                  
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+ - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+
+Assignment Summary:
+
+Part 1. The Concept of the Assignment
+"""""""""""""""""""""""""""""""""""""
+In the previous programming assignment, you created some aliases to make UNIX
+act like a text adventure game. These new assignments will add additional 
+aliases. A rule is imposed that you cannot use scripts or variables or shell
+commands such as loops. Instead everything must be based on the first 3 
+lectures (plus lecture 5's information on quoting rules).
+
+
+ *   *   *   *   *   *   *   *   *   *   *   *   *   *   *   *   *   *   *   *
+   *   *   *   *   *   *   *   *   *   *   *   *   *   *   *   *   *   *   *
+ *   *   *   *   *   *   *   *   *   *   *   *   *   *   *   *   *   *   *   *
+Part 2. Provided Files 
+""""""""""""""""""""""
+
+If you are reading this document, then you must have opened the provided tar
+file. Looking in the directory containing this README file, you will see:
+% cd ~/HW2
+% ls
+exam     inv       itemDisplays  jarImpact  obj  README  vermont
+hw2game  invNames  jarHole       museum     obs  street
+%
+
+With the exception of README, hw2game, and the two files jarHole and jarImpact,
+everything else is a directory. 
+README is the file you are now reading.
+hw2game is the saved game. You can run it within the emacs dunnet game by 
+typing "restore ~/HW2/hw2game".
+The two  files named jar* are simple text that you will end up needing to 
+display for implementing the drop alias. Their contents are:
+% cat jarHole 
+The explosion causes a hole to open up in the ground, which you
+*almost* fall through.
+% cat jarImpact 
+As the jar impacts the ground it explodes into many pieces.
+%
+
+Now let's look at each of the provided directories. First, exam:
+% ls exam
+acid	    bone      drop     glycerine  license    ruby      tank
+amethyst    bracelet  egg      gold	  Mona	     shovel    towel
+bill	    cabinet   fish     jar	  paper      silver    train
+bins	    coins     garbage  key	  platinum   skeleton
+blackboard  diamond   gate     lamp	  preserver  switch
+% cat exam/acid
+I see nothing special about that.
+% cat exam/train
+It is a passenger train that is ready to go.
+% 
+
+From the above, we see that these are the descriptions you get when you examine
+objects. We also see that not every name appears. For example, you may remember
+from the prior homework that "bin" and "bins" were both allowed object names. 
+The exam directory, however, only has one entry for each object, regardless of
+how many synonyms there are for that object.
+
+Let's look at another directory:
+% ls
+exam     inv       itemDisplays  jarImpact  obj  README  vermont
+hw2game  invNames  jarHole       museum     obs  street
+% ls inv
+bone  lamp  license  ruby
+% 
+
+These are the four objects that you start out having in your inventory. You
+can restore hw2game in emacs and you will see that these are the items in your
+inventory.
+
+Let's look at another directory:
+% ls invNames
+'A $100 bill'	 'A glass jar'	     'A ruby'		'Some glycerine'
+'A beach towel'  'A gold bar'	     'A shovel'		'Some nitric acid'
+'A bone'	 'A lamp'	     'A silver bar'	'Some valuable coins'
+'A bracelet'	 'A license'	     'A slip of paper'	'The Mona Lisa'
+'A brass key'	 'A life preserver'  'A valuable egg'
+'A diamond'	 'A platinum bar'    'An amethyst'
+% cat invNames/*egg*
+It is a valuable Fabrege egg.
+% cat invNames/*gold*
+I see nothing special about that.
+% 
+
+The above files also contain the descriptions of the objects, just like in the
+exam directory. But the names of these new files are the names of the objects
+as they appear in the inventory, when you type "i" in the game. Particularly,
+note that these files contains spaces in their names. This is not, generally,
+a good idea for naming files. It works in the present case, however. And it
+gives you a chance to work with quoting rules and unusual file names.
+
+Let's see the next directory:
+% ls itemDisplays
+'The Mona Lisa is here.'
+'There are some valuable coins here.'
+'There is a 100 dollar bill here.'
+'There is a beach towel on the ground here.'
+"There is a bus driver's license here."
+'There is a dinosaur bone here.'
+'There is a glass jar here.'
+'There is a gold bar here.'
+'There is a jewel-encrusted egg here.'
+'There is a lamp nearby.'
+'There is a life preserver here.'
+'There is a packet of glycerine here.'
+'There is a packet of nitric acid here.'
+'There is a platinum bar here.'
+'There is a shimmering diamond here.'
+'There is a shiny brass key here.'
+'There is a shovel here.'
+'There is a silver bar here.'
+'There is a slip of paper here.'
+'There is a valuable amethyst here.'
+'There is a valuable ruby here.'
+'There is an emerald bracelet here.'
+% cat itemDisplays/*egg*
+It is a valuable Fabrege egg.
+% 
+
+Again, these files contain the object descriptions. But, in this case, the
+names represent how the items display if they are present in a room.
+
+Moving on to the next set of directories:
+% ls
+exam     inv       itemDisplays  jarImpact  obj  README  vermont
+hw2game  invNames  jarHole       museum     obs  street
+% ls -A museum
+.descriptionA0	.descriptionA1	.descriptionA2	n
+% ls -A vermont
+.descriptionA0	.descriptionA1	.descriptionA2	n
+% ls -A street
+ .descriptionS1   jar
+ .doneS2	  s
+ acid		 'There is a glass jar here.'
+ e		 'There is a packet of glycerine here.'
+ glycerine	 'There is a packet of nitric acid here.'
+% 
+
+The museum and vermont directories are from the previous homework. The street
+directory is new. When you restore hw2game, you will find yourself at this 
+street. To get to the vermont subway stop, you need to blow up the jar and
+go down the hole it makes. Looking in this directory, there are some objects
+on the ground. And there are exits to additional locations to the east and
+south.
+
+Moving on, there are just two more directories:
+
+% ls
+exam     inv       itemDisplays  jarImpact  obj  README  vermont
+hw2game  invNames  jarHole       museum     obs  street
+% ls obj
+% 
+
+The above shows that obj is an empty directory. You will use this directory as
+a workspace for some of the aliases. The final directory is obs:
+% ls obs
+acid	    bone      diamond	fish	   key	    nitric     silver	 train
+amethyst    bracelet  dinosaur	garbage    lamp     paper      skeleton  vax
+bill	    cabinet   disposal	gate	   license  platinum   switch
+bin	    cliff     drop	glycerine  life     preserver  tank
+bins	    coins     egg	gold	   mail     ruby       tanks
+blackboard  computer  emerald	jar	   Mona     shovel     towel
+% cat obs/gold
+gold
+% cat obs/bins
+bins
+% cat obs/bin
+bins
+% cat obs/emerald
+bracelet
+% cat obs/bracelet 
+bracelet
+%
+
+From the above we see that the files for the objects generally contain the
+same contents as the file name. But there are exceptions. Some objects can be
+referred to by more than one name. In these cases, a single name was chosen. 
+So, for example, the two files "bin" and "bins" both contain the same text, 
+"bins". This is why, "bins" was a file in the exam directory, but "bin" wasn't.
+
+ *   *   *   *   *   *   *   *   *   *   *   *   *   *   *   *   *   *   *   *
+   *   *   *   *   *   *   *   *   *   *   *   *   *   *   *   *   *   *   *
+ *   *   *   *   *   *   *   *   *   *   *   *   *   *   *   *   *   *   *   *
+
+Part 3. How to Capture the Command Line Argument
+""""""""""""""""""""""""""""""""""""""""""""""""
+The purpose of this homework is to see how far we can push the UNIX commands
+themselves, without using scripts or variables. The main difficulty in
+implementing the game with these constraints is that aliases cannot take 
+arguments, but the game commands do. For example, there is a game command "x". 
+If you are, for example, in the vermont station and you type "x train," the 
+response is: "It is a passenger train that is ready to go." We had implemented 
+this, in the first homework with alias x='cat'. And it worked, because the file
+"train" contained the text we wanted. But there is a limitation to this method,
+because the game actually lets you examine objects that are in either the room
+or your inventory. But alias x='cat' can only show objects from the current
+directory. To get both directories, we'd need something like "alias x='cat $1||
+cat ~/HW2/inv/$1' The problem is that alias does not support arguments like $1.
+The solution is to use a script. But since the philosophy of this present
+assignment is to not use scripts, we have to come up with another way to get
+the argument that the player types on the command line... 
+
+The solution we will use is clever. But, to understand it, let's first make
+some observations about UNIX. To begin, consider:
+% cd ~/HW2/vermont
+% ls
+train
+%
+
+Here we see that there is only one (not hidden) file in this directory. Let's
+see what happens when we pass this file into cat:
+% cat < train
+A
+It is a passenger train that is ready to go.
+%
+
+Of course that is what it does. And of course the file has to exist:
+% cat < notAfile
+-bash: notAfile: No such file or directory
+%
+
+We can, of course, put another command first and the redirection still applies
+to "cat":
+% echo A && cat < train
+A
+It is a passenger train that is ready to go.
+%
+
+If we put the other command after, however, then the redirect only applies to
+the command it touches:
+% cat && echo A < train
+<== This hangs until I hit Ctrl-C
+
+The reason that the above hangs is because no input was provided to "cat". And,
+in that case, "cat" is waiting for keyboard input:
+% cat 
+<== This hangs until I hit Ctrl-C
+
+Now, the next thing to consider is how "(...)" affects redirection:
+
+% (echo A && cat) < train
+A
+It is a passenger train that is ready to go.
+% (cat && echo A) < train
+It is a passenger train that is ready to go.
+A
+% (cat; echo A) < train
+It is a passenger train that is ready to go.
+A
+%
+
+From the above, we see that the () allows the redirected input to apply to
+whichever command first tries to read keyboard input. But there are limits:
+
+% cd
+% (cd ~/HW2/vermont;cat)<train
+-bash: train: No such file or directory
+% 
+
+From the above, we see that the access to the train file happened BEFORE the
+"cd", even though the command that used the input ("cat") came after the "cd".
+
+So what does this all mean? It means that we can capture the command-line
+argument, if we are careful and if that argument matches to a file in the
+current directory. This is why I have given you a directory named "~/HW2/obs".
+Let's see that directory:
+% cd ~/HW2/obs
+% ls
+acid        bone      diamond   fish       key      nitric     silver    train
+amethyst    bracelet  dinosaur  garbage    lamp     paper      skeleton  vax
+bill        cabinet   disposal  gate       license  platinum   switch
+bin         cliff     drop      glycerine  life     preserver  tank
+bins        coins     egg       gold       mail     ruby       tanks
+blackboard  computer  emerald   jar        Mona     shovel     towel
+%
+
+These are all of the objects in this year's part of the game. Let's look at
+some of them:
+% cat train
+train
+% cat bins
+bins
+% cat bin
+bins
+%
+
+From the above we see that the files for the objects generally contain the same
+contents as the file name. But there are exceptions for objects that can be
+referred to by more than one name.
+
+Now I want to make some aliases to prove a point. But first consider that wc -c
+counts the number of characters in a file (including the \n at the end of each
+line):
+% cat bin
+bins
+% wc -c < bin   #"bins\n"
+5
+% 
+
+Now let's define two aliases, and use them:
+% alias Arg2File='cat>~/HW2/T'
+% alias countLetters='(Arg2File;wc -c < ~/HW2/T) <'
+% countLetters bins
+5
+% countLetters bin
+5
+% countLetters bbins
+sh: bbins: No such file or directory
+% 
+
+From the above, we see that the countLetters alias was able to use the command
+line argument -- except if that argument was not a valid object. This, then, is
+how our aliases will work. This will let us behave like the original game, to
+some extent. Let's see a comparison...
+
+
+ *   *   *   *   *   *   *   *   *   *   *   *   *   *   *   *   *   *   *   *
+   *   *   *   *   *   *   *   *   *   *   *   *   *   *   *   *   *   *   *
+ *   *   *   *   *   *   *   *   *   *   *   *   *   *   *   *   *   *   *   *
+
+Part 4. A comparison of the UNIX Game to the Original
+"""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+THE UNIX GAME:                            ORIGINAL GAME:
+% bash                                    > restore hw2game
+% source ./pa2                            Done.
+Fourth-Vermont intersection               Fourth-Vermont intersection
+There is a glass jar here.                There is a packet of nitric acid here.
+There is a packet of glycerine here.      There is a packet of glycerine here.
+There is a packet of nitric acid here.    There is a glass jar here.
+>x jar                                    >x jar
+It is a plain glass jar.                  It is a plain glass jar.
+>x train                                  >x train
+I do not see that here.                   I don't see that here.
+>x fggdfdf                                >x fggdfdf
+bash: fggdfdf: No such file or directory  I don't know what that is.
+>                                         >
+
+
+From the above, we see two differences. First, the items (jar, glycerine, acid)
+display in a different order. This difference is unimportant, since the order
+doesn't matter anyway. Second, the error message is different when an incorrect
+object name is given. This difference is important, but I couldn't figure out
+how to fix it, using only aliases. So we'll just accept this difference.
+
+Moving on, there are some other differences:
+% bash                                    >restore hw2game
+% source ./pa2                            Done.
+Fourth-Vermont intersection               Fourth-Vermont intersection
+There is a glass jar here.                There is a packet of nitric acid here
+There is a packet of glycerine here.      There is a glass jar here.
+There is a packet of nitric acid here.    There is a packet of glycerine here.
+>i                                        >i
+You currently have:                       You currently have:
+A bone                                    A bone
+A lamp                                    A lamp
+A license                                 A license
+A ruby                                    A ruby
+>put lamp in jar                          >put lamp in jar
+bash: syntax error near unexpected token  That will not fit in the jar.
+>                                         >
+
+In the above, we see that our game commands can only receive one argument. But
+the real game uses three arguments for "put". Our solution: we will assume that
+you want to put it "in jar", so you won't have to type it. (There are other
+places things can be put, but those won't be implemented in this homework.) 
+So let's try it without saying "in jar":
+>put lamp                                 >put lamp
+The jar is not here.                      You must supply an indirect object.
+>get jar                                  >get jar
+Done.                                     Taken.
+>put lamp                                 >put lamp in jar
+That will not fit in the jar.             That will not fit in the jar.
+>                                         >
+
+From the above, we see another difference. The game allowed us to try to put
+the lamp in the jar if the jar was on the ground. But our implementation
+requires that you get the jar first. The reason for this difference was just
+to shorten the assignment. The put command could be expanded to support that
+case, but we won't do it.
+
+Looking at the above, also note that you can pick up objects like the jar.
+Let's moving around to where something immovable is, and try to pick it up:
+% source ./pa2                          >restore hw2game
+                                        Done.
+Fourth-Vermont intersection             Fourth-Vermont intersection
+There is a glass jar here.              There is a glass jar here.
+There is a packet of glycerine here.    There is a packet of glycerine here.
+There is a packet of nitric acid here.  There is a packet of nitric acid here.
+>s                                      >s
+Fourth-Oaktree intersection             Fourth-Oaktree intersection
+You are at the intersection of Fourth S You are at the intersection of Fourth S
+>e                                      >e
+First-Oaktree intersection              Fifth-Oaktree intersection
+You are at the intersection of Fifth St You are at the intersection of Fifth St
+There is a cliff off to the east.       There is a cliff off to the east.
+There are some valuable coins here.     There are some valuable coins here.
+>get cliff                              >get cliff
+You cannot take that.                   You cannot take that.
+>get train                              >get train
+I do not see that here.                 I do not see that here.
+>x fggfd                                >x fggfd
+bash: fggfd: No such file or directory  I don't know what that is.
+>                                       >
+
+From the above, we see that there is a special message for trying to pick up
+immovable things. It is different than the message for trying to pick up things
+that aren't present, or things that don't exist. So let's pick something up:
+
+>get coins                              >get coins
+Taken.                                  Taken.
+>get coins                              >get coins
+I do not see that here.                 I do not see that here.
+>i                                      >i
+You currently have:                     You currently have:
+A bone                                  A lamp
+A lamp                                  A license
+A license                               A bone
+A ruby                                  A ruby
+Some valuable coins                     Some valuable coins
+>l                                      >l
+First-Oaktree intersection              Fifth-Oaktree intersection
+You are at the intersection of Fifth S  You are at the intersection of Fifth S
+There is a cliff off to the east.       There is a cliff off to the east.
+>                                       >
+
+From the above, we see that it really did pick it up.
+Let's move around some more:
+>l                                      >l
+First-Oaktree intersection              Fifth-Oaktree intersection
+You are at the intersection of Fifth S  You are at the intersection of Fifth S
+There is a cliff off to the east.       There is a cliff off to the east.
+>s                                      >s
+You cannot go that way.                 Fifth-Maple intersection
+>s                                      You are at the south end of Fifth Stre
+You cannot go that way.                 >n
+>                                       Fifth-Oaktree intersection
+>e                                      >e
+You cannot go that way.                 You fall down the cliff and land on yo
+>quit                                   You are dead.
+You have scored 60 out of a possible 90 You have scored 60 out of a possible 90
+
+From the above, we see that our game is smaller. Looking at the provided HW2
+file, you will see that only 4 street corners have been included. And, because
+you cannot fall of the cliff and die, the only way to see the score is to quit.
+(Also, the score is currently not computed, but is instead always "60".)
+
+OK, lets start over and look at what the idea with putting things in the jar is
+about:
+% bash                                  >restore hw2game
+% source ./pa2                          Done.
+Fourth-Vermont intersection             Fourth-Vermont intersection
+There is a glass jar here.              There is a packet of nitric acid here.
+There is a packet of glycerine here.    There is a glass jar here.
+There is a packet of nitric acid here.  here is a packet of glycerine here.
+>get jar                                >get jar
+Taken.                                  Taken.
+>get acid                               >get acid
+Taken.                                  Taken.
+>get glycerine                          >get glycerine
+Taken.                                  Taken.
+>i                                      >i
+You currently have:                     You currently have:
+A bone                                  A lamp
+A lamp                                  A license
+A license                               A bone
+A ruby                                  A ruby
+Some glycerine                          A glass jar
+Some nitric acid                        Some nitric acid
+A glass jar                             Some glycerine
+>put acid                               put acid in jar
+Done.                                   Done.
+>                                       >
+
+From the above, we see that the acid can fit in the jar. Let's see what the
+effect was:
+>i                                      >i
+You currently have:                     You currently have:
+A bone                                  A lamp
+A lamp                                  A license
+A license                               A bone
+A ruby                                  A ruby
+Some glycerine                          A glass jar
+A glass jar                             The jar contains:
+The jar contains:                            Some nitric acid
+     Some nitric acid                   Some glycerine
+>                                       >
+
+Although the two outputs are in a different order, they display the same
+information. Most notably, the jar now contains the acid. It is interesting
+how we got this display. The concept behind our previous homework is that there
+is a similarity between the directories in UNIX and the rooms in a text game.
+Well, we now extend that to the inventory: an object containing an object is
+like a subdirectory for it. Moreover, the ls display has similarity. Consider:
+    % mkdir d1
+    % cd d1
+    % echo > A\ bone
+    % echo > A\ glass\ jar
+    % mkdir The\ jar\ contains
+    % echo >The\ jar\ contains/Some\ acid
+    % ls * | cat
+    A bone
+    A glass jar
+
+    The jar contains:
+    Some acid
+    %
+
+From the above quick example, there are many similarities in this output, when
+compared to the game output. There are also, of course, a few differences that
+need to be addressed.
+
+We have seen how the jar looks in the inventory. But what about on the ground:
+>drop jar                               >drop jar
+Done.                                   Done.
+>i                                      >i
+You currently have:                     You currently have:
+A bone                                  A lamp
+A lamp                                  A license
+A license                               A bone
+A ruby                                  A ruby
+Some glycerine                          Some glycerine
+>l                                      >l
+Fourth-Vermont intersection             Fourth-Vermont intersection
+You are at the intersection of Fourth S You are at the intersection of Fourth S
+There is a glass jar here.              There is a glass jar here.
+The jar contains:                       The jar contains:
+     Some nitric acid                        There is a packet of nitric acid h
+>                                       >
+
+From the above, we see that our game has a slightly different display. But I
+chose to leave it the way you see it, because the game actually displays it
+worse. And it did not make sense to add code to make it display worse.
+
+Let's keep going and see why we have a jar at all:
+>get jar                                >get jar
+Taken.                                  Taken.
+>put glycerine                          >put glycerine in jar
+Done.                                   Done.
+>i                                      >i
+You currently have:                     You currently have:
+A bone                                  A lamp
+A lamp                                  A license
+A license                               A bone
+A ruby                                  A ruby
+A glass jar                             A glass jar
+The jar contains:                            The jar contains:
+     Some glycerine                          Some nitric acid
+     Some nitric acid                        Some glycerine
+>                                       >
+
+From the above, we see the jar now holds two things. Actually these are the
+only two things that will fit in the jar. Together they have created nitro-
+glycerine, an explosive. So what happens if we drop it?
+
+>drop jar                               >drop jar
+Done.                                   Done.
+As the jar impacts the ground it explod As the jar impacts the ground it explod
+The explosion causes a hole to open up  The explosion causes a hole to open up
+*almost* fall through.                  through.
+>                                       Vermont station
+                                        You are at the Vermont St. subway stati
+
+From the above, we see that our game is a little different. The reason is the
+method we used to capture the command line argument. Recall how we had defined
+the "countLetters" alias:
+      % alias countLetters='(Arg2File;wc -c < ~/HW2/T) <'
+
+Well, we aren't interested in counting letters. But we do want to use the same
+approach for capturing the command line argument. And, in particular, notice
+that the executing of Arg2File was inside a (...). These parentheses prevent
+any directory changes from persisting after the leaving the parentheses. And
+so the drop jar command, which must use (...) because it needs a command line
+argument, cannot therefore change directory to the vermont subway station.
+My solution was to instead create a hole that you can go down. Let's see it:
+
+>s
+Fourth-Oaktree intersection
+You are at the intersection of Fourth Street and Oaktree Ave.
+>n
+Fourth-Vermont intersection
+>l
+Fourth-Vermont intersection
+You are at the intersection of Fourth Street and Vermont Ave.
+There is a hole in the street here that you could jump into.
+>d
+Vermont station
+You are at the Vermont St. subway station.  A train is sitting here waiting.
+>
+
+From this point we are back in the regular game.
+
+let's see one more thing:
+% bash                                  >restore hw2game
+% source ./pa2                          Done.
+Fourth-Vermont intersection             Fourth-Vermont intersection
+There is a glass jar here.              There is a packet of nitric acid here.
+There is a packet of glycerine here.    There is a glass jar here.
+There is a packet of nitric acid here.  There is a packet of glycerine here.
+>e                                      >e
+Fifth-Vermont intersection              Fifth-Vermont intersection
+You are at the intersection of Fifth St You are at the intersection of Fifth St
+The Mona Lisa is here.                 >
+There is a 100 dollar bill here.
+There is a beach towel on the ground here.
+There is a gold bar here.
+There is a jewel-encrusted egg here.
+There is a life preserver here.
+There is a platinum bar here.
+There is a shimmering diamond here.
+There is a shiny brass key here.
+There is a shovel here.
+There is a silver bar here.
+There is a slip of paper here.
+There is an emerald bracelet here.
+>
+
+The difference here is that there are many additional objects in the room to
+the east of the start. The reason that I added these objects is because they
+are objects that we will not see in their correct location until homework #3.
+Despite them not occurring in the present portion of the game, I want the game
+to recognize these objects. So I just placed them all in this room.
+
+
+A template file for your aliases will be posted later...
+Good luck!

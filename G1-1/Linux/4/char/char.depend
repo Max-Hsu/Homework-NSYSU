@@ -1,0 +1,7 @@
+# depslib dependency file v1.0
+1540536382 source:c:\users\max-hsu\desktop\homework\linux\4\tranchar.c
+	<stdio.h>
+	<time.h>
+	<string.h>
+	<stdlib.h>
+

@@ -1,0 +1,423 @@
+
+
+
+                  ##################################################
+                  ##                                              ##
+                  ##         C A L I B R E    S Y S T E M         ##
+                  ##                                              ##
+                  ##             L V S   R E P O R T              ##
+                  ##                                              ##
+                  ##################################################
+
+
+
+REPORT FILE NAME:         AdderSDFF.lvs.report
+LAYOUT NAME:              /home/vlsi109/vlsi109a01/UM180FDKMFC0000OA_A02/Calibre/LVS/TWSDFF/AdderSDFF.sp ('AdderSDFF')
+SOURCE NAME:              /home/vlsi109/vlsi109a01/UM180FDKMFC0000OA_A02/Calibre/LVS/TWSDFF/AdderSDFF.src.net ('AdderSDFF')
+RULE FILE:                /home/vlsi109/vlsi109a01/UM180FDKMFC0000OA_A02/Calibre/LVS/TWSDFF/_G-DF-MIXED_MODE_RFCMOS18-1.8V_3.3V-1P6M-MMC_CALIBRE-LVS-2.1-P8.txt_
+RULE FILE TITLE:          LVS of UMC 0.18um 1.8V/3.3V 1P6M MMC Mixed Mode/RFCMOS Process
+CREATION TIME:            Tue Jul 14 17:06:19 2020
+CURRENT DIRECTORY:        /home/vlsi109/vlsi109a01/UM180FDKMFC0000OA_A02/Calibre/LVS/TWSDFF
+USER NAME:                vlsi109a01
+CALIBRE VERSION:          v2019.4_16.9    Tue Oct 1 16:24:54 PDT 2019
+
+
+
+                               OVERALL COMPARISON RESULTS
+
+
+
+                         #       ###################       _   _   
+                        #        #                 #       *   *   
+                   #   #         #     CORRECT     #         |     
+                    # #          #                 #       \___/  
+                     #           ###################               
+
+
+  Warning:  Unbalanced smashed mosfets were matched.
+
+
+**************************************************************************************************************
+                                      CELL  SUMMARY
+**************************************************************************************************************
+
+  Result         Layout                        Source
+  -----------    -----------                   --------------
+  CORRECT        AdderSDFF                     AdderSDFF
+
+
+
+**************************************************************************************************************
+                                      LVS PARAMETERS
+**************************************************************************************************************
+
+
+o LVS Setup:
+
+   // LVS COMPONENT TYPE PROPERTY
+   // LVS COMPONENT SUBTYPE PROPERTY
+   // LVS PIN NAME PROPERTY
+   LVS POWER NAME                         "?VDD?" "?VCC?"
+   LVS GROUND NAME                        "?VSS?" "?GND?"
+   LVS CELL SUPPLY                        NO
+   LVS RECOGNIZE GATES                    ALL
+   LVS IGNORE PORTS                       NO
+   LVS CHECK PORT NAMES                   YES
+   LVS IGNORE TRIVIAL NAMED PORTS         NO
+   LVS BUILTIN DEVICE PIN SWAP            YES
+   LVS ALL CAPACITOR PINS SWAPPABLE       NO
+   LVS DISCARD PINS BY DEVICE             NO
+   LVS SOFT SUBSTRATE PINS                NO
+   LVS INJECT LOGIC                       YES
+   LVS EXPAND UNBALANCED CELLS            YES
+   LVS FLATTEN INSIDE CELL                NO
+   LVS EXPAND SEED PROMOTIONS             YES
+   LVS PRESERVE PARAMETERIZED CELLS       NO
+   LVS GLOBALS ARE PORTS                  YES
+   LVS REVERSE WL                         NO
+   LVS SPICE PREFER PINS                  NO
+   LVS SPICE SLASH IS SPACE               YES
+   LVS SPICE ALLOW FLOATING PINS          YES
+   // LVS SPICE ALLOW INLINE PARAMETERS     
+   LVS SPICE ALLOW UNQUOTED STRINGS       NO
+   LVS SPICE CONDITIONAL LDD              NO
+   LVS SPICE CULL PRIMITIVE SUBCIRCUITS   NO
+   // LVS SPICE EXCLUDE CELL SOURCE
+   // LVS SPICE EXCLUDE CELL LAYOUT
+   LVS SPICE IMPLIED MOS AREA             NO
+   // LVS SPICE MULTIPLIER NAME
+   LVS SPICE OVERRIDE GLOBALS             NO
+   LVS SPICE REDEFINE PARAM               NO
+   LVS SPICE REPLICATE DEVICES            YES
+   LVS SPICE SCALE X PARAMETERS           NO
+   LVS SPICE STRICT WL                    NO
+   // LVS SPICE OPTION
+   LVS STRICT SUBTYPES                    NO
+   LVS EXACT SUBTYPES                     NO
+   LAYOUT CASE                            NO
+   SOURCE CASE                            NO
+   LVS COMPARE CASE                       NO
+   LVS DOWNCASE DEVICE                    NO
+   LVS REPORT MAXIMUM                     50
+   LVS PROPERTY RESOLUTION MAXIMUM        32
+   // LVS SIGNATURE MAXIMUM
+   // LVS FILTER UNUSED OPTION
+   // LVS REPORT OPTION
+   LVS REPORT UNITS                       YES
+   // LVS NON USER NAME PORT
+   // LVS NON USER NAME NET
+   // LVS NON USER NAME INSTANCE
+   // LVS IGNORE DEVICE PIN
+   // LVS PREFER NETS FILTER SOURCE
+   // LVS PREFER NETS FILTER LAYOUT
+   LVS PREFER PORT NETS                   NO
+
+   // Reduction
+
+   LVS REDUCE SERIES MOS                  NO
+   LVS REDUCE PARALLEL MOS                YES
+   LVS REDUCE SEMI SERIES MOS             NO
+   LVS REDUCE SPLIT GATES                 YES
+   LVS REDUCE PARALLEL BIPOLAR            YES
+   LVS REDUCE SERIES CAPACITORS           YES
+   LVS REDUCE PARALLEL CAPACITORS         YES
+   LVS REDUCE SERIES RESISTORS            YES
+   LVS REDUCE PARALLEL RESISTORS          YES
+   LVS REDUCE PARALLEL DIODES             YES
+
+   LVS REDUCE  C(MIMCAPM_RF)  PARALLEL NO
+   LVS REDUCTION PRIORITY                 PARALLEL
+   
+   LVS SHORT EQUIVALENT NODES             NO
+
+   // Trace Property
+
+   TRACE PROPERTY  mn(n_18_g2)  l l 3
+   TRACE PROPERTY  mn(n_18_g2)  w w 3
+   TRACE PROPERTY  mp(p_18_g2)  l l 3
+   TRACE PROPERTY  mp(p_18_g2)  w w 3
+   TRACE PROPERTY  mn(n_18_mm)  l l 3
+   TRACE PROPERTY  mn(n_18_mm)  w w 3
+   TRACE PROPERTY  mp(p_18_mm)  l l 3
+   TRACE PROPERTY  mp(p_18_mm)  w w 3
+   TRACE PROPERTY  mn(n_lv_18_mm)  l l 3
+   TRACE PROPERTY  mn(n_lv_18_mm)  w w 3
+   TRACE PROPERTY  mp(p_lv_18_mm)  l l 3
+   TRACE PROPERTY  mp(p_lv_18_mm)  w w 3
+   TRACE PROPERTY  mn(n_33_g2)  l l 3
+   TRACE PROPERTY  mn(n_33_g2)  w w 3
+   TRACE PROPERTY  mp(p_33_g2)  l l 3
+   TRACE PROPERTY  mp(p_33_g2)  w w 3
+   TRACE PROPERTY  mn(n_33_mm)  l l 3
+   TRACE PROPERTY  mn(n_33_mm)  w w 3
+   TRACE PROPERTY  mp(p_33_mm)  l l 3
+   TRACE PROPERTY  mp(p_33_mm)  w w 3
+   TRACE PROPERTY  mn(n_lv_33_mm)  l l 3
+   TRACE PROPERTY  mn(n_lv_33_mm)  w w 3
+   TRACE PROPERTY  mp(p_lv_33_mm)  l l 3
+   TRACE PROPERTY  mp(p_lv_33_mm)  w w 3
+   TRACE PROPERTY  mn(n_zero_18_mm)  l l 3
+   TRACE PROPERTY  mn(n_zero_18_mm)  w w 3
+   TRACE PROPERTY  mn(n_zero_33_mm)  l l 3
+   TRACE PROPERTY  mn(n_zero_33_mm)  w w 3
+   TRACE PROPERTY  mn(n_bpw_18_mm)  l l 3
+   TRACE PROPERTY  mn(n_bpw_18_mm)  w w 3
+   TRACE PROPERTY  mn(n_bpw_33_mm)  l l 3
+   TRACE PROPERTY  mn(n_bpw_33_mm)  w w 3
+   TRACE PROPERTY  mn(n_po7w500_18_rf)  l l 3
+   TRACE PROPERTY  mn(n_po7w500_18_rf)  w w 3
+   TRACE PROPERTY  mp(p_po7w500_18_rf)  l l 3
+   TRACE PROPERTY  mp(p_po7w500_18_rf)  w w 3
+   TRACE PROPERTY  mn(n_po7w500_33_rf)  l l 3
+   TRACE PROPERTY  mn(n_po7w500_33_rf)  w w 3
+   TRACE PROPERTY  mp(p_po7w500_33_rf)  l l 3
+   TRACE PROPERTY  mp(p_po7w500_33_rf)  w w 3
+   TRACE PROPERTY  mn(n_l18w500_18_rf)  l l 3
+   TRACE PROPERTY  mn(n_l18w500_18_rf)  w w 3
+   TRACE PROPERTY  mp(p_l18w500_18_rf)  l l 3
+   TRACE PROPERTY  mp(p_l18w500_18_rf)  w w 3
+   TRACE PROPERTY  mn(n_l34w500_33_rf)  l l 3
+   TRACE PROPERTY  mn(n_l34w500_33_rf)  w w 3
+   TRACE PROPERTY  mp(p_l34w500_33_rf)  l l 3
+   TRACE PROPERTY  mp(p_l34w500_33_rf)  w w 3
+   TRACE PROPERTY  mn(n_pg400_g2)  l l 3
+   TRACE PROPERTY  mn(n_pg400_g2)  w w 3
+   TRACE PROPERTY  mn(n_pd400_g2)  l l 3
+   TRACE PROPERTY  mn(n_pd400_g2)  w w 3
+   TRACE PROPERTY  mp(p_l400_g2)  l l 3
+   TRACE PROPERTY  mp(p_l400_g2)  w w 3
+   TRACE PROPERTY  mn(n_pg1020_g2)  l l 3
+   TRACE PROPERTY  mn(n_pg1020_g2)  w w 3
+   TRACE PROPERTY  mn(n_pd1020_g2)  l l 3
+   TRACE PROPERTY  mn(n_pd1020_g2)  w w 3
+   TRACE PROPERTY  mp(p_l1020_g2)  l l 3
+   TRACE PROPERTY  mp(p_l1020_g2)  w w 3
+   TRACE PROPERTY  c(varmis_18_rf)  nf nf 3
+   TRACE PROPERTY  c(vardiop_rf)  nf nf 3
+   TRACE PROPERTY  r(rsnwell)  r r 3
+   TRACE PROPERTY  r(rsnd)  r r 3
+   TRACE PROPERTY  r(rspd)  r r 3
+   TRACE PROPERTY  r(rsnpo)  r r 3
+   TRACE PROPERTY  r(rsppo)  r r 3
+   TRACE PROPERTY  r(rnnd)  r r 3
+   TRACE PROPERTY  r(rnpd)  r r 3
+   TRACE PROPERTY  r(rnnpo)  r r 3
+   TRACE PROPERTY  r(rnnpo_mm)  r r 3
+   TRACE PROPERTY  r(rnnpo_rf)  r r 3
+   TRACE PROPERTY  r(rnppo)  r r 3
+   TRACE PROPERTY  r(rnppo_mm)  r r 3
+   TRACE PROPERTY  r(rnppo_rf)  r r 3
+   TRACE PROPERTY  r(rnhr1000_mm)  r r 3
+   TRACE PROPERTY  r(rnhr_rf)  r r 3
+   TRACE PROPERTY  r(rm1_mm)  r r 3
+   TRACE PROPERTY  r(rm2_mm)  r r 3
+   TRACE PROPERTY  r(rm3_mm)  r r 3
+   TRACE PROPERTY  r(rm4_mm)  r r 3
+   TRACE PROPERTY  r(rm5_mm)  r r 3
+   TRACE PROPERTY  r(rm6_mm)  r r 3
+   TRACE PROPERTY  c(pad_rf)  index index 3
+   TRACE PROPERTY  d(dion_g2)  p p 3
+   TRACE PROPERTY  d(dion_g2)  a a 3
+   TRACE PROPERTY  d(diop_g2)  a a 3
+   TRACE PROPERTY  d(diop_g2)  p p 3
+   TRACE PROPERTY  d(dionw_g2)  a a 3
+   TRACE PROPERTY  d(dionw_g2)  p p 3
+   TRACE PROPERTY  d(dion_mm)  a a 3
+   TRACE PROPERTY  d(dion_mm)  p p 3
+   TRACE PROPERTY  d(diop_mm)  a a 3
+   TRACE PROPERTY  d(diop_mm)  p p 3
+   TRACE PROPERTY  d(dionw_mm)  a a 3
+   TRACE PROPERTY  d(dionw_mm)  p p 3
+   TRACE PROPERTY  q(pnp_v50x50_g2)  a a 3
+   TRACE PROPERTY  q(pnp_v100x100_g2)  a a 3
+   TRACE PROPERTY  q(pnp_v50x50_mm)  a a 3
+   TRACE PROPERTY  q(pnp_v100x100_mm)  a a 3
+   TRACE PROPERTY  c(mimcaps_mm)  c c 3
+   TRACE PROPERTY  c(mimcapm_rf)  l l 3
+   TRACE PROPERTY  c(mimcapm_rf)  w w 3
+   TRACE PROPERTY  c(mimcapm_rf)  nx nx 3
+   TRACE PROPERTY  c(mimcapm_rf)  ny ny 3
+   TRACE PROPERTY  l(l_slcr20k_rf)  d d 3
+   TRACE PROPERTY  l(l_slcr20k_rf)  n n 3
+   TRACE PROPERTY  l(l_slcr20k_rf)  w w 3
+
+
+
+                   CELL COMPARISON RESULTS ( TOP LEVEL )
+
+
+
+                         #       ###################       _   _   
+                        #        #                 #       *   *   
+                   #   #         #     CORRECT     #         |     
+                    # #          #                 #       \___/  
+                     #           ###################               
+
+
+  Warning:  Unbalanced smashed mosfets were matched.
+
+LAYOUT CELL NAME:         AdderSDFF
+SOURCE CELL NAME:         AdderSDFF
+
+--------------------------------------------------------------------------------------------------------------
+
+INITIAL NUMBERS OF OBJECTS
+--------------------------
+
+                Layout    Source         Component Type
+                ------    ------         --------------
+ Ports:             30        30
+
+ Nets:             655       655
+
+ Instances:       4219      1069    *    MN (4 pins)
+                  3769       619    *    MP (4 pins)
+                ------    ------
+ Total Inst:      7988      1688
+
+
+NUMBERS OF OBJECTS AFTER TRANSFORMATION
+---------------------------------------
+
+                Layout    Source         Component Type
+                ------    ------         --------------
+ Ports:             30        30
+
+ Nets:             233       233
+
+ Instances:         13        13         _invv (4 pins)
+                    34        34         _nand2v (5 pins)
+                   150       150         _nand3v (6 pins)
+                     2         2         _sdw2v (4 pins)
+                     2         2         _sup2v (4 pins)
+                    14        14         _xor2v (5 pins)
+                ------    ------
+ Total Inst:       215       215
+
+
+       * = Number of objects in layout different from number in source.
+
+
+
+**************************************************************************************************************
+                               INFORMATION AND WARNINGS
+**************************************************************************************************************
+
+
+                  Matched    Matched    Unmatched    Unmatched    Component
+                   Layout     Source       Layout       Source    Type
+                  -------    -------    ---------    ---------    ---------
+   Ports:              30         30            0            0
+
+   Nets:              233        233            0            0
+
+   Instances:          13         13            0            0    _invv
+                       34         34            0            0    _nand2v
+                      150        150            0            0    _nand3v
+                        2          2            0            0    _sdw2v
+                        2          2            0            0    _sup2v
+                       14         14            0            0    _xor2v
+                  -------    -------    ---------    ---------
+   Total Inst:        215        215            0            0
+
+
+o Statistics:
+
+   7650 layout mos transistors were reduced to 900.
+     6750 mos transistors were deleted by parallel reduction.
+   900 source mos transistors were reduced to 450.
+     450 mos transistors were deleted by parallel reduction.
+
+
+o Initial Correspondence Points:
+
+   Ports:        VDD GND SET B7 RST CLK S0 B4 B5 B6 S1 S2 A5 A6 A7 A1 B2 A4 B0 A0 S3 S4 B1 A3 S5
+                 S7 S6 CCOUT B3 A2
+
+
+o Voltage Names Matched by Wildcard:
+
+   Power Names from Layout:
+
+                 VDD
+
+   Ground Names from Layout:
+
+                 GND
+
+   Power Names from Source:
+
+                 VDD
+
+   Ground Names from Source:
+
+                 GND
+
+
+o Matched Mosfets Which Have Been Unequally Reduced:
+
+       X21/X20/M18(608.276,471.488)                              XI88/MM34
+       X21/X20/M26(598.836,471.488)                              XI88/MM34==2
+       X21/X20/M25(600.016,471.488)                              ** missing smashed mosfet ** 
+       X21/X20/M24(601.196,471.488)                              ** missing smashed mosfet ** 
+       X21/X20/M23(602.376,471.488)                              ** missing smashed mosfet ** 
+       X21/X20/M22(603.556,471.488)                              ** missing smashed mosfet ** 
+       X21/X20/M21(604.736,471.488)                              ** missing smashed mosfet ** 
+       X21/X20/M20(605.916,471.488)                              ** missing smashed mosfet ** 
+       X21/X20/M19(607.096,471.488)                              ** missing smashed mosfet ** 
+
+       X21/X20/M9(618.896,471.488)                               XI88/MM36
+       X21/X20/M17(609.456,471.488)                              XI88/MM36==2
+       X21/X20/M16(610.636,471.488)                              ** missing smashed mosfet ** 
+       X21/X20/M15(611.816,471.488)                              ** missing smashed mosfet ** 
+       X21/X20/M14(612.996,471.488)                              ** missing smashed mosfet ** 
+       X21/X20/M13(614.176,471.488)                              ** missing smashed mosfet ** 
+       X21/X20/M12(615.356,471.488)                              ** missing smashed mosfet ** 
+       X21/X20/M11(616.536,471.488)                              ** missing smashed mosfet ** 
+       X21/X20/M10(617.716,471.488)                              ** missing smashed mosfet ** 
+
+       X21/X20/M0(629.516,471.488)                               XI88/MM35
+       X21/X20/M8(620.076,471.488)                               XI88/MM35==2
+       X21/X20/M7(621.256,471.488)                               ** missing smashed mosfet ** 
+       X21/X20/M6(622.436,471.488)                               ** missing smashed mosfet ** 
+       X21/X20/M5(623.616,471.488)                               ** missing smashed mosfet ** 
+       X21/X20/M4(624.796,471.488)                               ** missing smashed mosfet ** 
+       X21/X20/M3(625.976,471.488)                               ** missing smashed mosfet ** 
+       X21/X20/M2(627.156,471.488)                               ** missing smashed mosfet ** 
+       X21/X20/M1(628.336,471.488)                               ** missing smashed mosfet ** 
+
+       X21/X41/M16(609.456,491.248)                              XI88/MM39
+       X21/X41/M23(601.196,491.248)                              ** missing smashed mosfet ** 
+       X21/X41/M22(602.376,491.248)                              ** missing smashed mosfet ** 
+       X21/X41/M21(603.556,491.248)                              ** missing smashed mosfet ** 
+       X21/X41/M20(604.736,491.248)                              ** missing smashed mosfet ** 
+       X21/X41/M19(605.916,491.248)                              ** missing smashed mosfet ** 
+       X21/X41/M18(607.096,491.248)                              ** missing smashed mosfet ** 
+       X21/X41/M17(608.276,491.248)                              ** missing smashed mosfet ** 
+
+       X21/X41/M8(618.896,491.248)                               XI88/MM37
+       X21/X41/M15(610.636,491.248)                              ** missing smashed mosfet ** 
+       X21/X41/M14(611.816,491.248)                              ** missing smashed mosfet ** 
+       X21/X41/M13(612.996,491.248)                              ** missing smashed mosfet ** 
+       X21/X41/M12(614.176,491.248)                              ** missing smashed mosfet ** 
+       X21/X41/M11(615.356,491.248)                              ** missing smashed mosfet ** 
+       X21/X41/M10(616.536,491.248)                              ** missing smashed mosfet ** 
+       X21/X41/M9(617.716,491.248)                               ** missing smashed mosfet ** 
+
+       X21/X41/M0(628.336,491.248)                               XI88/MM38
+       X21/X41/M7(620.076,491.248)                               ** missing smashed mosfet ** 
+       X21/X41/M6(621.256,491.248)                               ** missing smashed mosfet ** 
+       X21/X41/M5(622.436,491.248)                               ** missing smashed mosfet ** 
+       X21/X41/M4(623.616,491.248)                               ** missing smashed mosfet ** 
+       X21/X41/M3(624.796,491.248)                               ** missing smashed mosfet ** 
+       X21/X41/M2(625.976,491.248)                               ** missing smashed mosfet ** 
+       X21/X41/M1(627.156,491.248)                               ** missing smashed mosfet ** 
+
+
+
+**************************************************************************************************************
+                                         SUMMARY
+**************************************************************************************************************
+
+Total CPU Time:      0 sec
+Total Elapsed Time:  0 sec

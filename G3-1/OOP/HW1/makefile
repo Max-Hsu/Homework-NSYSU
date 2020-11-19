@@ -1,0 +1,41 @@
+CC	=	gcc
+CPP	=	g++
+CC_FLAGS	=	-std=c11
+CPP_FLAGS	=	-std=c++11
+BASE_ADDRESS	:=	${CURDIR}
+C_STACK_DIR	=	$(BASE_ADDRESS)/src/c/
+CPP_STACK_DIR	=	$(BASE_ADDRESS)/src/c++/
+C_MAIN_DIR	=	$(BASE_ADDRESS)/c/
+CPP_MAIN_DIR	=	$(BASE_ADDRESS)/c++/
+
+all:c_stack	c_main	cpp_stack	cpp_main	combine
+
+c_stack:
+	cd $(C_STACK_DIR) &&	$(CC)	$(CC_FLAGS)	stack.c -c
+c_main:
+	cd $(C_MAIN_DIR) &&	$(CC)	$(CC_FLAGS)	-I $(C_STACK_DIR) main.c -c	
+	cd $(C_MAIN_DIR) &&	$(CC)	$(CC_FLAGS)	-I $(C_STACK_DIR) main2.c -c	
+cpp_stack:
+	cd $(CPP_STACK_DIR) &&	$(CPP)	$(CPP_FLAGS)	stack.cpp -c
+cpp_main:
+	cd $(CPP_MAIN_DIR) &&	$(CPP)	$(CPP_FLAGS)	-I $(CPP_STACK_DIR) main.cpp -c
+	cd $(CPP_MAIN_DIR) &&	$(CPP)	$(CPP_FLAGS)	-I $(CPP_STACK_DIR) main2.cpp -c
+combine:
+	$(CC)	$(CC_FLAGS)		$(C_MAIN_DIR)main.o		$(C_STACK_DIR)stack.o	-o c_main1
+	$(CC)	$(CC_FLAGS)		$(C_MAIN_DIR)main2.o	$(C_STACK_DIR)stack.o	-o c_main2
+	$(CPP)	$(CPP_FLAGS)	$(CPP_MAIN_DIR)main.o	$(CPP_STACK_DIR)stack.o	-o cpp_main1
+	$(CPP)	$(CPP_FLAGS)	$(CPP_MAIN_DIR)main2.o	$(CPP_STACK_DIR)stack.o	-o cpp_main2
+
+.PHONY:clean
+clean:
+	-rm	*.dep
+	-rm $(C_MAIN_DIR)*.o
+	-rm $(C_STACK_DIR)*.o
+	-rm $(CPP_MAIN_DIR)*.o
+	-rm $(CPP_STACK_DIR)*.o
+	-rm	*main*
+dep:
+	$(CC)	$(CC_FLAGS)		-I $(C_STACK_DIR)	$(C_MAIN_DIR)main.c			-MM	>	c_main.dep
+	$(CC)	$(CC_FLAGS)		-I $(C_STACK_DIR)	$(C_MAIN_DIR)main2.c		-MM	>	c_main2.dep
+	$(CPP)	$(CPP_FLAGS)	-I $(CPP_STACK_DIR)	$(CPP_MAIN_DIR)main.cpp		-MM	>	cpp_main.dep
+	$(CPP)	$(CPP_FLAGS)	-I $(CPP_STACK_DIR)	$(CPP_MAIN_DIR)main2.cpp	-MM	>	cpp_main2.dep

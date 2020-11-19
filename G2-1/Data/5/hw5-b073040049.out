@@ -1,0 +1,23 @@
+Case1:
+ADD
+1 2
+1 1
+1 0
+MULTIPLY
+0 0
+Case2:
+ADD
+3 5
+1 2
+MULTIPLY
+3 7
+-6 6
+2 3
+-4 2
+Case3:
+ADD
+0 0
+MULTIPLY
+-25 2
+70 1
+-49 0

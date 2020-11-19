@@ -1,0 +1,6 @@
+Num	Core	Performance	Ideation
+1	10	28		9
+2	8	20		10
+3	9	15		8
+4	5	25		6
+5	2	5		3

@@ -1,0 +1,7 @@
+20:53:04.874958 == Info:   Trying 127.0.0.1...
+20:53:04.883207 == Info: Connected to 127.0.0.1 () port 8997 (#0)
+20:53:04.883273 == Info: set timeouts for state 0; Total 300, retry 6 maxtry 50
+20:53:06.900222 == Info: Connected for receive
+20:53:06.900263 == Info: set timeouts for state 1; Total 3600, retry 72 maxtry 50
+20:53:07.085945 == Info: Operation too slow. Less than 1000 bytes/sec transferred the last 2 seconds
+20:53:07.090434 == Info: Closing connection 0

@@ -1,0 +1,719 @@
+Below is a playthrough of the beginning part of the game. You won't implement
+this part of the game. But we want to go through it, to get an understanding of
+how the computer inside the game, named ‘pokey’, works (because we will be
+implementing that).
+
+So let's get started, playing the game from the beginning:
+% emacs -batch -l dunnet
+
+Dead end
+You are at a dead end of a dirt road.  The road goes to the east.
+In the distance you can see that it will eventually fork off.  The
+trees here are very tall royal palms, and they are spaced equidistant
+from each other.
+There is a shovel here.
+>
+
+
+The next few commands are necessary in order to turn the computer on. (Again,
+we are not going to implement this part of the game. But we do need a working
+computer.
+
+To begin, we "get shovel". Then we go "e" twice. At that point, the description
+says that the ground is soft, so we "dig" and then "l" to see what we found.
+It then says it is a CPU card.  So we "get card". Then we "se" and "get food"
+which is on the ground there. Then we "se" again and "drop food". This causes
+a key to appear. We "get key", and now we are ready to go turn on pokey. So
+we go "nw", "nw","ne","ne","ne","w". Finally, we fix the computer by typing:
+"put card in vax". If you typed the above commands as I have done, the computer
+should now be working. Let's see what we've got:
+
+>l
+Computer room
+You are in a computer room.  It seems like most of the equipment has
+been removed.  There is a VAX 11/780 in front of you, however, with
+one of the cabinets wide open.  A sign on the front of the machine
+says: This VAX is named ‘pokey’.  To type on the console, use the
+‘type’ command.  The exit is to the east.
+The panel lights are flashing in a seemingly organized pattern.
+
+Yes, the computer lights indicate a working computer. And the above description
+says that you use "type" to access the keyboard. So let's try it:
+
+>type
+
+
+UNIX System V, Release 2.2 (pokey)
+
+login: me
+password: password
+login incorrect
+
+
+UNIX System V, Release 2.2 (pokey)
+
+login: umm
+password: dontknow
+login incorrect
+
+
+UNIX System V, Release 2.2 (pokey)
+
+login: abc
+password: xyzzy
+login incorrect
+>
+
+
+OK, so we can't log in without an account and password. After three tries, it
+kicked me off. That is why the ">" prompt displays at the bottom. Well, let's
+go find that password. It is in the mailroom:
+
+>e
+Old Building hallway
+>e
+Mailroom
+You are in a mailroom.  There are many bins where the mail is usually
+kept.  The exit is to the west.
+>x bins
+All of the bins are empty.  Looking closely you can see that there
+are names written at the bottom of each bin, but most of them are
+faded away so that you cannot read them.  You can only make out three
+names:
+                   Jeffrey Collier
+                   Robert Toukmond
+                   Thomas Stock
+
+
+Could it be? Does one of these people have an account on pokey?
+Actually, Robert Toukmond does. And he has an easy password: his first name.
+So let's go log in:
+
+>w
+Old Building hallway
+>w
+Computer room
+The panel lights are flashing in a seemingly organized pattern.
+>type
+
+
+UNIX System V, Release 2.2 (pokey)
+
+login: toukmond
+password: robert
+
+Welcome to Unix
+
+Please clean up your directories.  The filesystem is getting full.
+Our tcp/ip link to gamma is a little flaky, but seems to work.
+The current version of ftp can only send files from your home
+directory, and deletes them after they are sent!  Be careful.
+
+Note: Restricted bourne shell in use.
+
+$
+
+
+Very interesting. The dunnet game has a bourne shell UNIX simulation inside of
+it! The $ symbol indicates that we are at a UNIX prompt inside the game.
+
+Meanwhile, ironically, we've simulating the dunnet game inside of UNIX. But we
+have done enough of that in the previous homeworks. So this time, we'll be
+using a cshell script to implement the part of the game that actually is UNIX. 
+Let's see some more:
+
+$ l
+l: not found.
+$ pwd
+/usr/toukmond
+$
+
+
+See, the "l" command doesn't work anymore, because we are simulating UNIX.
+But the pwd command does work. The directory "toukmond" is the user id that
+we logged in as. Let's see what happens if we step away from the computer and
+then come back to it:
+
+$ exit
+
+You step back from the console.
+
+>w
+Old Building hallway
+>w
+Computer room
+The panel lights are flashing in a seemingly organized pattern.
+>type
+$
+
+
+See that when we come back, we just get the "$" prompt. We don't have to log
+back in, because we never logged out -- we just stepped away from the console.
+Let's see some more:
+
+$ ls
+total 467
+drwxr-xr-x  3 toukmond restricted      512 Jan 1 1970 .
+drwxr-xr-x  3 root     staff          2048 Jan 1 1970 ..
+-rwxr-xr-x  1 toukmond restricted    10423 Jan 1 1970 ls
+-rwxr-xr-x  1 toukmond restricted    10423 Jan 1 1970 ftp
+-rwxr-xr-x  1 toukmond restricted    10423 Jan 1 1970 echo
+-rwxr-xr-x  1 toukmond restricted    10423 Jan 1 1970 exit
+-rwxr-xr-x  1 toukmond restricted    10423 Jan 1 1970 cd
+-rwxr-xr-x  1 toukmond restricted    10423 Jan 1 1970 pwd
+-rwxr-xr-x  1 toukmond restricted    10423 Jan 1 1970 rlogin
+-rwxr-xr-x  1 toukmond restricted    10423 Jan 1 1970 ssh
+-rwxr-xr-x  1 toukmond restricted    10423 Jan 1 1970 uncompress
+-rwxr-xr-x  1 toukmond restricted    10423 Jan 1 1970 cat
+-rwxr-xr-x  1 toukmond restricted        0 Jan 1 1970 paper.o.Z
+-rwxr-xr-x  1 toukmond restricted        0 Jan 1 1970 lamp.o
+-rwxr-xr-x  1 toukmond restricted        0 Jan 1 1970 shovel.o
+-rwxr-xr-x  1 toukmond restricted        0 Jan 1 1970 key.o
+$
+
+
+I want to first look at the 3 files that end with ".o". They are "lamp.o",
+"shovel.o", and "key.o". Let's try to see just them:
+
+$ ls *.o
+No such directory.
+$ ls ..
+total 4
+drwxr-xr-x  3 toukmond restricted      512 Jan 1 1970 .
+drwxr-xr-x  3 root     staff          2048 Jan 1 1970 ..
+-rwxr-xr-x  1 toukmond restricted        0 Jan 1 1970 toukmond
+$
+
+
+The above reminds us that we aren't really using UNIX, just a simple
+simulation of it. The ls command only allows a directory for its argument.
+Getting back to the three .o files, "lamp.o", "shovel.o", and "key.o" are
+actually the three items in my inventory. Let's see that:
+
+$ exit
+
+You step back from the console.
+
+>i
+You currently have:
+A lamp
+A shovel
+A brass key
+>
+
+
+This is a very strange aspect of the dunnet game. It is self-aware of being a
+computer game. What you do "in the real world" affects the UNIX environment.
+For example, let's see what happens if I drop the shovel:
+
+>drop shovel
+>type
+$ ls
+total 467
+drwxr-xr-x  3 toukmond restricted      512 Jan 1 1970 .
+drwxr-xr-x  3 root     staff          2048 Jan 1 1970 ..
+-rwxr-xr-x  1 toukmond restricted    10423 Jan 1 1970 ls
+-rwxr-xr-x  1 toukmond restricted    10423 Jan 1 1970 ftp
+-rwxr-xr-x  1 toukmond restricted    10423 Jan 1 1970 echo
+-rwxr-xr-x  1 toukmond restricted    10423 Jan 1 1970 exit
+-rwxr-xr-x  1 toukmond restricted    10423 Jan 1 1970 cd
+-rwxr-xr-x  1 toukmond restricted    10423 Jan 1 1970 pwd
+-rwxr-xr-x  1 toukmond restricted    10423 Jan 1 1970 rlogin
+-rwxr-xr-x  1 toukmond restricted    10423 Jan 1 1970 ssh
+-rwxr-xr-x  1 toukmond restricted    10423 Jan 1 1970 uncompress
+-rwxr-xr-x  1 toukmond restricted    10423 Jan 1 1970 cat
+-rwxr-xr-x  1 toukmond restricted        0 Jan 1 1970 paper.o.Z
+-rwxr-xr-x  1 toukmond restricted        0 Jan 1 1970 lamp.o
+-rwxr-xr-x  1 toukmond restricted        0 Jan 1 1970 key.o
+$
+
+
+See that? The shovel is gone.
+Let's think about the other files. They are UNIX commands, like "ls" and "cat".
+They are, in fact, the only commands that pokey can execute. (This game was
+written in 1982, so the weak command set of pokey is not so unreasonable.) Now
+I think it would have made more sense to put these commands under /bin, but
+that's not what the game does, so we'll copy the game.
+
+Let's try running each of these commands. First, each without any arguments:
+
+$ cat
+Usage: cat <ascii-file-name>
+$ uncompress
+Usage: uncompress <filename>
+$ rlogin
+Usage: rlogin <hostname>
+$ ssh
+Usage: rlogin <hostname>
+$ pwd
+/usr/toukmond
+$ cd
+Usage: cd <path>
+$ echo
+
+$ ftp
+ftp: hostname required on command line.
+$
+
+
+The above outputs indicate what we will want to produce in these cases. (I
+didn't run exit and ls, because we've already seen those two.) Notice also
+that ssh is just another name for rlogin. It behaves the same and we'll say
+nothing more about it.
+
+Let's now give each a meaningless argument, and see what they do:
+
+$ cat xyzzy
+File not found.
+$ uncompress xyzzy
+Uncompress command failed.
+$ rlogin xyzzy
+No such host.
+$ pwd xyzzy
+/usr/toukmond
+$ cd xyzzy
+No such directory.
+$ echo xyzzy
+xyzzy
+$ ftp xyzzy
+ftp: Unknown host.
+$ ls xyzzy
+No such directory.
+$ exit xyzzy
+
+You step back from the console.
+
+>type
+$
+
+
+The above outputs are also what we will want to produce in these cases. We
+notice that pwd and exit both worked, because they ignored the argument. Echo
+also worked, in the sense that it printed what you would expect.
+
+Let's now look at each command, in-depth, with various arguments that are
+meaningful to each, and see what they do. (We'll skip exit and pwd, since we
+now know that they ignore arguments):
+
+$ echo
+
+$ echo xyzzy
+xyzzy
+$ echo Hello world
+Hello world
+$ echo "Hello world"
+"Hello world"
+$
+
+
+From the above, we see that echo behaves as expected, except that it prints
+the quotation marks in the last case. Note that it works with any number of
+arguments.
+
+Now let's look at cat:
+
+$ cat
+Usage: cat <ascii-file-name>
+$ cat xyzzy
+File not found.
+$ cat ls
+Ascii files only.
+$ cat lamp.o
+Ascii files only.
+$ cat ls xyzzy
+Ascii files only.
+$ cat xyzzy ls
+File not found.
+$ cat ./lamp.o
+cat: only files in current directory allowed.
+$
+
+From the above, we see that cat knows whether you have provided the name of a
+file that doesn't exist (like xyzzy) or whether the file does exist (like ls
+and lamp.o). We also see that cat can only display Ascii files (and there are
+no Ascii files in this directory). We also see that it ignores all arguments
+after the first. Finally, we see that the implementation of cat is very simple.
+"cat ./lamp.o" was denied, even though it is perfectly valid UNIX syntax. So
+our version of cat simply won't allow any "/" in its argument. If it gets one,
+it will print the above error message.
+
+
+Next, let's look at uncompress:
+
+$ uncompress
+Usage: uncompress <filename>
+$ uncompress xyzzy
+Uncompress command failed.
+$ uncompress lamp.o
+Uncompress command failed.
+$ uncompress xyzzy lamp.o
+Uncompress command failed.
+$
+
+
+The above shows that uncompress just gives one of two outputs, depending on
+whether an argument is given. (But, you might protest: "The ls output had also
+indicated a file called paper.o.z, which sounds compressed." The answer to your
+question is, first, yes that file can be uncompressed. But, second, that will
+already have happened by the time we get to the endgame portion that we are
+coding in this assignment. So, FOR US, there are no files to uncompress; and
+so we can only get one of the above two messages when we run uncompress.)
+
+
+If you look at line #108, above, you will see that the computer's login message
+had mentioned a tcp/ip connection to "gamma". We'll use that knowledge in the
+following.
+
+Now, let's look at ftp:
+
+$ ftp
+ftp: hostname required on command line.
+$ ftp xyzzy
+ftp: Unknown host.
+$ ftp xyzzy gamma
+ftp: Unknown host.
+$ ftp gamma
+ftp: host not responding.
+$ ftp gamma xyzzy
+ftp: host not responding.
+$ 
+
+
+From the above, we see that ftp ignores everything after the first argument.
+The ftp command gives one of only three messages, depending on whether an
+argument is provided, and whether that argument's name is "gamma". (What is
+the point of a command that does nothing? Well, it does do something in a
+different part of the game which we aren't concerned about.)
+
+
+Now, let's look at rlogin:
+
+$ rlogin
+Usage: rlogin <hostname>
+$ rlogin xyzzy
+No such host.
+$ rlogin xyzzy gamma
+No such host.
+$ rlogin gamma
+Host not responding.
+$ rlogin gamma xyzzy
+Host not responding.
+$
+
+
+From the above, we see that rlogin is like ftp. It ignores all arguments after
+the first and it gives a different message depending on whether that argument
+is "gamma". (In fact it has a fourth output if you try logging in to "endgame",
+but that will be discussed later in this README file...)
+
+
+Now we get to a more complex one. Let's look at ls:
+
+$ ls
+total 467
+drwxr-xr-x  3 toukmond restricted      512 Jan 1 1970 .
+drwxr-xr-x  3 root     staff          2048 Jan 1 1970 ..
+-rwxr-xr-x  1 toukmond restricted    10423 Jan 1 1970 ls
+-rwxr-xr-x  1 toukmond restricted    10423 Jan 1 1970 ftp
+-rwxr-xr-x  1 toukmond restricted    10423 Jan 1 1970 echo
+-rwxr-xr-x  1 toukmond restricted    10423 Jan 1 1970 exit
+-rwxr-xr-x  1 toukmond restricted    10423 Jan 1 1970 cd
+-rwxr-xr-x  1 toukmond restricted    10423 Jan 1 1970 pwd
+-rwxr-xr-x  1 toukmond restricted    10423 Jan 1 1970 rlogin
+-rwxr-xr-x  1 toukmond restricted    10423 Jan 1 1970 ssh
+-rwxr-xr-x  1 toukmond restricted    10423 Jan 1 1970 uncompress
+-rwxr-xr-x  1 toukmond restricted    10423 Jan 1 1970 cat
+-rwxr-xr-x  1 toukmond restricted        0 Jan 1 1970 paper.o.Z
+-rwxr-xr-x  1 toukmond restricted        0 Jan 1 1970 lamp.o
+-rwxr-xr-x  1 toukmond restricted        0 Jan 1 1970 key.o
+$ ls ..
+total 4
+drwxr-xr-x  3 root     staff           512 Jan 1 1970 .
+drwxr-xr-x  3 root     staff          2048 Jan 1 1970 ..
+drwxr-xr-x  3 toukmond restricted      512 Jan 1 1970 toukmond
+$ ls ../..
+total 4
+drwxr-xr-x  3 root     staff           512 Jan 1 1970 .
+drwxr-xr-x  3 root     staff          2048 Jan 1 1970 ..
+drwxr-xr-x  3 root     staff          2048 Jan 1 1970 usr
+drwxr-xr-x  3 root     staff          2048 Jan 1 1970 rooms
+$ ls /
+total 4
+drwxr-xr-x  3 root     staff           512 Jan 1 1970 .
+drwxr-xr-x  3 root     staff          2048 Jan 1 1970 ..
+drwxr-xr-x  3 root     staff          2048 Jan 1 1970 usr
+drwxr-xr-x  3 root     staff          2048 Jan 1 1970 rooms
+$ ls /..
+total 4
+drwxr-xr-x  3 root     staff           512 Jan 1 1970 .
+drwxr-xr-x  3 root     staff          2048 Jan 1 1970 ..
+drwxr-xr-x  3 root     staff          2048 Jan 1 1970 usr
+drwxr-xr-x  3 root     staff          2048 Jan 1 1970 rooms
+$ ls /../../../././//./usr/../..
+total 4
+drwxr-xr-x  3 root     staff           512 Jan 1 1970 .
+drwxr-xr-x  3 root     staff          2048 Jan 1 1970 ..
+drwxr-xr-x  3 root     staff          2048 Jan 1 1970 usr
+drwxr-xr-x  3 root     staff          2048 Jan 1 1970 rooms
+$ ls / xyzzy
+total 4
+drwxr-xr-x  3 root     staff           512 Jan 1 1970 .
+drwxr-xr-x  3 root     staff          2048 Jan 1 1970 ..
+drwxr-xr-x  3 root     staff          2048 Jan 1 1970 usr
+drwxr-xr-x  3 root     staff          2048 Jan 1 1970 rooms
+$ ls ls
+No such directory
+$
+
+
+The final test, "ls ls", reminds us of what we saw already back on lines #179
+& #189, the "ls" command on pokey only accepts directory arguments, not files.
+The test before that, "ls / xyzzy" shows that ls ignores additional arguments.
+The other tests show that directories really work. The line "ls /.." might seem
+like an error, but go try it on your own UNIX system: it works and just does
+the same thing as "ls ..". (In other words, attempts to go below the root just
+stay in the root.) The line "/../../../././//./usr/../.." might also seem like
+an error, but again, go try it: it works.
+
+
+The last of the commands is cd:
+$ cd
+Usage: cd <path>
+$ cd -
+No such directory.
+$ cd ~
+No such directory.
+$ cd ls
+No such directory.
+$ cd xyzzy
+No such directory.
+$ cd ../toukmond
+$ pwd
+/usr/toukmond
+$ cd .. xyzzy
+/usr
+$ pwd
+/usr
+$ cd ../../../../usr/../..
+$ pwd
+/
+$
+
+
+From the above, the first three ("cd", "cd -", and "cd ~") show that the cd
+command is simple and not like real UNIX. But it is what we will implement.
+The next three ("cd ls", "cd xyzzy", "cd ../toukmond") show that cd does behave
+mostly as we would expect. The next ("cd .. xyzzy") shows that cd ignores any
+arguments after the first. Finally, "cd ../../../../usr/../.." shows that "cd"
+is implemented like "ls", allowing complicated paths and not getting confused
+by trying to go below the root directory.
+
+
+OK. So that's it. Except that it isn't. There are a few more cases to consider.
+
+First additional point: "ls" and "cd" don't do the following correctly:
+$ cd ../../../../usr/.///.
+$ pwd
+/
+$
+If you try this in UNIX you'll get the answer "/usr" (that is, assuming that
+you have a directory "usr" in the root directory).
+Solution: I don't see a reason why we should try to reproduce the wrong answer
+of "/" when the code can more easily create the right answer of "/usr". So, in
+the case of complicated paths, our code will match to real UNIX, not dunnet.
+
+
+Second additional point: we need to look around the directories more:
+$ ls /
+total 4
+drwxr-xr-x  3 root     staff           512 Jan 1 1970 .
+drwxr-xr-x  3 root     staff          2048 Jan 1 1970 ..
+drwxr-xr-x  3 root     staff          2048 Jan 1 1970 usr
+drwxr-xr-x  3 root     staff          2048 Jan 1 1970 rooms
+$ ls /rooms
+drwxr-xr-x  3 root     staff           512 Jan 1 1970 .
+drwxr-xr-x  3 root     staff          2048 Jan 1 1970 ..
+drwxr-xr-x  3 root     staff           512 Jan 1 1970 computer-room
+drwxr-xr-x  3 root     staff           512 Jan 1 1970 mailroom
+drwxr-xr-x  3 root     staff           512 Jan 1 1970 old-building-hallway
+drwxr-xr-x  3 root     staff           512 Jan 1 1970 building-front
+drwxr-xr-x  3 root     staff           512 Jan 1 1970 ne-sw-road
+drwxr-xr-x  3 root     staff           512 Jan 1 1970 bear-hangout
+drwxr-xr-x  3 root     staff           512 Jan 1 1970 se-nw-road
+drwxr-xr-x  3 root     staff           512 Jan 1 1970 fork
+drwxr-xr-x  3 root     staff           512 Jan 1 1970 e-w-dirt-road
+drwxr-xr-x  3 root     staff           512 Jan 1 1970 dead-end
+drwxr-xr-x  3 root     staff           512 Jan 1 1970 hidden-area
+$
+
+
+If you look at the above, you will see that each of the rooms that we have
+visited has a directory. Let's look at one of them:
+
+$ ls /rooms/computer-room
+total 4
+drwxr-xr-x  3 root     staff           512 Jan 1 1970 .
+drwxr-xr-x  3 root     staff          2048 Jan 1 1970 ..
+-rwxr-xr-x  3 root     staff          2048 Jan 1 1970 description
+-rwxr-xr-x  1 toukmond restricted        0 Jan 1 1970 shovel.o
+
+Notice that? In computer-room there is a shovel object. But remember, I am in
+the computer room, and I dropped a shovel here, back on line #209, and that had
+caused the shovel to disappear from /usr/toukmond, back on line #227.
+
+We also notice that there is another file, named "description". That will be
+the topic of the next point...
+
+
+Third additional point: the description file is an Ascii file that you can cat.
+$ cd /rooms/computer-room
+$ ls
+total 4
+drwxr-xr-x  3 root     staff           512 Jan 1 1970 .
+drwxr-xr-x  3 root     staff          2048 Jan 1 1970 ..
+-rwxr-xr-x  3 root     staff          2048 Jan 1 1970 description
+$ cat description
+You are in a computer room.  It seems like most of the equipment has
+been removed.  There is a VAX 11/780 in front of you, however, with
+one of the cabinets wide open.  A sign on the front of the machine
+says: This VAX is named ‘pokey’.  To type on the console, use the
+‘type’ command.  The exit is to the east.
+$
+
+See that the above description is the text that displays the first time you
+enter the room (ie, the .description?2 file in our implementation).
+
+
+Fourth additional point: Rooms add to the directory as you visit them. Every
+one of the subdirectories in /rooms is a place that we had to visit in order to
+turn on the computer. Later on in the game, when we look at /rooms again, we'll
+find additional rooms for all of the new places we will have visited by then.
+
+
+Fifth additional point: There's an exception to the above point: a hidden-area.
+Although we haven't been there, it displays. Look again at the rooms directory:
+$ ls /rooms
+drwxr-xr-x  3 root     staff           512 Jan 1 1970 .
+drwxr-xr-x  3 root     staff          2048 Jan 1 1970 ..
+drwxr-xr-x  3 root     staff           512 Jan 1 1970 computer-room
+drwxr-xr-x  3 root     staff           512 Jan 1 1970 mailroom
+drwxr-xr-x  3 root     staff           512 Jan 1 1970 old-building-hallway
+drwxr-xr-x  3 root     staff           512 Jan 1 1970 building-front
+drwxr-xr-x  3 root     staff           512 Jan 1 1970 ne-sw-road
+drwxr-xr-x  3 root     staff           512 Jan 1 1970 bear-hangout
+drwxr-xr-x  3 root     staff           512 Jan 1 1970 se-nw-road
+drwxr-xr-x  3 root     staff           512 Jan 1 1970 fork
+drwxr-xr-x  3 root     staff           512 Jan 1 1970 e-w-dirt-road
+drwxr-xr-x  3 root     staff           512 Jan 1 1970 dead-end
+drwxr-xr-x  3 root     staff           512 Jan 1 1970 hidden-area
+$ cd /rooms/hidden-area
+$ ls
+total 4
+drwxr-xr-x  3 root     staff           512 Jan 1 1970 .
+drwxr-xr-x  3 root     staff          2048 Jan 1 1970 ..
+-rwxr-xr-x  3 root     staff          2048 Jan 1 1970 description
+-rwxr-xr-x  1 toukmond restricted        0 Jan 1 1970 bracelet.o
+$ cat description
+You are in a well-hidden area off to the side of a road.  Back to the
+northeast through the brush you can see the bear hangout.
+$
+
+See, it's a puzzle. The bear hangout is where I dropped the food. If I go back
+there I can get a treasure from a hidden area apparently to its southwest:
+$ exit
+
+You step back from the console.
+
+>e
+Old Building hallway
+>s
+Building front
+>sw
+NE/SW road
+>sw
+Fork
+>se
+SE/NW road
+>se
+Bear hangout
+>se
+You can't go that way.
+>sw
+Hidden area
+There is an emerald bracelet here.
+>get bracelet
+Taken.
+>ne
+Bear hangout
+>nw
+SE/NW road
+>nw
+Fork
+>ne
+NE/SW road
+>ne
+Building front
+>ne
+Old Building hallway
+>w
+Computer room
+The panel lights are flashing in a seemingly organized pattern.
+>
+Note: we are not implementing this hidden area. I am just explaining why it
+appears even though we haven't been there before (the reason is: it is a
+special puzzle).
+
+
+Sixth additional point: There is a score:
+>score
+You have scored 0 out of a possible 90 points.
+>i
+You currently have:
+A lamp
+A brass key
+A bracelet
+>
+Notice that we have 0 points, despite having obtained the bracelet. This is
+because points are made when you put treasures in the treasure room, not when
+you pick them up. Items are sent to the treasure room by putting them in
+special places. (In the end part of the game, the special place is the garbage
+can in the museum subway stop, located at /museum/n/n.)
+
+
+Seventh additional point: Besides gamma, we can also connect to the endgame
+computer. (We've seen this computer in the prior homework, at museum/n/n/d/ne.)
+>type
+$ rlogin endgame
+You have scored 0 out of a possible 90 points.
+You have not achieved enough points to connect to endgame.
+$ ftp endgame
+ftp: Unknown host.
+$
+From the above, we see that endgame doesn't work with ftp. But it does work
+with rlogin (we just need 90 points first).
+
+
+Eight additional point: the ls display has date stamps and file ownerships:
+$ ls /../../.././././//.//../../usr
+total 4
+drwxr-xr-x  3 root     staff     512 Jan  1  1970 .
+drwxr-xr-x  3 root     staff    2048 Jan  1  1970 ..
+drwxr-xr-x  1 toukmond restricted  0 Jan  1  1970 toukmond
+$
+We'll need to use the "touch" UNIX command to change the dates to Jan 1 1970
+(By the way, this date is called in UNIX the beginning date of the epoch. It
+means that the file timestamps are all 0. This will become a problem on January
+19, 2038. https://en.wikipedia.org/wiki/Unix_time)
+We could also use chown and chgroup to fix the ownerships, but we would need
+to add toukmond as a user. So, instead, we'll use sed to change these parts.
+
+
+Ninth additional point: for whatever reason (probably a bug), the ssh command
+disappears from the /usr/toukmond directory by the time that we reach the end
+part of the game. So we won't actually implement it anyway, rlogin does the
+same thing...)
+
+
+Alright. That completes the background tutorial on how pokey's UNIX works.
+We'll need to implement these things, but for a later part of the game.
+The information on how to do that will be posted soon.

@@ -1,0 +1,930 @@
+                              UNIX Programming
+                      Avengers Part 4: Endgame| sed \
+                         's/g.../t/;s/./ssignm/'
+                           
+
+Due: Friday, May 14  at  11:59 pm.
+
+Submission method: You will post to the course website, just like the previous
+                   assignment. 
+
+Submission rules: I REQUIRE you to FOLLOW THESE RULES:
+
+                  1. Submit one file named "<your student ID>_pa4.tar"
+                     Inside of this tar file will be a subdirectory named
+                     <your student ID>, containing two files: "pa4" and "type".
+                   
+                  2. Submissions made after the deadline will be ignored.
+                     (That means: no late submissions on this assignment.)
+                     (By the way, assignments are a significant part of your
+                     grade. So start early and ask questions.)
+                  
+                  This is a large class. Unless each of you follows the above
+                  rules, the TAs' work becomes so hard. So I INSIST that you 
+                  FOLLOW the above rules. If you don't, we won't accept your 
+                  homework.
+
+                  If you have questions about these rules, you may post your 
+                  questions to the course website.
+
+
+Getting help:   - The Professor has office hours on Monday from 12:30-2:30, 
+                  and on Friday from 10:00-12:00, in room 9037.  He can also 
+                  be reached by email.
+                - The TAs are also available to answer your questions.
+                - Questions about the assignment can be posted to the 
+                  Discussion Forum.
+                - You may also discuss the ideas of the assignment with your
+                  classmates. Such discussions can be quite helpful to your 
+                  learning -- IF you ONLY talk about the general concepts of
+                the steps of the assignment.
+                - If, however, you tell other students the specific details
+                  of your implementation, then you are not helping each other
+                  to learn; you are just doing the work for them.
+                    In other words, you are cheating. You CANNOT show another
+                  student ANY part of the answer to the assignment.
+
+Cheating policy:  We encourage students to form study groups. But this does not
+                  mean sharing code. If students are found to be sharing work,
+                  they can receive a 0 for the entire course, or worse.
+                  It is cheating to let another student see your work, or to 
+                  let them look over your shoulder when your code is on the
+                  screen.
+                  A good way to know you cheated: if you have code that is in
+                  your solution just because another student told you to put
+                  it there, but you don't actually understand it.
+                  If you are still unsure, you can ask the TA for more
+                  explanation.
+                  We always look for evidence of cheating, so don't do it.
+                  (In any event, even if you do not get caught, those who 
+                  copy the homework will not learn the material, so they 
+                  will fail the exam.)
+
+Most Important    The programming assignments are a large part of the grade.
+Things to Know:   This large point value means that, if you don't do them, you
+                  may fail.
+                  The large point value also explains why the policy against
+                  cheating is strictly enforced.
+                
+
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+ - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+Assignment steps:
+
+1. Read the provided READMEprimer file, to familiarize yourself with how the
+   computer in the dunnet game behaves.
+   
+2. Run "cat HW4/README|sed 's/1 Jan/0 Jan/' > READMEwalkthrough" to fix a typo.
+   Then read READMEwalkthrough, to see the expected behavior of the game.
+   
+3. Read the provided READMEnewAliases file, to see how to code the new parts of
+   the pa4 file.
+
+4. Read this current READMEtype file, to see how to code the script named type.
+
+ - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+Note, in the following, you will see things like "__1__ this uses find" or
+"__2__ this uses grep". In each and every case, the indicated __X__ must be a
+single unix command (specifically the one indicated), and not a pipe of several
+commands. Now, if we see something like "__3__ This uses sed" then the answer
+must be a single execution of sed, but recognize that a sed program can have
+multiple one-letter sed commands inside of it.
+
+
+Line by line discussion of the type script:
+
+Lines 1-5: #!/usr/bin/tcsh
+           cd ~/G
+           rm -r ~/R/* >& ~/X
+           rm ~/G/pokey/root/usr/toukmond/*.o >& ~/X
+           cd rooms
+
+           Note that the ">&" syntax was used, because this is csh. This
+           differs from the "&>" syntax used in the pa4 file. This difference
+           is because the pa4 file is in bash.
+           (Note that these lines contain an "rm -r ~/R/*" which is dangerous
+           if your R file isn't a link to the rooms on pokey. This link is
+           created by pa4 (and also by pa3into4).)
+
+Lines 6-11: These lines create the directories and files for "/rooms" on pokey.
+
+  Line 6: 
+	find . -name *[12] | |xargs grep ".*" |  sed -n "/1:/p" | tr " " "-" |  sed "s/^.*:/mkdir /" > ~/R/tmpa
+  This line creates "tmpa", a script which makes all of the directories for
+  visited rooms on pokey.
+
+   __1__ This uses "find" to locate, within subdirectories, all of the hidden
+         files that end in a 1 or 2. Note:
+         o Line 5 has put us in the ~/HW4/rooms directory. This contains the
+           subdirectories "endgame", "museum", "street", and "vermont". It
+           should not be confused with the ~/HW4/pokey/root/rooms.
+         o Each room has one hidden file ending with a 1, and one hidden file
+           ending with a 2. (The file ending with a 2 might be .done2, and it
+           might be .description?2. But the point is that there is always
+           exactly one such file.)
+
+   __2__ This uses "grep" to connect the file contents to the file names. What
+         does that mean? Well, Let's consider an example. Without giving you
+         the answer for __1__, let's get a similar list of some files, in this
+         case with ls (note: YOU will not use ls to achieve __1__):
+     % ls ../j*
+     ../jarHole  ../jarImpact
+     % ls ../j* | __2__
+     ../jarHole:The explosion causes a hole to open up in the ground, which you
+     ../jarHole:*almost* fall through.
+     ../jarImpact:As the jar impacts the ground it explodes into many pieces.
+     %
+         Notice that the above __2__ has caused the file contents to display
+         after the file names (with a ":" to separate the two parts).
+
+   __3__ This uses sed to create a list of all of the input lines that come
+         from files whose names end in "1", but only for rooms that have been
+         visited. To clarify, here is the correct output from __3__, at the
+         point where you start the game and haven't visited any new rooms:
+         % __1__ | __2__ | __3__
+         ./museum/n/n/u/w/.descriptionG1:Classroom
+         ./museum/n/n/u/w/s/.descriptionH1:Maintenance room
+         ./museum/n/n/u/w/w/.descriptionI1:Marine life area
+         ./museum/n/n/u/w/w/s/.descriptionJ1:Geological display
+         ./museum/n/n/u/w/w/s/w/.descriptionK1:Museum lobby
+         ./museum/n/n/u/w/w/s/w/s/.descriptionL1:Museum entrance
+         ./museum/n/n/u/w/w/s/w/s/se/.descriptionM1:Main-Maple intersection
+         ./museum/n/n/u/w/w/s/w/s/se/s/.descriptionN1:Post office
+         ./museum/n/n/u/w/w/s/w/s/se/s/e/.descriptionO1:Meadow
+         ./museum/n/n/u/w/w/s/w/s/se/s/e/s/.descriptionP1:Old Building hallway
+         ./museum/n/n/u/w/w/s/w/s/se/s/e/s/w/.descriptionQ1:Computer room
+         ./street/.descriptionS1:Fourth-Vermont intersection
+
+         There are several points to note about the implementing of __3__:
+         o The rooms that have been visited are the ones that have a file
+           named .done2.
+         o The .done2 file might be longer than one line, and this will have
+           the effect of generating multiple output lines from __2__ (just
+           like ../jarHole created 2 output lines, above).
+         o The .description*1 line is always one line long.
+         o For each room, the .description*1 line will come before the .d*2
+           lines.
+         o For full points, __3__ should be AS SHORT AS POSSIBLE.
+  
+   __4__ This uses one tr command to make the input lower case, and to also
+         turn any spaces into dash symbols ("-"). To clarify, here are the last
+         lines of output at the point where you start the game and haven't
+         visited any new rooms:
+         % __1__ | __2__ | __3__ | __4__ | tail -3
+         ./museum/n/n/u/w/w/s/w/s/se/s/e/s/.descriptionp1:old-building-hallway
+         ./museum/n/n/u/w/w/s/w/s/se/s/e/s/w/.descriptionq1:computer-room
+         ./street/.descriptions1:fourth-vermont-intersection
+         %
+
+   __5__ This uses sed to replace everything up to the ":" with "mkdir ".
+         As indicated above, the output then goes to ~/R/tmpa. This temporary
+         file is a script that makes the directories for all of the rooms that
+         have been visited.
+
+
+  Line 7: 
+	find . -name *[12] | |xargs grep ".*" |  sed "s/.*1://;TJ;y~ABCDEFGHIJKLMNOPQRSTUVWXYZ/~abcdefghijklmnopqrstuvwxyz-~;h;d;:J;/.description/z;s/:/echo :/;G;s/\n/\" >> /;s~.*$~&/description~" > ~/R/tmpb
+  This line creates "tmpb", a script which makes all of the description files
+  within the visited rooms on pokey.
+
+   __1__ This is the same as __1__ on Line 6.
+   
+   __2__ This is the same as __2__ on Line 6.
+
+   __6__ This is a sed program to create a script to create the description
+         files in the rooms. It has 11 parts:
+        "s/.*1://"
+         1: A command to delete the file name and the : for names ending in 1.
+		"TJ"
+         2: A command to jump to a label if this is NOT a line for a file name
+            ending in 1. Note: this step ISN'T allowed to have any "/" or "\"
+            symbols.
+		"y~ABCDEFGHIJKLMNOPQRSTUVWXYZ/~abcdefghijklmnopqrstuvwxyz-~"
+         3: At this point, we know that the pattern space holds the contents of
+            a .description?1 file. We also know that that .description?1 file's
+            contents are very similar to pokey's room names -- we just have to
+            make it lower cased and turn all spaces and forward slashes into 
+            dashes.
+            That is what the sed command on this step 3 does.
+		h
+         4: A command to save the pattern space (ie, the subdirectory's name)
+            into the hold space.
+		d
+		 5: A command to delete the pattern space and to end the program for 
+            this line of input (meaning it will start from the beginning, for
+            the next line of input).
+		:J
+         6: This is the label you jumped to, back on step 2.
+            At this point, we know that the pattern space holds a line that is
+            for one of the files whose name ends in a 2.  (Recall that there
+            can be more than one such line created from one .*2 file.)
+        /.description/d
+		 7. This deletes any lines that are .description files rather than 
+            .done files.
+		s/:/echo \"/
+         8. At this point, we know that the pattern space relates to the 
+            description of a room that has been visited.
+            This command turns everything up the ":" into 'echo "'. The reason
+            we do this is because the text after the ":" is a line of text that
+            we want to send to a description file-- and this will eventually be
+            accomplished by running the script that we are creating here on
+            __6__, which will execute the echo that we are creating here on
+            step 8.
+		G
+         9. This command appends the hold space to the pattern space.
+		s/\n/\" >> /
+        10. This command replace the newline character in the pattern space
+            with a '" >> '. The reason for the quote (") is to complete the 
+            echo begun on step 8. The reason for the ">>" is to accommodate
+            .done2 files that contain more than one line.
+		s~.*~&/description~
+        11. This append the text "/description" to the end of the pattern
+            space. The reason for this is that the pattern space was holding
+            the subdirectory name at its end. So adding a "/description" will
+            complete the file name that we want to echo into.
+
+  Lines 8 & 9:
+  These two lines create "tmpc", a script which makes all of the *.o files
+  within the visited rooms on pokey. But how to do it?
+   1. We need to know where these objects are, within ~/G/rooms.
+
+      The find command can do this: any file inside of ~/G/rooms subdirectories
+      is the file of an object, when it ends in a letter. This distinguishes
+      objects from description files, which always end in a number.
+      Note that this does not distinguish moveable files from immovable ones.
+      A review of READMEprimer reminds us that only movable objects create .o
+      files. For example, /rooms/classroom DOESN'T contain a blackboard.o file.
+      Therefore, after using find, we'll still need to filter the results, by
+      using sed.
+      
+   2. We need to know where to put these objects, within ~/G/pokey/root/rooms.
+
+      Those directory names are found in the .description?1 files (if we make
+      the contents lower-case, and turn spaces and slashes into dashes).
+      The find command can do this: any file inside of ~/G/rooms subdirectories
+      is the file of a room's name, when it ends in the number 1.  Then, after
+      finding these room names, tr can change the spaces, slashes, and capital
+      letters.
+ 
+   3. We need to actually put .o files into the rooms of ~/G/pokey/root/rooms.
+
+      This is tricky, because we need to line up the outputs of the above-two
+      finds, so that objects can be matched to the names of the rooms that
+      containing them.
+
+      The first part of accomplishing this is to just use one find for both
+      purposes. A problem with this, however, is that find displays depth-first
+      rather than breadth-first. This means that subdirectories might list in
+      between the description?1 file and the object files in that same room.
+      Another problem is that the description files have to be passed into cat
+      before we can know the room names, but the object files don't pass into
+      cat. This complexity is the reason why it takes two lines to handle all
+      of this. Line 8 will make script to do the find and the cat. Line 9 will
+      run that script in order to make a new script for making the .o file in
+      the right directories. The details are as follows:
+
+
+	find . -name "*[1a-z]"  | grep  -v -e "\(/[.bcdfgst][liarkw][inabostre][gscifphebltk].*$\)\|\(/.\{1,2\}$\)" -e "^\./[^/]*$" | sed ":J;s~/\([^x]\{1,2\}\)/~/x\1/~;tJ" | sort | sed "s/x//g;/.des/s/\(.*\)/cat \1|tr A-Z\/\  a-z-/; s~^\.\/.*\/\(.*\)~echo \1.o~"
+  Line 8: __7__ | __8__ | __9__ | __10__ | __11__ > ~/R/tmp
+  This line creates "tmp", a script which can be run to make a list of all of
+  the room names and all of the objects in those rooms. The objects will list
+  directly below the containing rooms. This list will include rooms that have
+  not been visited, but we'll deal with that on Line 9. Here are the steps:
+	find . -name "*[1a-z]" -type f
+   __7__ This uses "find" to locate, within subdirectories, all files ending
+         in either a 1 or a letter. What then is the output of this? Well, the
+         .description?1 files will be found. And the objects will be found. For
+         example (Note: the \ before the ! is only used in cshell):
+          % cd ~/G/rooms; __7__ | sed '32,34\!d'
+           ./museum/n/n/d
+           ./museum/n/n/d/.descriptionD1
+           ./museum/n/n/d/amethyst
+          % cat ./museum/n/n/d/.descriptionD1
+           Bottom of subway stairs
+          %
+          
+         The above output looks very useful. The amethyst is one of the objects
+         that needs a .o file. And the .descriptionD1 file holds the essence of
+         the name of the directory to put it into. Importantly, the relevant
+         description file came right before the object, so we are able to
+         reason about where to put the object: Put "amethyst.o" into the
+         directory "~/G/pokey/root/rooms/bottom-of-subway-stairs").
+
+         One small problem with the above is that we may not have visited this
+         room yet. In that case the subdirectory will not exist, because the
+         script created on Line 6 will not, when run, create that directory.
+         If this room hasn't been visited, then the attempt to put amethyst.o
+         into it will fail. But we'll deal with that later...
+
+         There are other problems with __7__, which can be seen if we look at
+         more of the output:
+           % cd ~/G/rooms; __7__ | sed '32,37\!d'
+           ./museum/n/n/d
+           ./museum/n/n/d/.descriptionD1
+           ./museum/n/n/d/amethyst
+           ./museum/n/n/d/ne
+           ./museum/n/n/d/ne/.descriptionE1
+           ./museum/n/n/d/ne/cabinet
+           %
+
+         From this longer output, we see that it is not just the amethyst that
+         lists, but also immovable objects like the cabinet. We'll have to do
+         something about this, because we should not make a cabinet.o file.
+
+         Another, even harder problem, is seen if we look at just a bit more of
+         the output:
+           % cd ~/G/rooms; __7__ | sed '30,38\!d'
+           ./museum/n/n
+           ./museum/n/n/.descriptionC1
+           ./museum/n/n/d
+           ./museum/n/n/d/.descriptionD1
+           ./museum/n/n/d/amethyst
+           ./museum/n/n/d/ne
+           ./museum/n/n/d/ne/.descriptionE1
+           ./museum/n/n/d/ne/cabinet
+           ./museum/n/n/garbage
+           %
+
+         Do you see the problem here? Whereas the amethyst and the cabinet
+         files list directly under their corresponding description files, the
+         garbage is not directly under its description file. As we can see
+         above, the garbage is at ./museum/n/n. But the description file for
+         ./museum/n/n is printed seven lines earlier (as opposed to being one
+         line above it).
+         Why did this happen? Looking at the above output, notice that it is
+         in alphabetical order: "./museum/n/n/d/amethyst" had displayed before
+         "./museum/n/n/d/ne" (because "amethyst" starts with "a" but "ne" 
+         starts with "n"), while "./museum/n/n/d" had displayed before
+         "./museum/n/n/garbage" (because "d" comes before "g").
+         (Now, you might note that this problem isn't a real problem, since the
+         garbage is immovable it does not make a .o file anyway. While that is
+         true, realize that the use could go to the room with the garbage and
+         drop the ruby there. Since "r" comes after "d", we would then get
+         the same problem -- and this time it would really be a true problem,
+         because the ruby.o file DOES exist.)
+         So many problems with the output of __7__! What to do about them all?
+         Well, we can fix them, on the following steps:
+	grep   -v -e "/[.bcdfgst][liarkw][inabostre][gscifphebltk].*$" -e "/.\{0,1\}.$"
+   __8__ This uses "grep" to remove input lines for immovable objects, such as
+         the cabinet and the garbage above. It also removes the listings for
+         directories rather than files, like "./museum/n/n", "./museum/n/n/d",
+         and "./museum/n/n/d/ne" above. So, looking at the filtered output for
+         that portion of _7__'s output that we've been discussing, we now have:
+           % __7__ | __8__ | sed '10,13\!d'
+           ./museum/n/n/.descriptionC1
+           ./museum/n/n/d/.descriptionD1
+           ./museum/n/n/d/amethyst
+           ./museum/n/n/d/ne/.descriptionE1
+
+         So now, how to do this filtering with grep? Well, we need a regular
+         expression that maps to all of the moveable objects and to all of the
+         description files, but to none of the immoveable objects or the plain
+         subdirectories.
+         But, there is an important simplification: many of the objects start
+         out in the endgame. Moreover, you start out not having visited the
+         endgame (meaning that the endgame rooms don't display). In the process
+         of playing of the game, you will eventually log into the endgame. But,
+         at that point, you will not be able to access pokey anymore. So these
+         objects are don't-care values, as far as __8__ is concerned.
+         So, to be clear, a working __8__ could be tested like this:  
+          % echo "The following two lines create some files just for testing:"
+          The following two lines create some files just for testing:
+          % echo > ~/G/obs/.descriptionA1
+          % echo > ~/G/obs/.lights
+          % ls -a ~/G/obs| __8__ |tr \\n ,|sed 's/.$//;s/,/, /g;s/sil/and &/'
+          .descriptionA1, acid, amethyst, bone, coins, egg, emerald, glycerine,
+          jar, lamp, license, ruby, and silver
+          %
+         
+         If any other movable objects display, that is fine. If the nitric file
+         displays in addition to acid, that is also fine (but you still need to
+         display acid). But you must not display any of the following: .lights,
+         bins, blackboard, cabinet, cliff, drop, fish, gate, garbage, skeleton,
+         switch, tank, or train.
+
+         In the above, you will have noticed that I added two files (.lights
+         and .descriptionA1) to the obs directory (whenever you run the game,
+         these will erase, but that is not a problem). The reason for adding
+         these files is to ensure that your regular expression doesn't match to
+         .lights, but does match to .descriptionA1 (in fact, it needs to match
+         to any .description?1 file, but I'm just testing one of them here).
+         Recall that .lights is a file in the computer room. Recall also that
+         other hidden files like .descriptionA2 or .done2 are don't-care values
+         because __7__ has removed them already.
+
+         So, how to do it? It can be done with a single regular expression. If
+         you do so, you will get bonus credit. If you use two -e flags, you can
+         get full credit. But you will lose points if you use three or more
+         regular expressions.
+	sed ":J;s~/\([^x]\{1,2\}\)/~/x\1/~;tJ"
+   __9__ This uses sed to start to deal with one of the problems described
+         above, the fact that the output is alphabetical, which can cause a
+         room's description file to be directly above the objects in that room.
+
+         The solution is a hack. We first notice that none of the objects have
+         any x's in them. We'll therefore add x's to the directory names in the
+         path, so that subdirectories naturally display after files (which 
+         don't have x's or z's, so must come earlier).
+         The directories in the path all have one of the following names: n, s,
+         e, w, ne, nw, se, sw, u, d. They also all have a "/" after their name.
+         This is enough information to identify a regular expression to find
+         these directory names. And the identification does not have to be
+         perfect, if it works, as far as creating the right alphabetical order.
+         The implementation of __9__ is simple: a single sed s command to put
+         an 'x' in front of each directory name in the path. Consider:
+           % source ./pa4
+           Fourth-Vermont intersection
+           You are at the intersection of Fourth Street and Vermont Ave.
+           >drop bone
+           Dropped.
+           >drop lamp
+           Dropped.
+           >e
+           Fifth-Vermont intersection
+           You are at the intersection of Fifth Street and the east end of V...
+           >quit
+
+           You have scored 40 out of a possible 90 points.
+           % __7__ | __8__ | __9__ | tail -8
+           ./street/.descriptionS1
+           ./street/bone
+           ./street/xe/.descriptionU1
+           ./street/xe/xs/.descriptionV1
+           ./street/xe/xs/coins
+           ./street/lamp
+           ./street/xs/.descriptionT1
+           ./vermont/.descriptionX1
+           %
+
+           In the above, notice how the bone is in the right place but the lamp
+           isn't. Moreover, notice that the lamp WOULD be in the right place,
+           if we were to sort this output alphabetically.
+	sort
+  __10__ This uses sort to put the new text in alphabetical order.
+	sed "s/x//g;/.des/s/\(.*\)/cat \1|tr A-Z\/\  a-z-/; s~^\.\/.*\/\(.*\)~echo \1.o~"
+  __11__ This uses sed to create the tmp script. This script will have two
+         actions: to cat description files and to echo object names. The sed
+         program for this has several steps, which you will need to figure out
+         for yourself. The output should be like this:
+           % __7__ | __8__ | __9__ | __10__ | __11__ > ~/R/tmp
+           % tail -8 ~/R/tmp 
+           cat ./street/.descriptionS1|tr A-Z/\  a-z-
+           echo bone.o
+           echo lamp.o
+           cat ./street/e/.descriptionU1|tr A-Z/\  a-z-
+           cat ./street/e/s/.descriptionV1|tr A-Z/\  a-z-
+           echo coins.o
+           cat ./street/s/.descriptionT1|tr A-Z/\  a-z-
+           cat ./vermont/.descriptionX1|tr A-Z/\  a-z-
+          
+         As you can see, the x's have all been removed, now that they've served
+         their purpose on __10__. Notice also that the description files are
+         set up to be turned into directory names, while the object file names
+         are set up to be printed.
+         Let's run the script that we've made (but remember that you have to
+         be in ~/G/rooms but run it from ~/G/pokey/root/rooms):
+           % chmod u+x ~/R/tmp; ~/R/tmp | tail -8
+           fourth-vermont-intersection
+           bone.o
+           lamp.o
+           fifth-vermont-intersection
+           fifth-oaktree-intersection
+           coins.o
+           fourth-oaktree-intersection
+           vermont-station
+           %
+
+         From the above, we see that we are definitely getting closer to being
+         able to put the .o files in the right places. But that will be the job
+         of Line 9...
+
+  Line 9: chmod u+x ~/R/tmp; ~/R/tmp | __12__ > ~/R/tmpc
+  This line creates "tmpc", a script that can be run to put objects onto rooms.
+	sed "/\.o$/"\!"{h;d;};x;G;h;s~\n.*~~;x;s~\n~/~;s~^~echo -n > ~"
+  __12__ This is a sed command to convert create the contents of tmpc. If the
+         input were the above output of Line 8 (where the lamp and bone have
+         been dropped), then the output created by __12__ is:
+           % cat ~/R/tmpc
+           echo -n > bottom-of-subway-stairs/amethyst.o
+           echo -n > fourth-vermont-intersection/bone.o
+           echo -n > fourth-vermont-intersection/lamp.o
+           echo -n > fifth-oaktree-intersection/coins.o
+           %
+
+         From the above, we see that rooms without objects don't display. But
+         if more than one object is in a room, they each get a line. In this
+         case, there are 4 objects that can be picked up in various places. 
+         Furthermore, notice that the objects in rooms we haven't visited are
+         still getting included.
+
+         So, how to do it? To begin, recall that the input has this format:
+           % ~/R/tmp | tail | head -5
+           mailroom
+           computer-room
+           fourth-vermont-intersection
+           bone.o
+           lamp.o
+           %
+
+        The program can be broken into three parts:
+         - Part 1.
+             Step 1. Identify lines that are for room names. (Note "mailroom"
+                     has no "-", so you can't use the dash to find these.)
+             Step 2. Save this room name to the hold space.
+             Step 3. Using only a single letter, stop execution for this input
+                     line (thus causing sed to start running the program on
+                     the next line).
+             Note: you are required to use \! and {...} in your answer.
+             
+         - Part 2.
+            At this point, we know that the pattern space contains the name of
+            the file and the hold space holds the directory to put it into.
+            We want to accomplish a few things in this part.
+             Step 1. Swap the pattern and hold spaces. Now the hold space has
+                     the object name and the pattern space has the room name.
+					 x
+             Step 2. Append the hold space to the pattern space.
+					 G
+             Step 3. Copy to the hold space. Now both spaces have both pieces
+                     of information.
+					 h
+             Step 4. Remove everything but the room's name from the pattern
+                     space.
+					 s~\n.*~~
+             Step 5. Swap the pattern and hold spaces. Now the hold space is
+                     the same as before we started Part 2. This is important
+                     for situations like where the bone and the lamp are both
+                     in the same room. Once we finish dealing with the bone,
+                     we'll want to go on and deal with the lamp. If the lamp
+                     is to be handled in the same way, it needs to start in
+                     the same way: with the hold space identifying the room
+                     name. This is why, after implementing the above steps,
+                     we have to restore the hold space back to its original
+                     contents.
+					 x
+
+         - Part 3.
+            At this point, the pattern space has the room name followed by the
+            object name (but separated by a \n). There are just two steps left:
+              Step 1. Turn the \n into a /. We do this to turn it into a path
+                      name.
+					  s~\n~/~
+              Step 2. Put an "echo -n > " at the front. We do this to create
+                      size 0 files (which matches to the original game).
+					  s~^~echo -n > ~
+  Line 10: ls ~/I| sed 's_.*_echo > ~/G/pokey/root/usr/toukmond/&.o_' >~/R/tmpd
+  This line, which I'm simply giving you, creates "tmpd", a script to put the
+  objects from your inventory into the toukmond directory.
+
+  Line 11: cd ~/R;(__13__; ./tmpa; ./tmpb; ./tmpc; ./tmpd; __14__) >& ~/X
+  This line runs all of the scripts we've made, so that all of the right files
+  will be in all of the right directories on pokey. There are two things for
+  you to add in:
+	chmod 777 tmp?
+  __13__ This is one command to make all of the tmp scripts executable.
+	#rm tmp?
+  __14__ This is one command to remove all of the tmp scripts. Note: for debug
+         purposes, I suggest you don't remove these files until you've finished
+         testing them. When there are bugs, you'll be able to see what's wrong
+         in these files.
+
+  But, you might wonder, what happens when tmpc tries to put files into rooms
+  that you haven't visited (and thus, which tmpa didn't make directories for)?
+  Well in those cases, there will be an error message. But: 1) that message
+  gets sent to ~/X, so you never see it, and 2) that error does not prevent
+  the script from continuing to execute later lines.
+
+
+Lines 12-15: These lines clear up a few things in the pokey directories.
+	touch -d 1970-1-1 *
+	touch -d 1970-1-1 */*
+	touch -d 1970-1-1 */*/*
+	find . | xargs touch -d 1970-1-1
+  Line 12: cd ~/G/pokey/root;
+  
+  Line 13: __15__; __16__; __17__
+           This uses three touch commands to set all of the file dates to Jan
+           1, 1970. I did not teach you touch, but I is teach you man. Use man
+           (or google) to learn how to use touch.
+  __15__: This touches all the things in the current directory.
+  __16__: This touches all the things in all subdirectories.
+  __17__: This touches all the things in all the subdirectories' subdirectories
+	chmod 766 *
+	chmod 766 */*
+	chmod 766 */*/*
+  Line 14: __18__; __19__; __20__
+           This uses three chmod commands to set all of the file permissions
+           to: user=rwx, group=r-x, and others=r-x. Yes all of this can be done
+           with one command.
+  __18__: This chmods all the things in the current directory.
+  __19__: This chmods all the things in all subdirectories.
+  __20__: This chmods all the things in all the subdirectories' subdirectories.
+	cd 'cat ~/G/pwd'
+  Line 15: This is a cd command.
+           There is a file named ~/G/pwd. It contains the current directory on
+           pokey. (It starts out as "~/G/pokey/root/usr/toukmond".)
+           This cd command changes the directory to the one indicated in this
+           file.
+
+
+Line 16: Blank
+
+while ( 1 )
+Line 17: start an infinite while loop
+	while ( 1 )
+  Line 18: start another infinite while loop
+		echo -n '$ '
+	Line 19: echo -n '$ '
+		set INPUT = $<:q
+    Line 20: Load a variable with a value entered from the keyboard
+		if ( "A$INPUT" == "A" ) break
+    Line 21: This line test to make sure that a non-empty input was given.
+             If so then we break out of the while loop begun on line 18.
+             Note: This line uses cshell's if version that does not use a then
+                   statement.
+             Note: If an empty input is given, you don't want this if statement
+                   to crash. And if a "-x" is given, you don't want a crash.
+                   Lecture 4, slide 47 explains how to handle this.
+  Line 22: end
+  
+  Line 23: #set echo;set verbose
+           This line is commented out, but you can turn off the comment when
+           you are debugging
+set com = `echo $INPUT | sed "s/ .*//"`
+  Line 24: The input entered on Line 20 may contain a command and arguments. We
+           want to break these apart.
+           This line uses sed to create a variable named com, holding the
+           command portion of what was entered on Line 20. The command portion
+           is the part up to, but, not including, the first space. Note also
+           that spaces at the front are ignored. So "   cd / abc" yields "cd".
+set arg = `echo $INPUT | sed "s/^[^\ ]* //;s/ .*//"`
+  Line 25: This line uses sed to create a variable named arg, holding the
+           portion for the first argument only. So "   cd / abc" yields "/".
+  Line 26: #unset echo; unset verbose
+           This line is commented out, but you can turn off the comment when
+           you are debugging.
+          
+  Line 27: unset notHandledYet
+           The notHandledYet variable will be used as a boolean variable, where
+           its being set indicates that you "haven't yet handled" this command.
+           What does it mean to skip or not skip? Well lines 29-47 (below)
+           handle a variety of simple cases that give simple outputs when no
+           argument is given. But there are some commands, for example "exit",
+           that don't care about arguments. So we implement it just once, after
+           Line 47.
+    if ( "A$arg" == "A" ) then
+  Line 28: Similar to Line 21, this line test whether the variable created on
+           Line 25 is empty. (Similar, yes. But different, because this time we
+           test FOR emptiness.)
+
+  Lines 29-47:
+    switch ( $com ) 
+      case echo:
+        echo; breaksw
+      case cat:
+        echo "Usage: cat <ascii-file-name>"; breaksw
+      case uncompress:
+        echo "Usage: uncompress <filename>"; breaksw      
+      case ftp:
+        echo "ftp: hostname required on command line."; breaksw
+      case rlogin:
+        echo "Usage: rlogin <hostname>"; breaksw
+      case cd:
+        echo "Usage: cd <path>"; breaksw
+      case ls:
+        set arg = "."
+      default:
+        set notHandledYet
+    endsw
+  endif
+
+Line 48: Blank
+if ( $?arg || $?notHandledYet ) then
+Line 49: This is an if-test for whether there EITHER is an argument or else the
+         notHandledYet boolean has been set.
+
+Lines 50-56:
+    switch ( $com ) 
+      case exit:
+        echo
+        echo You step back from the console.
+        echo
+        exit 1
+      case echo:
+        echo `echo $INPUT | sed "s/^[^\ ]* //"`
+Line 57:Echo is the one command that uses the entire input, rathen just the
+        first argument. The way to handle this is to echo the whole inputted
+        value, then to use sed to remove the first part which has the echo. 
+
+Lines 58-64:
+        breaksw
+      case pwd:
+        pwd | sed 's_.*root/*_/_'
+        breaksw
+      case cd:
+      case ls:
+        pwd > ~/G/pwd
+if ( `echo $arg | sed "s/\(.\).*/\1/"` == "/" ) cd ~/G/pokey/root
+Line 65:This is a cshell if statement (the no-then kind), that checks whether
+        arg begins with a "/". If so, we cd ~/G/pokey/root. 
+
+Line 66:As discussed on line 607 of READMEprimer, we need to be able to handle
+        paths like "/../../.././././//.//../../usr".
+        The issue here is that there is a difference between the pokey's root
+        directory (located at ~/G/pokey) versus the true system root (located
+        at /). So if you are in ~/G/pokey and you type cd ../usr, it's an error
+        because there is no ~/G/usr directory. But if you are in / and you type
+        cd ../usr, you'll be in /usr.
+set arg = `echo $arg | tr "/" " "` ; foreach run ( $arg )
+        The way we need to address this to get the right behavior is to loop
+        through the path held in arg, and process each part of it.
+        Step 1: Use tr to turn the slashes into spaces, so that the parts of
+                the path become separated out.
+        Step 2: Use foreach ( `...` ) to iterate through these parts.
+
+(cd $run;pwd -P > ~/G/runPWD)
+  Line 67:Now that we are iterating through the parts of the path, we want to
+          try to change directory to this part of the path.
+          But if this cd fails, the script will crash. How to prevent that? By
+          doing the cd inside of a new ( ... ) shell. But that introduces a new
+          problem: the cd won't remember its state once we leave the (...).
+          The solution to this is that we can save a file while still inside of
+          the (...).
+       if ( -e ~/G/runPWD ) then
+  Line 68:This is an if-then statement that looks at the file that we made (or
+          tried to make) on line 67, to test for a cd failure.
+       cd `cat ~/G/pwd`
+    Line 69:To get here, we know the path is bad. So we need to restore the
+            original path, the one saved in ~/G/pwd
+
+    Line 70:echo No such directory.
+    Line 71:breaksw
+  Line 72:endif
+  cd $run
+  Line 73:To get here, we know that the cd on line 67 did not fail. So we can
+          do the cd again, this time outside of the (...).
+	 pwd -P | grep "/maxhsu" || cd ~/G/pokey/root
+  Line 74:Here we do a pwd and test the answer to see whether we are still
+          inside of the pokey files (ie, is the string "/root" present in the
+          path?). If not, we change directory to ~/G/pokey/root.
+          This is the key step of why we need to cd the path part by part: to
+          prevent a .. from going below ~/G/pokey/root
+Line 75:end 
+
+Line 76:if ( $com == cd ) breaksw
+
+Lines 77-80:
+        At this point we know that we're doing an ls (recall that Lines 62 & 63
+        allowed us to handle cd and ls together, but that line 76 has completed
+        the cd case, leaving only ls).
+
+        Of course ls and cd both have paths, so it made sense to process them
+        together. But we don't want to really do a cd if the command was ls.
+        The solution is, now that we are in the directory indicated in the
+        path, to do the ls -- but then to cd back to the original directory.
+
+        But we can't just "do the ls". As described on lines 260-271 of the
+        earlier-posted README file (now tweaked to become READMEwalkthrough),
+        there are various considerations to get the output right. Consider:
+
+        % cat READMEwalkthrough|sed -n '103,107p;234,237p;248p'|sed 's/^/>>> /'
+        >>> % ls -la ~/HW4/pokey/root/usr/toukmond/
+        >>> total 112
+        >>> drwxr-xr-x+ 1 Me None     0 Jan  1  1970 .
+        >>> drwxr-xr-x+ 1 Me None     0 Jan  1  1970 ..
+        >>> -rwxr-xr-x  1 Me None 10423 Jan  1  1970 cat
+        >>> $ ls
+        >>> total 122
+        >>> drwxr-xr-x  3 toukmond restricted    512 Jan  1  1970 .
+        >>> drwxr-xr-x  3 toukmond restricted   2048 Jan  1  1970 ..
+        >>> -rwxr-xr-x  1 toukmond restricted  10423 Jan  1  1970 cat
+
+        Notice the differences above. The owner and group fields have changed.
+        The "+" signs are gone. And the second field is a "3" for directories,
+        rather than a "1". Also, the sizes of the . and .. are different. In
+        the game . always has size 512 and .. always has size 2048.
+       
+        Actually, there are additional differences if we keep looking for them:
+
+        % cat READMEwalkthrough|sed -n '314,318p;417,423p'|sed 's/^/>>> /' 
+        >>> $ ls ..
+        >>> total 4
+        >>> drwxr-xr-x  3 root     staff     512 Jan  1  1970 .
+        >>> drwxr-xr-x  3 root     staff    2048 Jan  1  1970 ..
+        >>> drwxr-xr-x  1 toukmond restricted  0 Jan  1  1970 toukmond
+        >>> $ cd fifth-vermont-intersection
+        >>> $ ls
+        >>> total 6
+        >>> drwxr-xr-x  3 root     staff      512 Jan  1  1970 .
+        >>> drwxr-xr-x  3 root     staff     2048 Jan  1  1970 ..
+        >>> -rwxr-xr-x  1 toukmond restricted   0 Jan  1  1970 lamp.o
+        >>> -rwxr-xr-x  1 root     staff       77 Jan  1  1970 description
+
+        See that the owner and user groups can be two different things. All
+        files in toukmond, as well as the toukmond directory itself are owned
+        by toukmond. Also, all .o files are owned by toukmond (regardless of
+        where they are stored). Beyond these cases, everything else is owned
+        by root.
+
+        How to do it? Well, it has two parts:
+( pwd -P | grep "/toukmond" > /dev/null ) && set verify = AAA || set verify = BBB
+Line 77:First we recognize that the toukmond directory is special, because
+        everything in it gets owned by toukmond.
+        This line sets a variable to "." if we are in ~/G/pokey/usr/toukmond,
+        but to some other value otherwise. What is "some other value"? It is
+        anything that can never appear in the ls listing.
+        So what have we accomplished with this variable? We have a regular
+        expression that is guaranteed to match to the pattern space if we are
+        in the toukmond directory, and guaranteed to not match otherwise.
+
+        Now we are ready for the longer second step:
+
+Line 78:ls -la --color=never | sort | __21__
+sed "s/^/$verify /; /\(^AAA\|^BBB.*\.o\|^BBB d.*toukmond\)/s/^[^ ]*[ ]*\([^ ]*[ ]*[^ ]*[ ]*\)[^ ]*[ ]*[^ ]*/\1toukmond restricted/;TJ;:J;s/^[^ ]*[ ]*\([^ ]*[ ]*[^ ]*[ ]*\)[^ ]*[ ]*[^ ]*/\1root     staff     /"
+ 
+ 
+ ls -la --color=never | sort | sed "s/^/$verify /" | sed "/\(^AAA\|^BBB.*\.o\|^BBB.*toukmond\)/s/^[^ ]*[ ]*\([^ ]*[ ]*[^ ]*[ ]*\)[^ ]*[ ]*[^ ]*/\1toukmond restricted/;{s/^BBB*[ ]*\([^ ]*[ ]*[^ ]*[ ]*\)[^ ]*[ ]*[^ ]*/\1root     staff     /};/^[^ ]\{11\}/s/^\([^ ]\{10\}\)[^ ]/\1/;/^d.\{9\} . /s/^\(d.\{9\} \)[^ ]*[ ]*\([^ ]*[ ]*[^ ]*[ ]*\)[^ ]*/\13 \22048/;/[^\.]\.\{1\}"\$"/s/\([^ ]*[ ]*[^ ]*[ ]*[^ ]*[ ]*[^ ]*[ ]*\)[^ ]*/\1512/"
+ __21__:This is a sed command to fix all of the output differences discussed
+        above. 
+        Note: The variable created on Line 77 will let you know if you are in
+              the toukmond directory. But:
+              - We set the owner and group to toukmond and to restricted not
+                only if the we are in the toukmond directory, but also if the
+                specific line is either a .o file or the toukmond directory.
+              - The variable cannot be directly accessed inside of a single
+                quote '...', while the regular expresion symbol $ cannot be
+                used inside of double quotes "...". So you need to do the
+                quoting right in order to use the variable created on Line 77
+                from within the sed program.
+                Moreover, note that sed doesn't know anything about variables.
+                Instead you are just inserting a string into the right place in
+                the sed program.
+                Not clear? Then ask yourself what the following does:
+                  % echo | sed "c($prompt)"
+                  (% )
+                  %
+cd `cat ~/G/pwd`
+Line 79: This is the same as Line 69.
+
+Line 80:  breaksw
+
+Line 81:case cat:
+if ( $arg =~ */* ) then
+Line 82:This is an if-then statement that checks whether there is a "/" in
+        the arg variable. 
+
+Line 83:  echo cat: only files in current directory allowed.
+else if ( -e $arg ) then
+Line 84:This is an else-if-then statement that checks whether there is a file
+        in the current directory with the name indicated by the arg variable. 
+
+Lines 85-109
+          if ( $arg == description ) then
+            cat $arg
+          else
+            echo Ascii files only.
+          endif
+        else
+          echo File not found.
+        endif
+        breaksw
+      case uncompress:
+        echo Uncompress command failed.
+        breaksw
+      case ftp:
+        if ( $arg == gamma ) then
+          echo ftp: host not responding.
+        else
+          echo ftp: Unknown host.
+        endif
+        breaksw
+      case rlogin:
+        if ( $arg == gamma ) then
+          echo Host not responding.
+        else if ( $arg != endgame ) then
+          echo ftp: Unknown host.
+        else
+
+if ( $1 !~ *90*90* ) break
+Line 110: This is an if without a then. It exits if you are allowed to log into
+          endgame. How do we know that we are allowed? We must have 90 points.
+          Now, the score message has been passed into this type script, from
+          the type alias, which was defined in the pa4 file.
+          So that means that we need to check our parameters for the info.
+echo $1
+Line 111: To get here, Line 110 must not have exited. So we are not yet allowed
+          To log into endgame. This Line 111 will print the score message that
+          has been passed into the parameter list.
+         
+Lines 112-119
+          echo You have not achieved enough points to connect to endgame.
+        endif
+        breaksw
+      default:            
+        echo "$com": not found.
+    endsw
+  endif
+end

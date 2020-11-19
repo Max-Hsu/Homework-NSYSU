@@ -1,0 +1,83 @@
+Copyright 1986-2018 Xilinx, Inc. All Rights Reserved.
+--------------------------------------------------------------------------------------
+| Tool Version : Vivado v.2018.3 (win64) Build 2405991 Thu Dec  6 23:38:27 MST 2018
+| Date         : Mon Nov 25 09:41:07 2019
+| Host         : PC01-55 running 64-bit major release  (build 9200)
+| Command      : report_control_sets -verbose -file myip_v1_0_control_sets_placed.rpt
+| Design       : myip_v1_0
+| Device       : xc7z020
+--------------------------------------------------------------------------------------
+
+Control Set Information
+
+Table of Contents
+-----------------
+1. Summary
+2. Histogram
+3. Flip-Flop Distribution
+4. Detailed Control Set Information
+
+1. Summary
+----------
+
++----------------------------------------------------------+-------+
+|                          Status                          | Count |
++----------------------------------------------------------+-------+
+| Number of unique control sets                            |    16 |
+| Unused register locations in slices containing registers |    12 |
++----------------------------------------------------------+-------+
+
+
+2. Histogram
+------------
+
++--------+--------------+
+| Fanout | Control Sets |
++--------+--------------+
+|      3 |            2 |
+|      6 |            1 |
+|      8 |           12 |
+|    16+ |            1 |
++--------+--------------+
+
+
+3. Flip-Flop Distribution
+-------------------------
+
++--------------+-----------------------+------------------------+-----------------+--------------+
+| Clock Enable | Synchronous Set/Reset | Asynchronous Set/Reset | Total Registers | Total Slices |
++--------------+-----------------------+------------------------+-----------------+--------------+
+| No           | No                    | No                     |               0 |            0 |
+| No           | No                    | Yes                    |               0 |            0 |
+| No           | Yes                   | No                     |               6 |            3 |
+| Yes          | No                    | No                     |               0 |            0 |
+| Yes          | No                    | Yes                    |               0 |            0 |
+| Yes          | Yes                   | No                     |             134 |           41 |
++--------------+-----------------------+------------------------+-----------------+--------------+
+
+
+4. Detailed Control Set Information
+-----------------------------------
+
++-------------------------+---------------------------------------------+-------------------------------------------+------------------+----------------+
+|       Clock Signal      |                Enable Signal                |              Set/Reset Signal             | Slice Load Count | Bel Load Count |
++-------------------------+---------------------------------------------+-------------------------------------------+------------------+----------------+
+|  s00_axi_aclk_IBUF_BUFG | myip_v1_0_S00_AXI_inst/axi_arready0         | myip_v1_0_S00_AXI_inst/axi_wready_i_1_n_0 |                1 |              3 |
+|  s00_axi_aclk_IBUF_BUFG | myip_v1_0_S00_AXI_inst/axi_awready0         | myip_v1_0_S00_AXI_inst/axi_wready_i_1_n_0 |                2 |              3 |
+|  s00_axi_aclk_IBUF_BUFG |                                             | myip_v1_0_S00_AXI_inst/axi_wready_i_1_n_0 |                3 |              6 |
+|  s00_axi_aclk_IBUF_BUFG | myip_v1_0_S00_AXI_inst/slv_reg2[31]_i_1_n_0 | myip_v1_0_S00_AXI_inst/axi_wready_i_1_n_0 |                2 |              8 |
+|  s00_axi_aclk_IBUF_BUFG | myip_v1_0_S00_AXI_inst/slv_reg1[31]_i_1_n_0 | myip_v1_0_S00_AXI_inst/axi_wready_i_1_n_0 |                2 |              8 |
+|  s00_axi_aclk_IBUF_BUFG | myip_v1_0_S00_AXI_inst/slv_reg1[7]_i_1_n_0  | myip_v1_0_S00_AXI_inst/axi_wready_i_1_n_0 |                1 |              8 |
+|  s00_axi_aclk_IBUF_BUFG | myip_v1_0_S00_AXI_inst/slv_reg1[23]_i_1_n_0 | myip_v1_0_S00_AXI_inst/axi_wready_i_1_n_0 |                3 |              8 |
+|  s00_axi_aclk_IBUF_BUFG | myip_v1_0_S00_AXI_inst/slv_reg2[7]_i_1_n_0  | myip_v1_0_S00_AXI_inst/axi_wready_i_1_n_0 |                2 |              8 |
+|  s00_axi_aclk_IBUF_BUFG | myip_v1_0_S00_AXI_inst/slv_reg2[23]_i_1_n_0 | myip_v1_0_S00_AXI_inst/axi_wready_i_1_n_0 |                3 |              8 |
+|  s00_axi_aclk_IBUF_BUFG | myip_v1_0_S00_AXI_inst/slv_reg1[15]_i_1_n_0 | myip_v1_0_S00_AXI_inst/axi_wready_i_1_n_0 |                2 |              8 |
+|  s00_axi_aclk_IBUF_BUFG | myip_v1_0_S00_AXI_inst/slv_reg2[15]_i_1_n_0 | myip_v1_0_S00_AXI_inst/axi_wready_i_1_n_0 |                1 |              8 |
+|  s00_axi_aclk_IBUF_BUFG | myip_v1_0_S00_AXI_inst/p_1_in[15]           | myip_v1_0_S00_AXI_inst/axi_wready_i_1_n_0 |                2 |              8 |
+|  s00_axi_aclk_IBUF_BUFG | myip_v1_0_S00_AXI_inst/p_1_in[7]            | myip_v1_0_S00_AXI_inst/axi_wready_i_1_n_0 |                2 |              8 |
+|  s00_axi_aclk_IBUF_BUFG | myip_v1_0_S00_AXI_inst/p_1_in[31]           | myip_v1_0_S00_AXI_inst/axi_wready_i_1_n_0 |                4 |              8 |
+|  s00_axi_aclk_IBUF_BUFG | myip_v1_0_S00_AXI_inst/p_1_in[23]           | myip_v1_0_S00_AXI_inst/axi_wready_i_1_n_0 |                2 |              8 |
+|  s00_axi_aclk_IBUF_BUFG | myip_v1_0_S00_AXI_inst/slv_reg_rden__0      | myip_v1_0_S00_AXI_inst/axi_wready_i_1_n_0 |               12 |             32 |
++-------------------------+---------------------------------------------+-------------------------------------------+------------------+----------------+
+
+

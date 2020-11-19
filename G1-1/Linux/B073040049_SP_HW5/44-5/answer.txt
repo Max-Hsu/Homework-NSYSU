@@ -1,0 +1,1 @@
+如果沒有dummyFD，serverFD會暫停等到有寫入模式的FIFO

@@ -1,0 +1,8 @@
+numpy
+tkinter
+cv2
+math
+os
+PIL
+io
+matplotlib

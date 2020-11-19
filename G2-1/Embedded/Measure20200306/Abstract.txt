@@ -1,0 +1,32 @@
+The MEASURE example uses the analog inputs of the LPC21xx device
+to simulate a datalogger.  
+
+This example shows how you can use signal functions in the µVision
+debugger to simulate a signal that is coming into one of the analog 
+inputs of the LPC21xx.
+
+The Measure example is described in detail in the Getting Started
+User's Guide.
+
+
+The MEASURE  example program is available for several targets:
+
+Simulator: uVision Simulator for LPC2129
+
+MCB2100:   Keil MCB2100 evaluation board with ULINK debugger
+           - Application is loaded to internal Flash.
+           - Switch S2 (INT1) is used as GPIO and sampled
+             (jumper positions: J1= off, J7= on)
+           - potentiometer POT1 is sampled as AIN0
+             (jumper position: J2= on)
+           - serial port COM1 parameters: 9600 baud, no parity,
+             8-bits, 1 stop bit, flow control none
+
+MCB2130:   Keil MCB2130 evaluation board with ULINK debugger
+           - Application is loaded to internal Flash.
+           - Switch S2 (INT1) is used as GPIO and sampled
+             (jumper positions: J1= off, J7= on)
+           - potentiometer POT1 is sampled as AIN1
+             (jumper position: J2= on)
+           - serial port COM1 parameters: 9600 baud, no parity,
+             8-bits, 1 stop bit, flow control none

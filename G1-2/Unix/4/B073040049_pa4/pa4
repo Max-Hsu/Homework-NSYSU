@@ -1,0 +1,68 @@
+cd
+ln -s /dev/null X &> /dev/null
+rm -r HW4 &>~/X
+tar xvf HW4.tar &> ~/X
+rm G
+ln -s HW4 G &> ~/X
+ln -s G/obj O &>~/X
+ln -s G/inv I &>~/X
+ln -s ~/G/pokey/root/rooms R &>~/X
+cd HW4/rooms/street
+PS1=">"
+alias l='cd - >~/X;cat .???*;ls *\ * 2>~/X|fgrep " ";cd ->~/X'
+alias see='(mv ~/G/tmpD ~/G/tmpC>~/X;pwd>~/G/tmpD;diff -q ~/G/tmp[CD]>~/X&&echo You cannot go that way.||(cat .?[^o]*&&mv .description?2 .done2;rm .d*3 &> ~/X; ls *\ *|cat))2>~/X;cd ~/G/obs'
+
+alias board='cd ->~/X;ls train&>~/X&&cd ~/G/rooms/museum;see;(cd -;rm .desc*A0)&>~/X'
+alias ne='cd ->~/X;cd ne 2> ~/X; see'
+alias se='cd ->~/X;cd se 2> ~/X; see'
+alias nw='cd ->~/X;./nw 2> ~/X|| see'
+
+alias GB='basename `pwd -P`>~/G/tmpB&&diff -q ~/G/tmp[AB]&>~/X&&cd `pwd -P`/..'
+alias sw='cd ->~/X;echo ne>~/G/tmpA &&GB && see'
+alias u=' cd ->~/X;echo d >~/G/tmpA &&GB ||cd u 2> ~/X; see'
+alias d=' cd ->~/X;echo u >~/G/tmpA &&GB ||cd d 2> ~/X; see'
+alias w=' cd ->~/X;echo e >~/G/tmpA &&GB ||cd w 2> ~/X; see'
+alias s=' cd ->~/X;echo n >~/G/tmpA &&GB ||cd s 2> ~/X; see'
+alias e=' cd ->~/X;echo w >~/G/tmpA &&GB ||cd e 2> ~/X; w/e 2>~/X&&cd w||see'
+alias n=' cd ->~/X;echo s >~/G/tmpA &&GB ||cd n 2> ~/X; s/n 2>~/X&&cd s||see'
+
+alias i='(echo You currently have:; cd ~/G/inv; ls [^Tj]* | cat -n |\
+      tr "\t\n[0-9]" "** ">~/G/i;cd ~/G/invNames;ls `cat ~/G/i`;\
+      ls ~/G/inv/jar >~/X && ls *jar*|cat)2>~/X|fgrep " "'
+
+alias Arg2File='cat>~/G/T&&cd - >~/X;rm -f ~/O/*&>~/X'
+alias InRoom='Arg2File; cp `cat ~/G/T`                     ~/O &>~/X'
+alias FromInv='Arg2File;mv             ~/G/inv/`cat ~/G/T` ~/O &>~/X'
+alias InArea='Arg2File; cp `cat ~/G/T` ~/G/inv/`cat ~/G/T` ~/O &>~/X'
+
+alias x='(InArea;cat ~/O/* 2>~/X||echo I do not see that here.) <'
+
+alias GetIt='(mv `cat ~/G/T` ~/G/inv && rm *`cat ~/G/T`*; \
+              mv *`cat ~/G/T`*tains ~/G/invNames;echo Taken.)2>~/X'
+alias ProbablyImmoble='ls ~/O/[^lp]*[iratn][^l]?&>~/X&&(ls ~/O/*??in? &>~/X&& \
+                       GetIt ||echo You cannot take that.)'
+alias get='(InRoom&&(ProbablyImmoble||GetIt)||echo I do not see that here.)<'
+alias take='get'
+
+alias dJar='(fgrep jar ~/G/T&&mv ~/G/invNames/*ains .||ls)&>~/X'
+alias explodeJar='(expr 2 = `ls *ains|wc -l`&>~/X&&rm -rf *jar*&&\
+      cat ~/G/jarImpact&&cat ~/G/jarHole&&ln -s ../vermont d&&echo There is a\
+      hole in the street here that you could jump into.>>.doneS2||ls>~/X)2>~/X'
+alias drop='(FromInv&&mv ~/O/* .&&cp ~/G/itemDisplays/*`cat ~/G/T`*. .&>~/X&&\
+      echo Dropped.&&dJar&&explodeJar||echo You do not have that.) <'
+alias throw='drop'
+
+alias TryToPutInJar='((cd ~/G/invNames;mkdir ~/G/invNames/The\ jar\ contains;\
+      rm ~/O/[ag][cl][iy][dc]*&&mv *`cat ~/G/T`* *tains&&cd *tains&& \
+      mv S* "`ls S* | cat -n |tr -d 1\\\\t`")&&echo Done.||\
+      (mv ~/O/* ~/G/inv&&echo That will not fit in the jar.))2>~/X'
+alias InJar='(ls ~/G/inv/jar&>~/X&&TryToPutInJar||(mv ~/O/* ~/G/inv&&\
+      echo The jar is not here.))'
+alias put='(FromInv&&InJar||echo You do not have that.&&\
+      rmdir ~/G/invNames/*ains 2>~/X ) <'
+alias cheat='(mv ~/G/rooms/museum/n/n/d/amethyst ~/G/inv; rm ~/G/rooms/museum/n/n/d/*amethyst*; mv ~/G/rooms/street/e/s/coins ~/G/inv; rm ~/G/rooms/street/e/s/*coins*; cd ~/G/rooms/endgame; cd -; drop amethyst;drop coins;drop silver; drop ruby; drop egg)&>~/X'
+alias type='~/type `score` && cd ~/G/rooms/endgame && cat .???*;ls *\ * 2>~/X|fgrep " " && rm .d*0 && mv .d*2 .doneZ2 && pwd > ~/G/tmpD && echo "endgame points out of a possible 110." > ~/G/scoremsg && cd ~/G/obs'
+alias score='(cd ~/G/rooms/endgame;ls [^Tn]* | grep -e "[abcdegMprs][miroglui].*[tlsdamyrg]"$ | grep -v "preserver" | sed -n $=; echo) | (cd ~/G ;sed "1s/^/You have scored /;1s/$/0/;1rscoremsg" ) | sed "N;N;y/\n/ /"'
+alias quit='rm ~/G/tmp?;echo;score;echo;exit 1'
+see
+

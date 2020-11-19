@@ -1,0 +1,235 @@
+cd
+ln -s /dev/null X &> /dev/null
+rm -r HW2 &>~/X
+tar xvf HW2.tar >~/X
+ln -s HW2 G &>~/X
+ln -s G/obj O &>~/X
+ln -s G/inv I &>~/X
+cd HW2/street
+PS1=">"
+alias l='cd - >~/X;cat .???*;ls *\ * 2>~/X|fgrep " ";cd ->~/X'
+alias see='(mv ~/G/tmpD ~/G/tmpC>~/X;pwd>~/G/tmpD;diff -q ~/G/tmp[CD]>~/X&&echo You cannot go that way.||(cat .?[^o]*&&mv .description?2 .done2;ls *\ *|cat))2>~/X;cd ~/G/obs'
+
+alias board='cd ->~/X;ls train&>~/X&&cd ~/G/museum;see;(cd -;rm .desc*A0)&>~/X'
+alias ne='cd ->~/X;cd ne 2> ~/X; see'
+alias se='cd ->~/X;cd se 2> ~/X; see'
+alias nw='cd ->~/X;./nw 2> ~/X|| see'
+
+alias GB='basename `pwd -P`>~/G/tmpB&&diff -q ~/G/tmp[AB]&>~/X&&cd `pwd -P`/..'
+alias sw='cd ->~/X;echo ne>~/G/tmpA &&GB && see'
+alias u=' cd ->~/X;echo d >~/G/tmpA &&GB ||cd u 2> ~/X; see'
+alias d=' cd ->~/X;echo u >~/G/tmpA &&GB ||cd d 2> ~/X; see'
+alias w=' cd ->~/X;echo e >~/G/tmpA &&GB ||cd w 2> ~/X; see'
+alias s=' cd ->~/X;echo n >~/G/tmpA &&GB ||cd s 2> ~/X; see'
+alias e=' cd ->~/X;echo w >~/G/tmpA &&GB ||cd e 2> ~/X; w/e 2>~/X&&cd w||see'
+alias n=' cd ->~/X;echo s >~/G/tmpA &&GB ||cd n 2> ~/X; s/n 2>~/X&&cd s||see'
+
+alias i='(echo You currently have:; cd ~/I; ls [^Tj]* | cat -n |\
+      tr "\t\n[0-9]" "** ">~/G/i;cd ~/G/invNames;ls `cat ../i`;\
+      ls ~/I/jar >~/X && ls *jar*|cat)2>~/X|fgrep " "'
+
+alias Arg2File='cat>../T&&cd - >~/X;rm -f ~/O/*&>~/X'
+alias InRoom='Arg2File; cp `cat ~/G/T`                     ~/O &>~/X'
+alias FromInv='Arg2File;mv             ~/G/inv/`cat ~/G/T` ~/O &>~/X'
+alias InArea='Arg2File; cp `cat ~/G/T` ~/G/inv/`cat ~/G/T` ~/O &>~/X'
+
+alias x='(InArea;cat ~/O/* 2>~/X||echo I do not see that here.) <'
+
+
+alias GetIt='(mv `cat ~/G/T` ~/I ; rm *"`cat ~/G/T` here"* ;mv jar ~/G/invNames ;echo taken.)2>~/X'
+
+# This alias is not one of the commands that you type in the game. Instead, it
+# is called by other aliases, below.
+#
+# The work of GetIt is to:
+#  								Q::Do I need to change directory????
+#  1. Move the object (as indicated by ~/G/T) from the room to your inventory.
+#
+#  2. Remove the message file for that object from the room. That is to say,
+#     remove the file with a name such as "There is a gold bar here.".
+#     (It makes sense to remove this description from the room, since Step 1
+#     has already removed the object from the room.)
+#     Hint: Notice that it happens to be the case that every message's filename
+#           contains within it the name of the object that the message is for.
+#
+#     Note that there is the special case of the jar being on the ground with
+#     contents. In this case there are two messages about the jar: 1) "There is
+#     a glass jar here." and 2) "The jar contains:". One of these messages is a
+#     file, just like the other objects have (eg. "There is a gold bar here.").
+#     The other message is a directory.
+#     This Step 2 is about removing the file message, not the directory one.
+#     Hint: You don't want to remove the directory (yet), and "rm" doesn't
+#           remove directories (but it does make an error message about it).
+#
+#  3. Now we want to deal with the jar directory.
+#     This line uses mv to put this this directory into ~/G/invNames. The key
+#     challenge of this step is coming up with the right wildcard pattern. 
+#     That pattern needs to account for the fact that you don't move the jar
+#     directory if ~/G/T is not "jar".
+#     Note: Step 2 has already removed "There is a glass jar here.", so only
+#           the directory name contains the word "jar".
+#     Note: There is an interesting feature of "mv", that it can move a whole
+#           directory and its contents.
+				################################################################Don't understand
+#
+#  4. Print "Taken."
+#     Note: This message is printed unconditionally. You might wonder, "But
+#           what if I tried to get an object that wasn't in the room? Wouldn't
+#           it be wrong to say 'Taken'?" The answer is yes, but also remember
+#           that we are right now doing the GetIt alias, not the "get" alias.
+#           As we'll see below, this GetIt alias is only invoked in situations
+#           where the object is known to be in the room.
+
+
+
+alias ProbablyImmobile='ls ~/O/bin* bl* c[al]* dr* f* ga* s[kw]* t[ar]* &>~/X&&(ls ~/O/ gl* co* &>~/X&& \
+                        GetIt ||echo You cannot take that.)'
+
+# Given the variety of names of objects in the game, There isn't one wildcard
+# pattern that can match to all of the unmovable objects and also to none of 
+# the movable objects (ie, the ones you can "get"). But we can find a pattern
+# that almost works (__1__), that finds all the unmovables, but also two that
+# are movable (the glycerine and the coins). Then we can use another pattern
+# (__2__) to match the glycerine and coins but to none of the immobile objects.
+# As the above template shows, we then run GetIt on those coins or glycerine.
+#
+# To clarify, consider that there are 12 unmovable objects:
+#   bins        cabinet  drop  garbage  skeleton  tank
+#   blackboard  cliff    fish  gate     switch    train
+#
+# There are also 7 synonyms for some of these, but we don't care if our pattern
+# matches them. (Indeed, __1__ will not match to some of them):
+#   bin  computer  dinosaur  disposal  mail  tanks  vax
+#
+# In addition, there are 21 movable objects:
+#   acid      bone      diamond  jar   license  platinum   shovel
+#   amethyst  bracelet  egg      key   Mona     preserver  silver
+#   bill      coins     gold     lamp  paper    ruby       towel   
+#
+# There are also 3 synonyms for some of these, but we don't care if our pattern
+# matches them. (Indeed, __1__ matches to "nitric", but we don't care):
+#   emerald  life  nitric
+
+
+alias get='(InRoom&&(ProbablyImmobile||GetIt)||echo I do not see that here.)<'
+alias take='get'
+
+
+alias dJar='(echo "tar" > ~/G/Testfile ; diff ~/G/T ~/G/Testfile && mv ~/G/invNames/jar/* `pwd -P` && exit 1 || exit 0)&>~/X'
+
+# dJar is not a command in the game. But it is used, below, as part of the drop
+# command. Recall how, above, the GetIt alias had to deal with the possibility
+# that you pick up a jar that contains things. The same thing happens here, but
+# in reverse: dropping a jar that contains things.
+#
+# The function of dJar is that it tests if ~/G/T is the jar, and then, if so,
+# moves the directory about what the jar contains from invNames to the current
+# directory (which is the room directory, at the point that dJar gets invoked.
+#
+# Note that the directory about what the jar contains may not exist (because
+# the jar can be empty). In this case you will get an error message, but we do
+# not care because, as shown above, the output is all sent to ~/X.
+#
+# dJar has a final job, however. it must execute some command, any command
+# of your choice, that allows dJar to finish with a "success" exit status.
+# -Why do we want this exit status? Because of how the code below uses dJar.
+# -Why do we need to create this exit status? Because the directory move that
+#  was just described above might fail, as also described above.
+# -How do we create this exit status? By successfully using a final command.
+#  That command can make output, it doesn't matter, because it gets sent to ~/X
+#  anyway.
+
+
+alias explodeJar='(expr 3 == `ls -l | wc -l ` &>~/X&& rm -r ~/G/invNames/jar &&\
+      cat ~/G/jarImpact&&cat ../jarHole&& ln -s d ~/G/vermont &&echo There is a\
+      hole in the street here that you could jump into. >> .doneS2 || exit 0)2>~/X'
+
+# This alias deals with the effects of dropping a full jar (full meaning that
+# it contains 2 items, the acid and glycerine).
+#
+# __1__: These are the appropriate arguments to compare to `ls __2__|wc __3__`.
+#
+# __2__: This is the subdirectory for what the jar contains. Notice that ls
+#        will list the directory contents.
+# __3__: This is the appropriate flag to only count the number of files listed
+#        by the ls.
+# __4__: If the above test passes, then you are dropping a full jar. It will
+#        explode, and that means that you have to remove the jar directory and
+#        its contents. You must do this with one command.
+# __5__: The command before this, "cat ../jarHole" will only succeed if you are
+#        in the ~/G/street directory. (It would also work from ~/G/museum, but
+#        you wouldn't get to the museum without first blowing up the jar.)
+#        Your job here then is to create a link named "d" to the ~.G/vermont
+#        directory. (Recall, from the previous homework, that we don't do what
+#        the original game did, which would be to drop you through the hole.)
+# __6__: This is the end portion of the echo command that indicates that there
+#        is now a hole in the ground here. The purpose here is to redirect this
+#        message TO THE END of the .doneS2 file. (In the ~/G/street room, it
+#        uses .descriptionS1 and .doneS2.)
+# __7__: As with the discussion of dJar, we want explodeJar to end with a
+#        success value. Use the same command here as you did for dJar.
+
+
+alias drop='(FromInv&&mv ~/O/* .&& mv ~/G/itemDisplays/*`cat ~/G/T`* . &&\
+      echo Dropped.&&dJar&&explodeJar||echo You do not have that.) <'
+
+# __1__: This moves the description file for the object indicated by ~/G/T from
+#        ~/G/itemDisplays to the current directory. Note that these files have
+#        long names, but they include the object's name, within their longer
+#        file names.
+
+
+alias throw='drop'
+
+
+alias TryToPutInJar='((cd ~/G/invNames;mkdir The\ Jar\ contains;\
+      rm ~/O/acid glycerine && mv some\ `cat ~/G/T`* ~/G/invNames/The\ Jar\ contains &&cd The\ * && \
+      mv S* `ls | cat -n |tr "[0-9]" " "` )&&echo Done.||\
+      (mv ~/O/* ~/G/inv&&echo That will not fit in the jar.))2>~/X'
+
+# __1__: This makes the directory "The Jar contains" in the invNames directory.
+#        If it already exists, this will give an error, but we don't care.
+# __2__: This wildcard pattern should match to only acid and glycerine
+# __3__: This moves the relevant file ("Some nitric acid" or "Some glycerine",
+#        as indicated by ~/G/T) from the current directory (invNames) to that
+#        directory which you just made in step __1__.
+# __4__: This changes to that new directory USING NO MORE THAN 6 characters for
+#        the argument that you supply to cd.
+# __5__: This one is tricky. It uses "``" and "ls" and "cat -n" and "tr" to
+#        insert spaces in front of the filename of the file that you just moved
+#        into this directory, back on step 2.
+#        Let's understand what the purpose of this is. Recall from the README
+#        file for the previous homework:
+#          % head -550 README | tail
+#          >i                                      >i
+#          You currently have:                     You currently have:
+#          A bone                                  A lamp
+#          A lamp                                  A license
+#          A license                               A bone
+#          A ruby                                  A ruby
+#          Some glycerine                          A glass jar
+#          A glass jar                             The jar contains:
+#          The jar contains:                            Some nitric acid
+#               Some nitric acid                   Some glycerine
+#
+#        See those five spaces in front of "Some nitric acid"? Well, that's
+#        what you are adding here.
+
+
+alias InJar='(ls ~/G/inv/jar&>~/X&&TryToPutInJar||(mv ~/O/* ~/G/inv&&\
+      echo The jar is not here.))'
+alias put='(FromInv&&InJar||echo You do not have that.&&\
+      rmdir The\ Jar\ contains 2>~/X ) <'
+
+# __1__: This removes the directory describing the contents of the jar from
+#        your inventory. This works in a smart way:
+#         - Did you notice how TryToPutInJar had created the directory before
+#           it tested whether the object would fit in the jar? Well that means
+#           that we might now have an empty directory. (This would occur when
+#           step of __2__ of TryToPutInJar had failed.
+#         - Did you know that rmdir will not remove nonempty directories? Well,
+#           that means that this step won't remove the message about the jar's
+#           contents unless the jar is actually empty.
+
+alias quit='rm ~/G/tmp?;echo;echo You have scored 60 out of a possible 90 \      points.;echo;exit 1'
+see

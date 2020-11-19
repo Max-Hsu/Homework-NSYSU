@@ -1,0 +1,73 @@
+////////////////////////////////////////////////////////////////////////////////
+// Copyright (c) 1995-2013 Xilinx, Inc.  All rights reserved.
+////////////////////////////////////////////////////////////////////////////////
+//   ____  ____ 
+//  /   /\/   / 
+// /___/  \  /    Vendor: Xilinx 
+// \   \   \/     Version : 14.7
+//  \   \         Application : sch2hdl
+//  /   /         Filename : sch.vf
+// /___/   /\     Timestamp : 10/07/2019 10:28:13
+// \   \  /  \ 
+//  \___\/\___\ 
+//
+//Command: sch2hdl -intstyle ise -family artix7 -verilog C:/Users/Max-Hsu/Desktop/homework/G2-1/Digital/5/exer3/sch.vf -w C:/Users/Max-Hsu/Desktop/homework/G2-1/Digital/5/exer3/sch.sch
+//Design Name: sch
+//Device: artix7
+//Purpose:
+//    This verilog netlist is translated from an ECS schematic.It can be 
+//    synthesized and simulated, but it should not be modified. 
+//
+`timescale 1ns / 1ps
+
+module sch(w, 
+           x, 
+           y, 
+           z, 
+           y0, 
+           y1, 
+           y2, 
+           y3);
+
+    input w;
+    input x;
+    input y;
+    input z;
+   output y0;
+   output y1;
+   output y2;
+   output y3;
+   
+   wire XLXN_12;
+   wire XLXN_17;
+   wire XLXN_18;
+   wire XLXN_19;
+   wire XLXN_21;
+   
+   INV  XLXI_1 (.I(w), 
+               .O(XLXN_21));
+   INV  XLXI_2 (.I(x), 
+               .O(XLXN_12));
+   INV  XLXI_3 (.I(y), 
+               .O(XLXN_17));
+   INV  XLXI_4 (.I(z), 
+               .O(y0));
+   AND3  XLXI_5 (.I0(XLXN_17), 
+                .I1(XLXN_12), 
+                .I2(XLXN_21), 
+                .O(y3));
+   AND3  XLXI_6 (.I0(y), 
+                .I1(XLXN_12), 
+                .I2(XLXN_21), 
+                .O(XLXN_18));
+   AND3  XLXI_7 (.I0(XLXN_17), 
+                .I1(x), 
+                .I2(XLXN_21), 
+                .O(XLXN_19));
+   OR2  XLXI_8 (.I0(XLXN_19), 
+               .I1(XLXN_18), 
+               .O(y2));
+   AND2  XLXI_9 (.I0(y), 
+                .I1(XLXN_21), 
+                .O(y1));
+endmodule

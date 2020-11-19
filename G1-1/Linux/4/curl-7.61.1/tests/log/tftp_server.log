@@ -1,0 +1,10 @@
+20:53:04.893199 trying to get file: /1238 mode 1
+20:53:04.894697 requested test number 1238 part 0
+20:53:04.895943 instructed to delay 2 secs between packets
+20:53:04.897019 file opened and all is good
+20:53:04.897805 Pausing 2 seconds before 512 bytes
+20:53:06.900468 Pausing 2 seconds before 512 bytes
+20:53:13.902812 alarm!
+20:53:13.904003 Pausing 2 seconds before 512 bytes
+20:53:20.504594 signalled to die
+20:53:20.515340 ========> IPv4 tftpd (port: 8997 pid: 10016) exits with signal (2)

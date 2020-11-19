@@ -1,0 +1,9 @@
+# depslib dependency file v1.0
+1539250592 source:c:\users\max-hsu\desktop\homework\c\4-1\main.cpp
+	<iostream>
+	<stdio.h>
+
+1540202411 source:c:\users\max-hsu\desktop\homework\c\4-1\aa.cpp
+	<iostream>
+	<stdio.h>
+

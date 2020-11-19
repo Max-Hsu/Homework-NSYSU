@@ -1,0 +1,13 @@
+In measure.ini
+in order to prevent the situation like the figure:(P1)
+P1-1 P1-2
+I had already created a mutex lock-like mechanism (lock ) to avoid the situation that the signal (LChange) already activate
+but this method is useless,it still show the same output
+
+and the second situation is that after i manually simulate the measure.ini did by enable or disable the checkbox
+well my measure.c did react to it,but something related to IOSET1 is acting weird...
+(pic p2)
+in the picture,you can see that it trigger the function(L_elevator_opening())by the output "open req"
+and the i is 3<<28 and was assigned into IOSET1
+but as you can see in the logic analyzer
+the whole port1 didn't change at all...

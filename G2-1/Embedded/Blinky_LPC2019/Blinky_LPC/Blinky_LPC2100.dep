@@ -1,0 +1,7 @@
+Dependencies for Project 'Blinky', Target 'LPC2100': (DO NOT MODIFY !)
+F (.\Startup.s)(0x4A0284D4)(--cpu ARM7TDMI --pd "__EVAL SETA 1" -g --pd "__MICROLIB SETA 1"-I C:\Keil\ARM\RV31\INC-I C:\Keil\ARM\CMSIS\Include-I C:\Keil\ARM\Inc\Philips-o .\obj\startup.o --depend .\obj\startup.d)
+F (.\Retarget.c)(0x4A0284D4)(-c --cpu ARM7TDMI -D__EVAL -D__MICROLIB -g -O0-I C:\Keil\ARM\RV31\INC-I C:\Keil\ARM\CMSIS\Include-I C:\Keil\ARM\Inc\Philips-o .\obj\retarget.o --omf_browse .\obj\retarget.crf --depend .\obj\retarget.d)
+I (C:\Keil\ARM\ARMCC\include\rt_misc.h)(0x51C7B744)
+F (.\Blinky.c)(0x4A0284D4)(-c --cpu ARM7TDMI -D__EVAL -D__MICROLIB -g -O0-I C:\Keil\ARM\RV31\INC-I C:\Keil\ARM\CMSIS\Include-I C:\Keil\ARM\Inc\Philips-o .\obj\blinky.o --omf_browse .\obj\blinky.crf --depend .\obj\blinky.d)
+I (C:\Keil\ARM\Inc\Philips\LPC21xx.H)(0x51C7B93C)
+F (.\Abstract.txt)(0x4A0284D4)()

@@ -1,0 +1,20 @@
+澄清embedded system homework measure.c 第4點要求
+
+LED燈泡的cycle設定為100ms 跟 之前的long press 100ms 沒有任何的關聯
+
+整個LED燈泡循環為100ms
+但在低輸出的時候(在100ms的期間LED燈只亮1、2ms...)
+會造成LED燈閃爍的狀況
+
+為了避免閃爍狀況發生
+我們把100ms的cycle切半成50ms
+並且分開輸出
+
+例如:燈泡如果需要在1個cycle內持續high，持續時間為2ms
+應該把時間切為:第0ms時為high、第50ms時為high
+			第1ms後為low 、第51ms後為low
+
+再舉例:燈泡如果需要在1個cycle內持續high，持續時間為5ms
+應該把時間切為:(第0~2ms時為high、第50~51ms時為high) 或是(第0~1ms時為high、第50~52ms時為high)
+			(第3ms後為low 、第52ms後為high)			(第2ms後為low 、第53ms後為low)
+			
