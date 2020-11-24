@@ -295,100 +295,7 @@ def hist_new_window():
         hist_canvas = FigureCanvasTkAgg(fig, master=hist_window_tk)  # A tk.DrawingArea.
         hist_canvas.draw()
         hist_canvas.get_tk_widget().grid(row = 1 , column = 2)
-def homo_show(label,pic):
-    max_pix = 250                                                                                               #i limited the maximum size to show
-    dx = pic.shape[0]                                                                                       #get x axis pixels
-    dy = pic.shape[1]                                                                                       #get y axis pixels
-    scale = max_pix / max(pic.shape)                                                                        #the most longest part should fix the max size so choose max
-    dx = int(dx*scale)                                                                                          #using the ratio to find the final product size
-    dy = int(dy*scale) 
-    sized_img_cv2 = cv2.resize(pic,(dy,dx) )                                                             #use opencv resize to limit the img size
-    img_PIL = cv2.cvtColor(sized_img_cv2,cv2.COLOR_BGR2RGB)                                                     #for showing we need to transfer into RGB type( if further use is for color image)
-    #print(img_PIL)
-    img_PIL *= 255
-    img_PIL = PIL.Image.fromarray(img_PIL.astype(np.uint8))                                                                      #some transfer steps
-    TKimg = PIL.ImageTk.PhotoImage(image=img_PIL)                                                               #tk interface for photos
-    label.imgtk = TKimg                                                                                       #some trivial transform
-    label.config(image = TKimg)
 
-def homo_process(dummy):
-    global img_cv2
-    global show_Proc_fft
-    global Yl_scale
-    global Yh_scale
-    global c_scale 
-    global D0_scale 
-
-    img_gray_cv2 = img_cv2.copy()                                                                               #copy for safe
-    fft_pre = np.log1p(np.array(img_gray_cv2,dtype = np.float64))                                               #step 1 ln
-    fft_img = np.fft.fft2(fft_pre)                                                                              #step 2 fft
-
-    Yl = Yl_scale.get()                                                                                         #get scale value
-    Yh = Yh_scale.get()
-    c = c_scale.get()
-    D0 = D0_scale.get()
-
-    du = np.zeros(fft_img.shape, dtype = np.float32)                                                            #create empty matrix
-    dft_M = fft_img.shape[0]
-    dft_N = fft_img.shape[1]
-    
-    for u in range(dft_M):                                                                                      #produce the matrix to be multiply
-        for v in range(dft_N):
-            du[u,v] = math.sqrt((u - dft_M/2.0)*(u - dft_M/2.0) + (v - dft_N/2.0)*(v - dft_N/2.0))              #formula for D
-    du2 = cv2.multiply(du,du) / (D0*D0)                                                                         #do mul
-    re = np.exp(- c * du2)                                                                                      #
-    H = (Yh - Yl) * (1 - re) + Yl                                                                               #final for H
-    H = np.fft.fftshift(H)                                                                                      #shift for multiply
-    
-    filtered = H*fft_img                                                                                        #mul #step 3
-
-    filtered = np.fft.ifft2(filtered)                                                                           #reverse fft # step 4
-
-    filtered = np.exp(np.real(filtered))-1                                                                      #step 5
-    #print(filtered)
-    #filtered *= 255.0/filtered.max()
-    filtered = np.uint8(filtered)                                                                               #back to uint8
-
-    homo_show(show_Proc_fft,filtered)                                                                           #show
-
-def homo_new_window():                                                                                          #for new window of homo
-    global show_Proc_fft
-    global Yl_scale
-    global Yh_scale
-    global c_scale 
-    global D0_scale 
-    new_homo_window_tk = tk.Toplevel(window)    
-    new_homo_window_tk.geometry("1000x800")
-    homo_frame = tk.Frame(new_homo_window_tk)
-    homo_frame.pack(side = tk.TOP)
-    
-    
-
-    #nN_fft_img = (Yh - Yl)* (1-np.e**(((-c)*fft_img**2)/D0**2))+Yl
-    
-
-    #normalization to be representable 
-    #filtered = cv2.magnitude(filtered[:, :, 0], filtered[:, :, 1])
-    #cv2.normalize(filtered, filtered, 0, 1, cv2.NORM_MINMAX)
-    #g(x, y) = exp(s(x, y))
-    #filtered = np.exp(filtered)
-    #cv2.normalize(filtered, filtered,0, 1, cv2.NORM_MINMAX)
-
-    show_Proc_fft = tk.Label(homo_frame)
-    show_Proc_fft.grid(row = 1 ,column = 1)
-    Yl_scale = tk.Scale(homo_frame, label='Yl', from_=-30, to=30, orient=tk.HORIZONTAL, length=500, showvalue=1,tickinterval=10, resolution=0.01, command=homo_process)
-    Yh_scale = tk.Scale(homo_frame, label='Yh', from_=-30, to=30, orient=tk.HORIZONTAL, length=500, showvalue=1,tickinterval=10, resolution=0.01, command=homo_process)
-    c_scale  = tk.Scale(homo_frame, label='c',  from_=-30, to=30, orient=tk.HORIZONTAL, length=500, showvalue=1,tickinterval=10, resolution=0.01, command=homo_process)
-    D0_scale = tk.Scale(homo_frame, label='D0', from_=-30, to=30, orient=tk.HORIZONTAL, length=500, showvalue=1,tickinterval=10, resolution=0.01, command=homo_process)
-    Yl_scale.grid(row = 2,column = 1)
-    Yh_scale.grid(row = 3,column = 1)
-    c_scale.grid(row = 4,column = 1)
-    D0_scale.grid(row = 5,column = 1)
-    Yl_scale.set(0.4)
-    Yh_scale.set(16.15)
-    c_scale.set(5)
-    D0_scale.set(20)
-    homo_process(0)
 
     
 
@@ -418,6 +325,46 @@ def blur_sharp_new_window():                                                    
     
 
 
+def feather_new_window():                                                                                          #
+    global img_cv2
+    feather_extract = tk.Toplevel(window)
+    feather_extract.geometry("1000x800")
+    feather_extract_frame = tk.Frame(feather_extract)
+    feather_extract_frame.pack(side = tk.TOP)
+
+    feather_orig_pic = tk.Label(feather_extract_frame)                                                                                         
+    feather_orig_pic.grid(row = 3 ,column = 2)
+    feather_H = tk.Label(feather_extract_frame)                                                                                         
+    feather_H.grid(row = 3 ,column = 3)
+    feather_S = tk.Label(feather_extract_frame)                                                                                         
+    feather_S.grid(row = 4 ,column = 3)
+    feather_final = tk.Label(feather_extract_frame)                                                                                         
+    feather_final.grid(row = 3 ,column = 4)
+    feather_final_color = tk.Label(feather_extract_frame)  
+    feather_final_color.grid(row = 4 ,column = 4)
+
+    img_mod_HSV_cv2 = cv2.cvtColor(img_cv2,cv2.COLOR_BGR2HSV)
+    img_mod_HSV_cv2_H , img_mod_HSV_cv2_S , img_mod_HSV_cv2_V = cv2.split(img_mod_HSV_cv2)
+    img_mod_HSV_cv2_H = cv2.inRange(img_mod_HSV_cv2_H,150,160)                                                  #H from 300 to 320 so into 255 is 
+    img_mod_HSV_cv2_S = cv2.inRange(img_mod_HSV_cv2_S,128,220) 
+    
+    feather_extract = cv2.bitwise_and(img_mod_HSV_cv2_H,img_mod_HSV_cv2_S)
+
+    img_mod_RGB_cv2 = cv2.cvtColor(img_cv2,cv2.COLOR_BGR2RGB)
+    img_mod_RGB_cv2_R , img_mod_RGB_cv2_G , img_mod_RGB_cv2_B = cv2.split(img_mod_RGB_cv2)
+    img_mod_RGB_cv2_R = cv2.bitwise_and(img_mod_RGB_cv2_R,feather_extract)
+    img_mod_RGB_cv2_G = cv2.bitwise_and(img_mod_RGB_cv2_G,feather_extract)
+    img_mod_RGB_cv2_B = cv2.bitwise_and(img_mod_RGB_cv2_B,feather_extract)
+    img_mod_RGB_cv2 = cv2.merge((img_mod_RGB_cv2_B,img_mod_RGB_cv2_G,img_mod_RGB_cv2_R))
+
+    img_mod_HSV_cv2_H = cv2.cvtColor(img_mod_HSV_cv2_H , cv2.COLOR_GRAY2BGR)
+    img_mod_HSV_cv2_S = cv2.cvtColor(img_mod_HSV_cv2_S , cv2.COLOR_GRAY2BGR)
+
+    show_blur_sharp(img_cv2,feather_orig_pic)
+    show_blur_sharp(img_mod_HSV_cv2_H,feather_H)
+    show_blur_sharp(img_mod_HSV_cv2_S,feather_S)
+    show_blur_sharp(feather_extract,feather_final)
+    show_blur_sharp(img_mod_RGB_cv2,feather_final_color)
 
 
 
@@ -670,7 +617,10 @@ RGB_op = tk.Button(RGB_frame , text = 'show RGB',command = RGB_choose)
 RGB_op.grid(row = 1, column = 0)
 HSL_op = tk.Button(RGB_frame , text = 'show HSL',command = HSL_choose)
 HSL_op.grid(row = 2, column = 0)
-
+blur_sharp_button = tk.Button(RGB_frame , text = 'blur_sharp_button' , command = blur_sharp_new_window)                         # for show frequency domain
+blur_sharp_button.grid(row = 3 , column = 0)
+feather_button = tk.Button(RGB_frame , text = 'feather_button' , command = feather_new_window)                         
+feather_button.grid(row = 4 , column = 0)
 
 compl_frame = tk.Frame(window)
 compl_frame.pack(side = tk.TOP)
@@ -679,10 +629,6 @@ compl.grid(row = 1 , column = 1)
 
 
 
-blur_sharp_Panel = tk.Frame(window)
-blur_sharp_Panel.pack(side = tk.TOP)
-blur_sharp_button = tk.Button(blur_sharp_Panel , text = 'blur_sharp_button' , command = blur_sharp_new_window)                         # for show frequency domain
-blur_sharp_button.grid(row = 0 , column = 0)
 
 
 window.mainloop()

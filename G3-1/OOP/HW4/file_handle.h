@@ -12,20 +12,17 @@ class file_handler{
                 cerr<<"cannot open "<<file_name<<"\n";
             }
         }
-        string getline_file(){
-            string temp;
-            
+        char char_mod(int & status){
+            char temp;
+            file.get(temp);
+            if(file.eof()){
+                status = -1;
+            }
+            else{
+                status = 0;
+            }
+            return temp;
         }
     private:
         ifstream file;
-};
-class string_and_token:private file_handler{
-    public:
-        string_and_token(string file_name):file_handler(file_name){}
-        void my_getline(){
-            line = file;
-
-        }
-    private:
-        string line;
 };

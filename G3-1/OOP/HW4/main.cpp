@@ -1,7 +1,16 @@
 #include <iostream>
+#include <string>
 #include "file_handle.h"
 
+
 int main(){
-    string_and_token hi("file")
+    int status;
+    file_handler hi("file");
+    std::cout<<status<<hi.char_mod(status)<<"\n";
+    std::cout<<status<<hi.char_mod(status)<<"\n";
+    std::cout<<status<<hi.char_mod(status)<<"\n";
+    std::cout<<status<<hi.char_mod(status)<<"\n";
+    std::cout<<status<<hi.char_mod(status)<<"\n";
+    std::cout<<status<<hi.char_mod(status)<<"\n";
 
 }
