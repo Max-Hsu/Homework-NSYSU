@@ -1,19 +1,22 @@
 #include <iostream>
 #include <string>
-#include "file_handle.h"
+#include "lexer.h"
 
+using namespace std;
 
 int main(int argc , char ** argv){
     if(argc<2){
-        std::cerr<<"./lexer file\n";
+        cerr<<"./lexer file\n";
+        return -1;
     }
-    int status;
-    file_handler hi("file");
-    std::cout<<status<<hi.char_get(status)<<"\n";
-    std::cout<<status<<hi.char_get(status)<<"\n";
-    std::cout<<status<<hi.char_get(status)<<"\n";
-    std::cout<<status<<hi.char_get(status)<<"\n";
-    std::cout<<status<<hi.char_get(status)<<"\n";
-    std::cout<<status<<hi.char_get(status)<<"\n";
-
+    string file_name(argv[1]);
+    Lexer Lexer_instance(file_name);
+    int file_status = Lexer_instance.file_status();
+    while(file_status == 0){
+        //cout<<"outer\n";
+        Token * X = Lexer_instance.scan();
+        cout<<"Token: "<<X->toString()<<"\n";
+        file_status = Lexer_instance.file_status();
+    }
+    cout<<"End of file reached\n";
 }
