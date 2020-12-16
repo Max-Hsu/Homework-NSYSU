@@ -169,6 +169,9 @@ class Lexer{
             dummy = IN_file.char_peek(status);
             return status;
         }
+        int eof_lex_check(){
+            return IN_file.eof_check();
+        }
         void readch(){  //stupid eof check i just want to skip
 
         }
@@ -188,6 +191,9 @@ class Lexer{
                     line = line+1;
                 }
                 read = IN_file.char_get(status);
+                if(status == -1){
+                    break;
+                }
             }
             return read;
         }

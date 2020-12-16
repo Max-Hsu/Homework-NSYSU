@@ -1,0 +1,33 @@
+
+# Messages from "go new"
+
+
+# Messages from "go analyze"
+
+/INPUTFILES/2
+Edison Design Group C++/C Front End - Version 5.1 (CIN-1)
+solution file add ../ntt/main.c
+Front End called with arguments: -- /media/Windata/Users/Max-Hsu_Lab/Desktop/Homework/G3-1/ASM_experiment/ntt/twiddle.h /media/Windata/Users/Max-Hsu_Lab/Desktop/Homework/G3-1/ASM_experiment/ntt/ntt.h /media/Windata/Users/Max-Hsu_Lab/Desktop/Homework/G3-1/ASM_experiment/ntt/ntt.c /media/Windata/Users/Max-Hsu_Lab/Desktop/Homework/G3-1/ASM_experiment/ntt/twiddle.c (CIN-69)
+Launching web browser to open http://www.mentor.com/hls-lp/catapult-high-level-synthesis/
+/INPUTFILES/1
+solution file add ../ntt/ntt.h
+/INPUTFILES/4
+/INPUTFILES/5
+# Error: Compilation aborted (CIN-5)
+/INPUTFILES/3
+# Error: a value of type "void *" cannot be assigned to an entity of type "uint64_t *" (CRD-513)
+# Error: identifier "size_t" is undefined (CRD-20)
+solution file add ../ntt/forward.c
+solution file add ../ntt/test.c
+# Error:           detected during compilation of secondary translation unit "/media/Windata/Users/Max-Hsu_Lab/Desktop/Homework/G3-1/ASM_experiment/ntt/twiddle.c" (CRD-513)
+solution file remove /media/Windata/Users/Max-Hsu_Lab/Desktop/Homework/G3-1/ASM_experiment/ntt/forward.c
+/INPUTFILES/7
+solution file add ../ntt/twiddle.h
+solution file remove /media/Windata/Users/Max-Hsu_Lab/Desktop/Homework/G3-1/ASM_experiment/ntt/main.c
+/INPUTFILES/6
+Moving session transcript to file "/media/Windata/Users/Max-Hsu_Lab/Desktop/Homework/G3-1/ASM_experiment/HLS_try/catapult.log"
+go analyze
+solution file remove /media/Windata/Users/Max-Hsu_Lab/Desktop/Homework/G3-1/ASM_experiment/ntt/test.c
+# Info: Starting transformation 'analyze' on solution 'solution.v1' (SOL-8)
+solution file add ../ntt/twiddle.c
+solution file add ../ntt/ntt.c

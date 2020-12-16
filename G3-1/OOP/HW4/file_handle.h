@@ -17,7 +17,9 @@ class file_handler{
             file.open(file_name,ios_base::in);
             if(!file.is_open()){
                 cerr<<"cannot open "<<file_name<<"\n";
+                return -1;
             }
+            return 0;
         }
         char char_get(int & status){
             char temp;
@@ -40,6 +42,9 @@ class file_handler{
                 status = 0;
             }
             return temp;
+        }
+        int eof_check(){
+            return file.eof();
         }
     private:
         ifstream file;

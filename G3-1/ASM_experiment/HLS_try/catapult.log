@@ -1,0 +1,54 @@
+//  Catapult University Version 10.5/861329 (Production Release) Wed Mar  4 15:45:36 PST 2020
+//  
+//  Copyright (c) Mentor Graphics Corporation, 1996-2020, All Rights Reserved.
+//                        UNPUBLISHED, LICENSED SOFTWARE.
+//             CONFIDENTIAL AND PROPRIETARY INFORMATION WHICH IS THE
+//                 PROPERTY OF MENTOR GRAPHICS OR ITS LICENSORS
+//  
+//  Running on Linux maxhsu@Max-Hsu-Lab 5.4.0-54-generic x86_64 aol
+//  
+//  Package information: SIFLIBS v23.5_0.0, HLS_PKGS v23.5_0.0, 
+//                       SIF_TOOLKITS v23.5_0.0, SIF_XILINX v23.5_0.0, 
+//                       SIF_ALTERA v23.5_0.0, CCS_LIBS v23.5_0.0, 
+//                       CDS_PPRO v10.3c_2, CDS_DesigChecker v10.5, 
+//                       CDS_OASYS v19.1_3.7, CDS_PSR v19.2_0.9, 
+//                       DesignPad v2.78_1.0
+//  
+//  This version may only be used for academic purposes.  Some optimizations 
+//  are disabled, so results obtained from this version may be sub-optimal.
+//  
+//  Start time Fri Dec 11 11:20:26 2020
+# -------------------------------------------------
+# Logging session transcript to file "/tmp/log202583029dd42.0"
+# Launching web browser to open http://www.mentor.com/hls-lp/catapult-high-level-synthesis/
+solution file add ../ntt/main.c
+# /INPUTFILES/1
+solution file add ../ntt/twiddle.c
+# /INPUTFILES/2
+solution file add ../ntt/ntt.c
+# /INPUTFILES/3
+solution file add ../ntt/forward.c
+# /INPUTFILES/4
+solution file add ../ntt/ntt.h
+# /INPUTFILES/5
+solution file add ../ntt/twiddle.h
+# /INPUTFILES/6
+solution file remove /media/Windata/Users/Max-Hsu_Lab/Desktop/Homework/G3-1/ASM_experiment/ntt/main.c
+solution file remove /media/Windata/Users/Max-Hsu_Lab/Desktop/Homework/G3-1/ASM_experiment/ntt/forward.c
+solution file add ../ntt/test.c
+# /INPUTFILES/7
+solution file remove /media/Windata/Users/Max-Hsu_Lab/Desktop/Homework/G3-1/ASM_experiment/ntt/test.c
+go analyze
+# Info: Starting transformation 'analyze' on solution 'solution.v1' (SOL-8)
+# Moving session transcript to file "/media/Windata/Users/Max-Hsu_Lab/Desktop/Homework/G3-1/ASM_experiment/HLS_try/catapult.log"
+# Front End called with arguments: -- /media/Windata/Users/Max-Hsu_Lab/Desktop/Homework/G3-1/ASM_experiment/ntt/twiddle.h /media/Windata/Users/Max-Hsu_Lab/Desktop/Homework/G3-1/ASM_experiment/ntt/ntt.h /media/Windata/Users/Max-Hsu_Lab/Desktop/Homework/G3-1/ASM_experiment/ntt/ntt.c /media/Windata/Users/Max-Hsu_Lab/Desktop/Homework/G3-1/ASM_experiment/ntt/twiddle.c (CIN-69)
+# Edison Design Group C++/C Front End - Version 5.1 (CIN-1)
+# Error: $PROJECT_HOME/../ntt/twiddle.h(6): identifier "size_t" is undefined (CRD-20)
+# Error: $PROJECT_HOME/../ntt/twiddle.c(28): a value of type "void *" cannot be assigned to an entity of type "uint64_t *" (CRD-513)
+# Error: $PROJECT_HOME/../ntt/twiddle.c(28):           detected during compilation of secondary translation unit "/media/Windata/Users/Max-Hsu_Lab/Desktop/Homework/G3-1/ASM_experiment/ntt/twiddle.c" (CRD-513)
+# Error: Compilation aborted (CIN-5)
+# Info: Completed transformation 'new' on solution 'solution.v1': elapsed time 0.39 seconds, memory usage 1219256kB, peak memory usage 1219256kB (SOL-9)
+# Error: go analyze: Failed analyze
+quit
+# Saving project file '/media/Windata/Users/Max-Hsu_Lab/Desktop/Homework/G3-1/ASM_experiment/HLS_try/Catapult.ccs'. (PRJ-5)
+// Finish time Fri Dec 11 12:04:00 2020, time elapsed 43:34, peak memory 1.16GB, exit status 0

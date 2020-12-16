@@ -1,6 +1,8 @@
 import numpy as np
 import cv2 as cv
 import sys
+import math
+
 
 def my_show(in_img_cv2):
     img_cv2 = in_img_cv2.copy()
@@ -20,15 +22,62 @@ imgray = cv.cvtColor(img, cv.COLOR_BGR2GRAY)
 ret, thresh = cv.threshold(imgray, np.mean(imgray), 255, 0)
 my_show(thresh)
 
-blurred = cv.GaussianBlur(thresh, (11, 11), 0)
 
-binaryIMG = cv.Canny(blurred, 20, 160)
+imgrayx= cv.convertScaleAbs(imgray, alpha=2, beta=-10)
+kernel = np.array([[-1,-1,-1], [-1,9,-1], [-1,-1,-1]])
+im = cv.filter2D(imgrayx, -1, kernel)
+my_show(im)
+
+blurred = cv.GaussianBlur(imgray, (11, 11), 0)
+my_show(blurred)
+binaryIMG = cv.Canny(blurred, 10, 160)
+my_show(binaryIMG)
+'''
 contours, hierarchy = cv.findContours(binaryIMG, cv.RETR_EXTERNAL, cv.CHAIN_APPROX_SIMPLE)
+'''
+contours, hierarchy = cv.findContours(binaryIMG.copy(), cv.RETR_LIST, cv.CHAIN_APPROX_SIMPLE)
+cnts = sorted(contours, key=cv.contourArea, reverse=True)[:5]
+
+for c in cnts:
+    peri = cv.arcLength(c, True)
+    approx = cv.approxPolyDP(c, 0.02*peri, True)
+    if len(approx) == 4:
+        screenCnt = approx
+        break
+
 #print(contours)
-cv.drawContours(img, contours, 0, (0,255,0), 3)
+cv.drawContours(img, [screenCnt], -1, (0,255,0), 3)
+cv.drawContours(img, cnts[0], -1, (0,0,255), 3)
 my_show(img)
 
-c = np.array(contours[0])
+c = np.array(screenCnt)
+list_arr = []
+for extract in screenCnt:
+    list_arr.append(list(extract[0]))
+min_extract = math.inf
+min_saver = None
+max_extract = -math.inf
+max_saver = None
+for extract in range(len(list_arr)):
+    evalue = list_arr[extract][0]**2 + list_arr[extract][1]**2
+    if(evalue < min_extract):
+        min_saver = extract
+        min_extract = evalue
+    if(evalue > max_extract):
+        max_saver = extract
+        max_extract = evalue
+q1 = list_arr[min_saver]
+q4 = list_arr[max_saver]
+list_arr.remove(q1)
+list_arr.remove(q4)
+if(list_arr[0][0] < list_arr[1][0]):
+    q2 = list_arr[0]
+    q3 = list_arr[1]
+else:
+    q2 = list_arr[1]
+    q3 = list_arr[0]
+
+'''
 extLeft = tuple(c[c[:, :, 0].argmin()][0])
 extRight = tuple(c[c[:, :, 0].argmax()][0])
 extTop = tuple(c[c[:, :, 1].argmin()][0])
@@ -46,6 +95,7 @@ for element in checklist:
             break
 
 if check_rectangle == 1 :
+    print("wrong")
     q1,q2,q4,q3 = contours[0]
     q1=tuple(q1[0])
     q2=tuple(q2[0])
@@ -56,6 +106,9 @@ else:
     q2 = extLeft
     q3 = extRight
     q4 = extBot
+
+'''
+print(q1,q2,q3,q4)
 
 height , width ,_ = img.shape
 dst = np.array([[0,0],[0,height],[width,0],[width,height]], dtype = "float32")
@@ -69,4 +122,5 @@ img2 = cv.circle(img2,tuple(q3),8,(0,0,255),thickness = -1)
 img2 = cv.circle(img2,tuple(q4),8,(0,0,255),thickness = -1)
 my_show(img2)
 my_show(warp)
+
 

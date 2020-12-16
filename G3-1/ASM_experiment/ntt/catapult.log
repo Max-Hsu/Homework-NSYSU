@@ -1,0 +1,61 @@
+//  Catapult University Version 10.5/861329 (Production Release) Wed Mar  4 15:45:36 PST 2020
+//  
+//  Copyright (c) Mentor Graphics Corporation, 1996-2020, All Rights Reserved.
+//                        UNPUBLISHED, LICENSED SOFTWARE.
+//             CONFIDENTIAL AND PROPRIETARY INFORMATION WHICH IS THE
+//                 PROPERTY OF MENTOR GRAPHICS OR ITS LICENSORS
+//  
+//  Running on Linux maxhsu@Max-Hsu-Lab 5.4.0-54-generic x86_64 aol
+//  
+//  Package information: SIFLIBS v23.5_0.0, HLS_PKGS v23.5_0.0, 
+//                       SIF_TOOLKITS v23.5_0.0, SIF_XILINX v23.5_0.0, 
+//                       SIF_ALTERA v23.5_0.0, CCS_LIBS v23.5_0.0, 
+//                       CDS_PPRO v10.3c_2, CDS_DesigChecker v10.5, 
+//                       CDS_OASYS v19.1_3.7, CDS_PSR v19.2_0.9, 
+//                       DesignPad v2.78_1.0
+//  
+//  This version may only be used for academic purposes.  Some optimizations 
+//  are disabled, so results obtained from this version may be sub-optimal.
+//  
+//  Start time Tue Dec 15 21:46:54 2020
+# -------------------------------------------------
+# Logging session transcript to file "/tmp/log24069882a0d55.0"
+project save
+# Moving session transcript to file "/media/Windata/Users/Max-Hsu_Lab/Desktop/Homework/G3-1/ASM_experiment/ntt/catapult.log"
+# Saving project file '/media/Windata/Users/Max-Hsu_Lab/Desktop/Homework/G3-1/ASM_experiment/ntt/Catapult.ccs'. (PRJ-5)
+project new -name ASMexperiment
+flow package require MemGen
+# 10.0.0
+solution file add ./mod.c
+# /INPUTFILES/1
+solution file add ./swap.h
+# /INPUTFILES/2
+solution file add ./bitreverse.c
+# /INPUTFILES/3
+solution file add ./main.c
+# /INPUTFILES/4
+solution file add ./swap.c
+# /INPUTFILES/5
+solution file add ./twiddle.h
+# /INPUTFILES/6
+solution file add ./baileys.h
+# /INPUTFILES/7
+solution file add ./forward.c
+# /INPUTFILES/8
+solution file add ./baileys.c
+# /INPUTFILES/9
+solution file add ./ntt.h
+# /INPUTFILES/10
+solution file add ./twiddle.c
+# /INPUTFILES/11
+solution file add ./ntt.c
+# /INPUTFILES/12
+solution file add ./mod.h
+# /INPUTFILES/13
+solution file add ./test.c
+# /INPUTFILES/14
+solution file add ./bitreverse.h
+# /INPUTFILES/15
+quit
+# Saving project file '/media/Windata/Users/Max-Hsu_Lab/Desktop/Homework/G3-1/ASM_experiment/ntt/ASMexperiment.ccs'. (PRJ-5)
+// Finish time Tue Dec 15 22:02:02 2020, time elapsed 15:08, peak memory 1.09GB, exit status 0

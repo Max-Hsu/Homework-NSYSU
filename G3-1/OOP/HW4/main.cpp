@@ -15,8 +15,13 @@ int main(int argc , char ** argv){
     while(file_status == 0){
         //cout<<"outer\n";
         Token * X = Lexer_instance.scan();
-        cout<<"Token: "<<X->toString()<<"\n";
-        file_status = Lexer_instance.file_status();
+        if(Lexer_instance.eof_lex_check()){
+            break;
+        }
+        else{
+            cout<<"Token: "<<X->toString()<<"\n";
+            file_status = Lexer_instance.file_status();
+        }
     }
     cout<<"End of file reached\n";
 }
